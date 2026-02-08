@@ -9,6 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UserRouteRouteImport } from './routes/user.route'
+import { Route as ReaderRouteRouteImport } from './routes/reader.route'
+import { Route as LoginRouteRouteImport } from './routes/login.route'
+import { Route as CategoryRouteRouteImport } from './routes/category.route'
+import { Route as BorrowRecordsRouteRouteImport } from './routes/borrow-records.route'
+import { Route as BookRouteRouteImport } from './routes/book.route'
+import { Route as AuthorRouteRouteImport } from './routes/author.route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
@@ -18,6 +25,41 @@ import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 
+const UserRouteRoute = UserRouteRouteImport.update({
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReaderRouteRoute = ReaderRouteRouteImport.update({
+  id: '/reader',
+  path: '/reader',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRouteRoute = LoginRouteRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoryRouteRoute = CategoryRouteRouteImport.update({
+  id: '/category',
+  path: '/category',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BorrowRecordsRouteRoute = BorrowRecordsRouteRouteImport.update({
+  id: '/borrow-records',
+  path: '/borrow-records',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookRouteRoute = BookRouteRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthorRouteRoute = AuthorRouteRouteImport.update({
+  id: '/author',
+  path: '/author',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -61,6 +103,13 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/author': typeof AuthorRouteRoute
+  '/book': typeof BookRouteRoute
+  '/borrow-records': typeof BorrowRecordsRouteRoute
+  '/category': typeof CategoryRouteRoute
+  '/login': typeof LoginRouteRoute
+  '/reader': typeof ReaderRouteRoute
+  '/user': typeof UserRouteRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -71,6 +120,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/author': typeof AuthorRouteRoute
+  '/book': typeof BookRouteRoute
+  '/borrow-records': typeof BorrowRecordsRouteRoute
+  '/category': typeof CategoryRouteRoute
+  '/login': typeof LoginRouteRoute
+  '/reader': typeof ReaderRouteRoute
+  '/user': typeof UserRouteRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -82,6 +138,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/author': typeof AuthorRouteRoute
+  '/book': typeof BookRouteRoute
+  '/borrow-records': typeof BorrowRecordsRouteRoute
+  '/category': typeof CategoryRouteRoute
+  '/login': typeof LoginRouteRoute
+  '/reader': typeof ReaderRouteRoute
+  '/user': typeof UserRouteRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -94,6 +157,13 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/author'
+    | '/book'
+    | '/borrow-records'
+    | '/category'
+    | '/login'
+    | '/reader'
+    | '/user'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -104,6 +174,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/author'
+    | '/book'
+    | '/borrow-records'
+    | '/category'
+    | '/login'
+    | '/reader'
+    | '/user'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -114,6 +191,13 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/author'
+    | '/book'
+    | '/borrow-records'
+    | '/category'
+    | '/login'
+    | '/reader'
+    | '/user'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -125,6 +209,13 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthorRouteRoute: typeof AuthorRouteRoute
+  BookRouteRoute: typeof BookRouteRoute
+  BorrowRecordsRouteRoute: typeof BorrowRecordsRouteRoute
+  CategoryRouteRoute: typeof CategoryRouteRoute
+  LoginRouteRoute: typeof LoginRouteRoute
+  ReaderRouteRoute: typeof ReaderRouteRoute
+  UserRouteRoute: typeof UserRouteRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
   DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
@@ -136,6 +227,55 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/user': {
+      id: '/user'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof UserRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reader': {
+      id: '/reader'
+      path: '/reader'
+      fullPath: '/reader'
+      preLoaderRoute: typeof ReaderRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/category': {
+      id: '/category'
+      path: '/category'
+      fullPath: '/category'
+      preLoaderRoute: typeof CategoryRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/borrow-records': {
+      id: '/borrow-records'
+      path: '/borrow-records'
+      fullPath: '/borrow-records'
+      preLoaderRoute: typeof BorrowRecordsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/author': {
+      id: '/author'
+      path: '/author'
+      fullPath: '/author'
+      preLoaderRoute: typeof AuthorRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -197,6 +337,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthorRouteRoute: AuthorRouteRoute,
+  BookRouteRoute: BookRouteRoute,
+  BorrowRecordsRouteRoute: BorrowRecordsRouteRoute,
+  CategoryRouteRoute: CategoryRouteRoute,
+  LoginRouteRoute: LoginRouteRoute,
+  ReaderRouteRoute: ReaderRouteRoute,
+  UserRouteRoute: UserRouteRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,
   DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,
