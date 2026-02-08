@@ -1,22 +1,35 @@
-import { flexRender, type Table as TanStackTTable } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { flexRender, PaginationState, type Table as TanStackTTable } from "@tanstack/react-table";
+import { ArrowDown, ArrowUp, Edit, Trash } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { PaginationTable } from "./pagination-table";
+import { Dispatch, SetStateAction } from "react";
+import { Button } from "./ui/button";
 
 interface IDynamicTableProps<TData> {
-    table: TanStackTTable<TData>
+    tableData: {
+        table: TanStackTTable<TData>;
+        setPagination: Dispatch<SetStateAction<PaginationState>>;
+        onChoose?: (data: TData) => void
+    }
 }
 
-export const DynamicTable = <TData,>({ table }: IDynamicTableProps<TData>) => {
+export const DynamicTable = <TData,>({ tableData }: IDynamicTableProps<TData>) => {
+    const { table, onChoose } = tableData;
+
+    const onChooseRow = (data: TData) => {
+        if (onChoose) {
+            onChoose(data)
+        }
+    }
 
     return (
-        <div className="w-full">
-            <div className="grid w-full [&>div]:max-h-[calc(100vh-260px)] [&>div]:border [&>div]:rounded">
+        <div className="w-full h-full flex flex-col">
+            <div className="grid w-full [&>div]:border flex-1">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id} className="*:whitespace-nowrap sticky top-0 bg-background after:content-[''] after:inset-x-0 after:h-px after:bg-border after:absolute after:bottom-0">
-                                <TableHead>
+                                <TableHead className="text-center">
                                     No
                                 </TableHead>
                                 {headerGroup.headers.map((header) => {
@@ -53,30 +66,48 @@ export const DynamicTable = <TData,>({ table }: IDynamicTableProps<TData>) => {
                                         </TableHead>
                                     )
                                 })}
+                                {
+                                    onChoose &&
+                                    <TableHead className="text-center">
+                                        Actions
+                                    </TableHead>
+                                }
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody className="overflow-hidden">
-                        {table.getRowModel().rows.map((row) => {
-                            const pageIndex = table.getState().pagination?.pageIndex ?? 0;
+                    <TableBody className="overflow-hidden h-full [&_tr:last-child]:border">
+                        {table.getRowModel().rows.length ? table.getRowModel().rows.map((row) => {
+                            const pageIndex = table.getState().pagination?.pageIndex ?? 1;
                             const pageSize = table.getState().pagination?.pageSize ?? row.index + 1;
 
                             return <TableRow key={row.id} className="odd:bg-muted/50 *:whitespace-nowrap">
-                                <TableCell >
-                                    {pageIndex * pageSize + row.index + 1}
+                                <TableCell className="text-center">
+                                    {(pageIndex - 1) * pageSize + row.index + 1}
                                 </TableCell>
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell key={cell.id}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </TableCell>
                                 ))}
+                                {
+                                    onChoose &&
+                                    <TableCell className="w-[200px]">
+                                        <div className="flex gap-2 flex justify-center">
+                                            <Button className="bg-green-500 hover:bg-green-600" onClick={() => onChooseRow(row.original)}><Edit size={18} /></Button>
+                                            <Button className="bg-red-500 hover:bg-red-600" onClick={() => onChooseRow(row.original)}><Trash size={18} /></Button>
+                                        </div>
+                                    </TableCell>
+                                }
+
                             </TableRow>
-                        })}
+                        }) : <TableRow className="h-full">
+                            Empty
+                        </TableRow>}
                     </TableBody>
                 </Table>
             </div>
-            <div className="mt-[25px] ml-auto">
-                <PaginationTable table={table} />
+            <div className="mt-[25px]">
+                <PaginationTable tableData={tableData} />
             </div>
         </div>
 
