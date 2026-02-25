@@ -1,4 +1,5 @@
 import { Popup } from "@/components/popup";
+import { SelectApp } from "@/components/select-app";
 import {
     Field,
     FieldError,
@@ -9,22 +10,25 @@ import { Input } from "@/components/ui/input";
 import { useMutationRequest } from "@/hooks/useMutation";
 import { User } from "@/models/user.model";
 import { userSchema } from "@/schema/user.schema";
+import { useNotificationStore } from "@/store/notification.store";
 import { useForm } from "@tanstack/react-form";
 import _ from "lodash";
 import { toast } from "sonner";
 
 interface IUserFormProps {
     open: boolean
-    onClose: (value?: string) => void
+    onClose: (value: boolean) => void
     user: User | null
 }
 
 export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
+    const notification = useNotificationStore();
     const { mutate } = useMutationRequest({
         key: ["create-user", "update-user"],
-        url: "users", method: !_.isEmpty(user) ? "put" : "post", options: {
-            onSuccess: (data: string | undefined) => {
-                onClose(data)
+        url: _.isNull(user) ? "users" : `users/${user.id}`, method: !_.isEmpty(user) ? "put" : "post", options: {
+            onSuccess: () => {
+                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                onClose(true);
             },
             onError: (error) => {
                 toast.info(error.message);
@@ -33,7 +37,13 @@ export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
     });
 
     const form = useForm({
-        defaultValues: user ? user : {
+        defaultValues: !_.isNull(user) ? {
+            full_name: user.full_name,
+            email: user.email,
+            phone: user.phone,
+            role: user.role,
+            lang: user.lang
+        } : {
             full_name: "",
             email: "",
             phone: "",
@@ -50,7 +60,7 @@ export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
 
     return (
         <div>
-            <Popup variant="xl" type="form" open={open} onClose={() => onClose()} title="Thông tin người dùng" form={form}>
+            <Popup variant="2xl" type="form" open={open} onClose={() => onClose(false)} title="Thông tin người dùng" form={form}>
                 <FieldGroup className="grid grid-cols-2 gap-3">
                     <form.Field
                         name="full_name"
@@ -136,15 +146,38 @@ export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
                             return (
                                 <Field data-invalid={isInvalid} className="gap-1">
                                     <FieldLabel htmlFor={field.name}>Role</FieldLabel>
-                                    <Input
-                                        id={field.name}
-                                        name={field.name}
+                                    <SelectApp
+                                        placeholder="Chức vụ"
+                                        options={[
+                                            { label: "Admin", value: "admin" },
+                                            { label: "Librarian", value: "librarian" },
+                                        ]}
                                         value={field.state.value}
-                                        onBlur={field.handleBlur}
-                                        onChange={(e) => field.handleChange(e.target.value)}
-                                        aria-invalid={isInvalid}
-                                        placeholder=""
-                                        autoComplete="off"
+                                        onValueChange={(value) => field.handleChange(value)}
+                                    />
+                                    {isInvalid && (
+                                        <FieldError errors={field.state.meta.errors} />
+                                    )}
+                                </Field>
+                            )
+                        }}
+                    />
+                    <form.Field
+                        name="lang"
+                        children={(field) => {
+                            const isInvalid =
+                                field.state.meta.isTouched && !field.state.meta.isValid
+                            return (
+                                <Field data-invalid={isInvalid} className="gap-1">
+                                    <FieldLabel htmlFor={field.name}>Role</FieldLabel>
+                                    <SelectApp
+                                        placeholder="Chọn ngôn ngữ hiển thị"
+                                        options={[
+                                            { label: "Tiếng việt", value: "vi" },
+                                            { label: "English", value: "en" },
+                                        ]}
+                                        value={field.state.value}
+                                        onValueChange={(value) => field.handleChange(value)}
                                     />
                                     {isInvalid && (
                                         <FieldError errors={field.state.meta.errors} />

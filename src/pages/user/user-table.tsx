@@ -1,11 +1,12 @@
+import { useImperativeHandle } from "react";
 import Loading from "@/components/loading";
 import { DynamicTable as Table } from "@/components/table-dynamic";
 import { useFetch } from "@/hooks/useFetch";
-import { useTable } from "@/hooks/useTable";
+import { TypeActionTable, useTable } from "@/hooks/useTable";
 import { User } from "@/models/user.model";
 import { userColumns } from "./user-column";
 import { DataList } from "@/models/response.model";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { PaginationState } from "@tanstack/react-table";
 import { PAGE_SIZE_10 } from "@/enum/search.enum";
 import { convertObjectToParam } from "@/lib/utils";
@@ -13,12 +14,14 @@ import { DropdownHeaderTable } from "@/components/dropdown-header-table";
 import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Button } from "@/components/ui/button";
+import _ from "lodash";
+import { UserTableRef } from ".";
 
 interface IUserTableProps {
-    onChooseUser: (user?: User) => void;
+    onChooseUser: (type: TypeActionTable, user?: User) => void;
 }
 
-export default function UserTable({ onChooseUser }: IUserTableProps) {
+const UserTable = forwardRef<UserTableRef, IUserTableProps>(({onChooseUser} , ref) => {
     const [search, setSearch] = useState<PaginationState & { fullName: string, phone: string }>({
         fullName: "",
         phone: "",
@@ -27,22 +30,29 @@ export default function UserTable({ onChooseUser }: IUserTableProps) {
     })
     const fullNameDebounce = useDebounce(search.fullName);
     const phoneDebounce = useDebounce(search.phone);
-    const { data, isLoading, error } = useFetch<DataList<User>>({
+    const { data, isLoading, error, refetch } = useFetch<DataList<User>>({
         url: `users?${convertObjectToParam(search)}`,
-        key: ["uers", search.pageIndex.toString(), search.pageSize.toString(), fullNameDebounce, phoneDebounce]
+        key: ["users", _.toString(search.pageIndex + search.pageSize), fullNameDebounce, phoneDebounce]
     });
+
     const tableData = useTable<User>({
         data: data?.list ?? [],
         search: search,
         total: data?.total,
         columns: userColumns,
         setSearch: setSearch,
-        onChoose: (data) => {
-            onChooseUser(data)
+        onChoose: (data, type) => {
+            onChooseUser(type, data);
         }
     });
 
     if (error instanceof Error) return <div>{error.message}</div>
+
+    useImperativeHandle(ref, () => ({
+        refresh() {
+            refetch();
+        }
+    }));
 
     return (
         <div className="h-full">
@@ -70,7 +80,7 @@ export default function UserTable({ onChooseUser }: IUserTableProps) {
 
                 <div className="ml-auto w-fit mb-[20px] flex gap-2">
                     <div>
-                        <Button className="bg-green-500 hover:bg-green-600" onClick={() => onChooseUser()}>Thêm mới</Button>
+                        <Button className="bg-green-500 hover:bg-green-600" onClick={() => onChooseUser(TypeActionTable.add)}>Add</Button>
                     </div>
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
@@ -78,4 +88,6 @@ export default function UserTable({ onChooseUser }: IUserTableProps) {
             {isLoading ? <Loading /> : <Table tableData={tableData} />}
         </div>
     )
-}
+});
+
+export default UserTable;

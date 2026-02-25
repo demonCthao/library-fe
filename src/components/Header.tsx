@@ -62,7 +62,7 @@ export function Header() {
           {/* Demo Links Start */}
 
           <Link
-            to="/demo/start/server-funcs"
+            to="/account"
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
             activeProps={{
