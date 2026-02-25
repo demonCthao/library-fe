@@ -1,0 +1,6 @@
+const PAGE_SIZE_10 = 10;
+const PAGE_SIZE_20 = 20;
+const PAGE_SIZE_50 = 50;
+const PAGE_SIZE_100 = 100;
+
+export { PAGE_SIZE_10, PAGE_SIZE_20, PAGE_SIZE_50, PAGE_SIZE_100 }
