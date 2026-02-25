@@ -30,7 +30,7 @@ export const Popup = ({ open, form, type, title, description, variant, children,
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
-            <DialogContent className={`sm:max-w-${variant}`}>
+            <DialogContent className={`max-w-${variant}`}>
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
                     {
@@ -47,34 +47,34 @@ export const Popup = ({ open, form, type, title, description, variant, children,
                                 form.handleSubmit()
                             }}>
                             {children}
+                            <DialogFooter className="mt-3">
+                                <DialogClose asChild>
+                                    <Button className="cursor-pointer" variant="outline">Cancel</Button>
+                                </DialogClose>
+                                <Button className="cursor-pointer" type="submit" onClick={onConfirm}>Save changes</Button>
+                            </DialogFooter>
                         </form> :
                         <div>
                             {children}
+                            <DialogFooter>
+                                {
+                                    _.isEqual(type, "confirm") ?
+                                        <>
+                                            <DialogClose asChild>
+                                                <Button variant="outline">Cancel</Button>
+                                            </DialogClose>
+                                            <Button type="button" onClick={onConfirm}>Confirm</Button>
+                                        </>
+                                        :
+                                        <DialogClose asChild>
+                                            <Button variant="outline">OK</Button>
+                                        </DialogClose>
+                                }
+
+                            </DialogFooter>
                         </div>
                 }
-                <DialogFooter>
-                    {
-                        _.isEqual(type, "form") ?
-                            <>
-                                <DialogClose asChild>
-                                    <Button variant="outline">Cancel</Button>
-                                </DialogClose>
-                                <Button type="submit" onClick={onConfirm}>Save changes</Button>
-                            </> :
-                            _.isEqual(type, "confirm") ?
-                                <>
-                                    <DialogClose asChild>
-                                        <Button variant="outline">Cancel</Button>
-                                    </DialogClose>
-                                    <Button type="button" onClick={onConfirm}>Confirm</Button>
-                                </>
-                                :
-                                <DialogClose asChild>
-                                    <Button variant="outline">OK</Button>
-                                </DialogClose>
-                    }
 
-                </DialogFooter>
             </DialogContent>
         </Dialog>
     )

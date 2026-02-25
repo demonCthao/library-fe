@@ -1,6 +1,11 @@
 import { type ColumnDef, type ColumnFiltersState, getCoreRowModel, getFilteredRowModel, getSortedRowModel, PaginationState, type SortingState, useReactTable, type VisibilityState } from "@tanstack/react-table";
 import { Dispatch, SetStateAction, useState } from "react";
 
+export enum TypeActionTable {
+    edit,
+    delete,
+    add
+}
 
 interface UseTableProps<TData> {
     data: TData[]
@@ -8,7 +13,7 @@ interface UseTableProps<TData> {
     search: PaginationState
     columns: ColumnDef<TData, any>[]
     setSearch: Dispatch<SetStateAction<PaginationState & any>>
-    onChoose?: (data: TData) => void
+    onChoose?: (data: TData, type: TypeActionTable) => void
     initialVisibility?: VisibilityState
 }
 

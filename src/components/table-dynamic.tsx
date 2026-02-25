@@ -4,21 +4,22 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { PaginationTable } from "./pagination-table";
 import { Dispatch, SetStateAction } from "react";
 import { Button } from "./ui/button";
+import { TypeActionTable } from "@/hooks/useTable";
 
 interface IDynamicTableProps<TData> {
     tableData: {
         table: TanStackTTable<TData>;
         setPagination: Dispatch<SetStateAction<PaginationState>>;
-        onChoose?: (data: TData) => void
+        onChoose?: (data: TData, type: TypeActionTable) => void
     }
 }
 
 export const DynamicTable = <TData,>({ tableData }: IDynamicTableProps<TData>) => {
     const { table, onChoose } = tableData;
 
-    const onChooseRow = (data: TData) => {
+    const onChooseRow = (data: TData, type: TypeActionTable) => {
         if (onChoose) {
-            onChoose(data)
+            onChoose(data, type)
         }
     }
 
@@ -93,8 +94,8 @@ export const DynamicTable = <TData,>({ tableData }: IDynamicTableProps<TData>) =
                                     onChoose &&
                                     <TableCell className="w-[200px]">
                                         <div className="flex gap-2 flex justify-center">
-                                            <Button className="bg-green-500 hover:bg-green-600" onClick={() => onChooseRow(row.original)}><Edit size={18} /></Button>
-                                            <Button className="bg-red-500 hover:bg-red-600" onClick={() => onChooseRow(row.original)}><Trash size={18} /></Button>
+                                            <Button className="bg-green-500 hover:bg-green-600 cursor-pointer" onClick={() => onChooseRow(row.original, TypeActionTable.edit )}><Edit size={18} /></Button>
+                                            <Button className="bg-red-500 hover:bg-red-600 cursor-pointer" onClick={() => onChooseRow(row.original, TypeActionTable.delete)}><Trash size={18} /></Button>
                                         </div>
                                     </TableCell>
                                 }

@@ -8,12 +8,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { useMutationRequest } from "@/hooks/useMutation";
 import { loginSchema } from "@/schema/login.schema";
+import { useNotificationStore } from "@/store/notification.store";
 import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
-import { toast } from "sonner";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const notification = useNotificationStore();
   const { mutate } = useMutationRequest({
     key: ["login"],
     url: "auth/login", method: "post", options: {
@@ -22,10 +23,11 @@ export default function LoginPage() {
         navigate({
           to: "/user",
           replace: true
-        })
+        });
+        notification.updateState({ message: "Đăng nhập thành công", type: "success", open: true });
       },
       onError: (error) => {
-        toast.info(error.message);
+        notification.updateState({ message: error.message, type: "error", open: true });
       }
     }
   });
@@ -39,7 +41,7 @@ export default function LoginPage() {
       onSubmit: loginSchema,
     },
     onSubmit: async ({ value }) => {
-      mutate(value);
+      await mutate(value);
     },
   });
 
@@ -98,6 +100,7 @@ export default function LoginPage() {
                       aria-invalid={isInvalid}
                       placeholder="Enter Account"
                       autoComplete="off"
+                      type="password"
                       className="w-full px-4 py-5 rounded-lg bg-gray-200 border focus:border-blue-500 focus:bg-white focus:outline-none"
                     />
                     {isInvalid && <FieldError errors={field.state.meta.errors} />}
