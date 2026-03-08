@@ -7,16 +7,13 @@ import { TypeActionTable } from "@/hooks/useTable";
 import UserConfirm from "./user-confirm";
 import { useMutationRequest } from "@/hooks/useMutation";
 import { useNotificationStore } from "@/store/notification.store";
-
-export interface UserTableRef {
-    refresh: () => void;
-}
+import { BaseTableRef } from "@/types/base-ref.type";
 
 export default function UserPage() {
     const notification = useNotificationStore();
     const [action, setAction] = useState<TypeActionTable | null>(null);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
-    const tableRef = useRef<UserTableRef>(null);
+    const tableRef = useRef<BaseTableRef>(null);
 
     const isFormOpen =
         action === TypeActionTable.add ||
@@ -46,7 +43,7 @@ export default function UserPage() {
 
     const handleConfirmDelete = () => {
         if (selectedUser) {
-            mutate({full_name: selectedUser.full_name});
+            mutate({ full_name: selectedUser.full_name });
         }
     };
 
@@ -78,6 +75,7 @@ export default function UserPage() {
             </div>
 
             <UserForm
+                key={`${action}-${selectedUser?.id ?? "new"}`}
                 open={isFormOpen}
                 onClose={handleCloseForm}
                 user={selectedUser}

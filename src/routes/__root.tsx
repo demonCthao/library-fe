@@ -89,7 +89,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="h-screen">
         {!checkLoginPage && <Header />}
-        <div className={cn(checkLoginPage? "h-screen" : "h-[calc(100vh-135px)] p-[20px]")}>{children}</div>
+        <div className={cn(checkLoginPage? "h-screen" : "h-[calc(100vh-165px)] p-[20px]")}>{children}</div>
         <Toaster />
         <TanStackDevtools
           config={{

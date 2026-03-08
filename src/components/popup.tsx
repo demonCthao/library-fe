@@ -27,10 +27,17 @@ type NonFormPopupProps = BasePopupProps & {
 type PopupProps = FormPopupProps | NonFormPopupProps
 
 export const Popup = ({ open, form, type, title, description, variant, children, onClose, onConfirm }: PopupProps) => {
+    const width: Record<string, string> = {
+        sm: "30%",
+        md: "35%",
+        lg: "40%",
+        xl: "50%",
+        "2xl": "60%",
+    }
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
-            <DialogContent className={`max-w-${variant}`}>
+            <DialogContent className={`w-[${width[variant]}] max-w-full`}>
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
                     {
@@ -56,7 +63,7 @@ export const Popup = ({ open, form, type, title, description, variant, children,
                         </form> :
                         <div>
                             {children}
-                            <DialogFooter>
+                            <DialogFooter className="mt-5">
                                 {
                                     _.isEqual(type, "confirm") ?
                                         <>

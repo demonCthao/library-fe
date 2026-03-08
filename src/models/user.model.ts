@@ -7,7 +7,9 @@ type Obj = {
     status: "active" | "inactive"
     lang: string
     created_at: string
-    updated_at: "string"
+    updated_at: string
 }
 
-export type User = Required<Obj>
+export type User = Required<Obj> & {
+    avatar_path?: string;
+};

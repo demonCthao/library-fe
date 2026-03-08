@@ -1,23 +1,45 @@
 import { api } from "@/configs/ky-config";
+import { ApiError } from "@/types/api-error";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
-interface DataResponse<T> {
+export interface DataResponse<T> {
     success: boolean;
-    data: T
+    data?: T;
+    message?: string;
+    errors?: unknown
 }
 
-export const useFetch = <TData>({ url, key, options }: { url: string, key: string[], options?: UseQueryOptions<TData> }) => {
-    const fetchAPI = async (): Promise<TData> => {
-        const response: DataResponse<TData> = await api.get(url).json();
+export const useFetch = <
+    TQueryFnData,
+    TData = TQueryFnData
+>({
+    url,
+    key,
+    options
+}: {
+    url: string
+    key: string[]
+    options?: Omit<
+        UseQueryOptions<TQueryFnData, ApiError, TData>,
+        "queryKey" | "queryFn"
+    >
+}) => {
 
-        return response.data;
-    }
+    const fetchAPI = async (): Promise<TQueryFnData> => {
+        const response: DataResponse<TQueryFnData> = await api.get(url).json();
 
-    return useQuery({
+        if (response.success) {
+            return response.data as TQueryFnData;
+        }
+
+        throw new ApiError(response.message || "Request failed", response.errors);
+    };
+
+    return useQuery<TQueryFnData, ApiError, TData>({
         queryKey: key,
         queryFn: fetchAPI,
         refetchOnWindowFocus: false,
         enabled: true,
-        ...options
-    })
-}
+        ...options,
+    });
+};

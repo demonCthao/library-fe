@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
     Select,
     SelectContent,
@@ -9,10 +8,13 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import * as React from "react";
 
 export interface SelectOption {
     label: string;
     value: string;
+    icon?: React.ReactNode;
+    otherValue?: any;
 }
 
 interface SelectApptProps {
@@ -48,8 +50,8 @@ const SelectApp = React.memo(
 
                 <SelectContent>
                     {options.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                            {option.label}
+                        <SelectItem className="cursor-pointer" key={`${option.label}-${option.value}`} value={option.value}>
+                            {option.label} {option?.icon}
                         </SelectItem>
                     ))}
                 </SelectContent>

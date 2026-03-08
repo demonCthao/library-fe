@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { User } from '@/models/user.model'
 import {
   createColumnHelper
@@ -49,7 +50,7 @@ export const userColumns = [
   }),
   columnHelper.accessor("updated_at", {
     header: "Updated At",
-    cell: (info) => info.renderValue(),
+    cell: ({ getValue }) => format(new Date(getValue() as string), "dd/MM/yyyy HH:mm"),
     sortUndefined: 'last',
     sortDescFirst: false,
     footer: (info) => info.column.id,

@@ -169,7 +169,7 @@ export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
                                 field.state.meta.isTouched && !field.state.meta.isValid
                             return (
                                 <Field data-invalid={isInvalid} className="gap-1">
-                                    <FieldLabel htmlFor={field.name}>Role</FieldLabel>
+                                    <FieldLabel htmlFor={field.name}>Ngôn ngữ</FieldLabel>
                                     <SelectApp
                                         placeholder="Chọn ngôn ngữ hiển thị"
                                         options={[

@@ -1,0 +1,30 @@
+import { Author } from "@/models/author.model";
+import { createColumnHelper } from "@tanstack/react-table";
+
+const columnHelper = createColumnHelper<Author>();
+
+export const authorColumns = [
+    columnHelper.accessor("name", {
+        header: "Name",
+        cell: (info) => info.getValue(),
+        sortUndefined: "last",
+        sortDescFirst: false,
+        footer: (info) => info.column.id,
+        filterFn: "includesString",
+        meta: {
+            label: "Name",
+        },
+    }),
+
+    columnHelper.accessor("bio", {
+        header: "Biography",
+        cell: (info) => info.getValue(),
+        sortUndefined: "last",
+        sortDescFirst: false,
+        footer: (info) => info.column.id,
+        filterFn: "includesString",
+        meta: {
+            label: "Biography",
+        },
+    })
+];

@@ -1,44 +1,52 @@
-import { Link } from '@tanstack/react-router';
+import { Link } from "@tanstack/react-router";
 
 import {
-  ChevronDown,
-  ChevronRight,
+  BookmarkCheck,
+  BookText,
+  BookUser,
+  Building2,
+  Flag,
+  FolderClosed,
   Menu,
-  Network,
   SquareFunction,
-  StickyNote,
   User,
+  UsersRound,
   X
-} from 'lucide-react';
-import { useState } from 'react';
+} from "lucide-react";
+import { useState } from "react";
+import AvatarDropdownMenu from "./avatar-dropdown";
+import { SelectApp } from "./select-app";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
-  const [groupedExpanded, setGroupedExpanded] = useState<
-    Record<string, boolean>
-  >({});
 
   return (
     <>
-      <header className="p-4 flex items-center bg-gray-800 text-white shadow-lg">
+      <header className="p-4 flex items-center bg-sky-700 text-white shadow-lg justify-between w-full">
         <button
           onClick={() => setIsOpen(true)}
-          className="p-2 hover:bg-gray-700 rounded-lg transition-colors cursor-pointer"
+          className="p-2 hover:bg-sky-200 hover:text-black rounded-lg transition-colors cursor-pointer"
           aria-label="Open menu"
         >
           <Menu size={24} />
         </button>
+        <div className="flex gap-3 items-center">
+          <div>
+            <SelectApp placeholder="Chọn ngôn ngữ" className="data-[placeholder]:text-white" options={[{ value: "vi", label: "Tiếng Việt" }, { value: "en", label: "English" }]} />
+          </div>
+          <AvatarDropdownMenu />
+        </div>
       </header>
 
       <aside
-        className={`fixed top-0 left-0 h-full w-80 bg-gray-900 text-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed top-0 left-0 h-full w-80 bg-white text-black shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${isOpen ? "translate-x-0" : "-translate-x-full"
           }`}
       >
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          <h2 className="text-xl font-bold">Navigation</h2>
+          <h2 className="text-xl font-bold">Quản lý thư viện</h2>
           <button
             onClick={() => setIsOpen(false)}
-            className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
+            className="p-2 hover:bg-sky-200 cursor-pointer rounded-lg transition-colors"
             aria-label="Close menu"
           >
             <X size={24} />
@@ -49,25 +57,23 @@ export function Header() {
           <Link
             to="/user"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
             }}
           >
             <User size={20} />
             <span className="font-medium">Quản lý người dùng</span>
           </Link>
 
-          {/* Demo Links Start */}
-
           <Link
             to="/account"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
             }}
           >
             <SquareFunction size={20} />
@@ -77,141 +83,93 @@ export function Header() {
           <Link
             to="/book"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
             }}
           >
-            <Network size={20} />
+            <BookText size={20} />
             <span className="font-medium">Quản lý sách</span>
           </Link>
 
           <Link
             to="/author"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
             }}
           >
-            <Network size={20} />
+            <BookUser size={20} />
             <span className="font-medium">Danh sách tác giả</span>
           </Link>
 
           <Link
             to="/borrow-records"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
             }}
           >
-            <Network size={20} />
+            <BookmarkCheck size={20} />
             <span className="font-medium">Phiếu mượn</span>
           </Link>
 
           <Link
             to="/category"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
             }}
           >
-            <Network size={20} />
+            <FolderClosed size={20} />
             <span className="font-medium">Danh sách thể loại</span>
           </Link>
 
           <Link
             to="/reader"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
             }}
           >
-            <Network size={20} />
+            <UsersRound size={20} />
             <span className="font-medium">Quản lý người đọc</span>
           </Link>
 
-          <div className="flex flex-row justify-between">
-            <Link
-              to="/demo/start/ssr"
-              onClick={() => setIsOpen(false)}
-              className="flex-1 flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-              activeProps={{
-                className:
-                  'flex-1 flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-              }}
-            >
-              <StickyNote size={20} />
-              <span className="font-medium">Start - SSR Demos</span>
-            </Link>
-            <button
-              className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
-              onClick={() =>
-                setGroupedExpanded((prev) => ({
-                  ...prev,
-                  StartSSRDemo: !prev.StartSSRDemo,
-                }))
-              }
-            >
-              {groupedExpanded.StartSSRDemo ? (
-                <ChevronDown size={20} />
-              ) : (
-                <ChevronRight size={20} />
-              )}
-            </button>
-          </div>
-          {groupedExpanded.StartSSRDemo && (
-            <div className="flex flex-col ml-4">
-              <Link
-                to="/demo/start/ssr/spa-mode"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-                activeProps={{
-                  className:
-                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-                }}
-              >
-                <StickyNote size={20} />
-                <span className="font-medium">SPA Mode</span>
-              </Link>
+          <Link
+            to="/publisher"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
+            activeProps={{
+              className:
+                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
+            }}
+          >
+            <Building2 size={20} />
+            <span className="font-medium">Danh sách nhà xuất bản</span>
+          </Link>
 
-              <Link
-                to="/demo/start/ssr/full-ssr"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-                activeProps={{
-                  className:
-                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-                }}
-              >
-                <StickyNote size={20} />
-                <span className="font-medium">Full SSR</span>
-              </Link>
-
-              <Link
-                to="/demo/start/ssr/data-only"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-                activeProps={{
-                  className:
-                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-                }}
-              >
-                <StickyNote size={20} />
-                <span className="font-medium">Data Only</span>
-              </Link>
-            </div>
-          )}
-
-          {/* Demo Links End */}
+          <Link
+            to="/fine"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
+            activeProps={{
+              className:
+                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
+            }}
+          >
+            <Flag size={20} />
+            <span className="font-medium">Danh sách phiếu phạt</span>
+          </Link>
         </nav>
       </aside>
     </>

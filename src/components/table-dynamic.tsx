@@ -29,13 +29,13 @@ export const DynamicTable = <TData,>({ tableData }: IDynamicTableProps<TData>) =
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id} className="*:whitespace-nowrap sticky top-0 bg-background after:content-[''] after:inset-x-0 after:h-px after:bg-border after:absolute after:bottom-0">
-                                <TableHead className="text-center">
+                            <TableRow key={headerGroup.id} className="bg-sky-600 *:whitespace-nowrap sticky top-0 after:content-[''] after:inset-x-0 after:h-px after:absolute after:bottom-0 hover:bg-sky-600">
+                                <TableHead className="text-center text-white">
                                     No
                                 </TableHead>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id} colSpan={header.colSpan}>
+                                        <TableHead className="text-white" key={header.id} colSpan={header.colSpan}>
                                             {header.isPlaceholder ? null : (
                                                 <div
                                                     className={
@@ -69,7 +69,7 @@ export const DynamicTable = <TData,>({ tableData }: IDynamicTableProps<TData>) =
                                 })}
                                 {
                                     onChoose &&
-                                    <TableHead className="text-center">
+                                    <TableHead className="text-center text-white">
                                         Actions
                                     </TableHead>
                                 }
