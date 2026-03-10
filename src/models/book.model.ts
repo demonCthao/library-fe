@@ -8,6 +8,10 @@ type Obj = {
     pages: number;
     category_id: number;
     publisher_id: number;
+    stock_quantity: number;
+    borrowed_quantity: number;
+    reserved_quantity: number;
+    available_quantity: number;
 }
 
 export type Book = Required<Obj>

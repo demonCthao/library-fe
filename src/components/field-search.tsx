@@ -31,7 +31,7 @@ export const FieldSearch = React.forwardRef<
                 {
                     children ? children : <Input
                         ref={ref}
-                        className={cn("pl-9", className)}
+                        className={cn(isHideIcon? "pl-2" :"pl-9", className)}
                         {...props}
                     />
                 }

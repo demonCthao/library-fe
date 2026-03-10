@@ -7,7 +7,7 @@ import { useCallback, useRef, useState } from 'react';
 import BorrowTable from './borrow-record-table';
 import { useNavigate } from '@tanstack/react-router';
 import BorrowConfirm from './borrow-record-confirm';
-import { BorrowPopup } from './borrow-form';
+import { BorrowForm } from './borrow-form';
 
 export default function BorrowRecordPage() {
     const notification = useNotificationStore();
@@ -40,8 +40,12 @@ export default function BorrowRecordPage() {
         setSelectedBorrow(null);
     }
 
-    const handleCloseForm = () => {
+    const handleCloseForm = (isReload?: boolean) => {
         setAction(null);
+
+        if (isReload) {
+            tableRef.current?.refresh();
+        }
     }
 
     const handleConfirmDelete = () => {
@@ -71,7 +75,11 @@ export default function BorrowRecordPage() {
                 onClose={resetState}
                 onConfirm={handleConfirmDelete}
             />
-            <BorrowPopup open={isAddOpen} key={`borrow-form`} onClose={handleCloseForm} />
+            <BorrowForm
+                open={isAddOpen}
+                key={`borrow-form`}
+                onClose={handleCloseForm}
+            />
         </div>
     )
 }

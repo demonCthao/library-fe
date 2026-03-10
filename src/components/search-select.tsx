@@ -13,7 +13,7 @@ export default function SearchSelect({
 }: ISearchSelectProps) {
 
     return (
-        <div className="relative w-full">
+        <div className="relative w-full z-50">
             <div className="absolute w-full border bg-white mt-1 rounded shadow">
                 {loading && (
                     <div className="p-2 text-gray-500">Loading...</div>
@@ -27,7 +27,7 @@ export default function SearchSelect({
                     options.map((item) => (
                         <div
                             key={item.value}
-                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                            className="p-2 hover:bg-gray-100 cursor-pointer bg-white"
                             onClick={() => {
                                 onSelect?.(item);
                             }}
