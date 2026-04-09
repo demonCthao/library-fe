@@ -90,13 +90,13 @@ export const fineColumns = [
             const value = info.getValue();
 
             return value? (
-                <span className="px-2 py-1 text-xs bg-green-100 text-green-700 rounded">
+                <div className="text-center px-2 py-1 rounded w-full text-xs font-medium bg-green-100 text-green-700 border border-green-200">
                     Đã thanh toán
-                </span>
+                </div>
             ) : (
-                <span className="px-2 py-1 text-xs bg-red-100 text-red-700 rounded">
+                <div className="text-center px-2 py-1 rounded w-full text-xs font-medium bg-red-100 text-red-700 border border-red-200">
                     Chưa thanh toán
-                </span>
+                </div>
             );
         },
         sortUndefined: 'last',

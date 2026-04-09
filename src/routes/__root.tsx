@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import { useNotificationStore } from '@/store/notification.store'
 import { toast } from 'sonner'
 import _ from 'lodash'
+import Navbar from '@/components/nav-bar'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -39,7 +40,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const notification = useNotificationStore();
   const checkLoginPage = location.pathname.includes("login");
 
-    useEffect(() => {
+  useEffect(() => {
     if (notification.open) {
       if (_.isEqual(notification.type, "success")) {
         toast.success(notification.message, {
@@ -87,9 +88,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="h-screen">
-        {!checkLoginPage && <Header />}
-        <div className={cn(checkLoginPage? "h-screen" : "h-[calc(100vh-165px)] p-[20px]")}>{children}</div>
+      <body className="h-screen" style={{ background: "#eceff180" }}>
+        {checkLoginPage ? <div>{children}</div> : <div className="min-h-screen">
+          <Navbar />
+          <div className="h-screen py-6 pr-4 xl:ml-80 flex flex-col">
+            <Header />
+            <div className="flex-1 mt-[25px]">
+              {children}
+            </div>
+          </div>
+
+        </div>}
         <Toaster />
         <TanStackDevtools
           config={{

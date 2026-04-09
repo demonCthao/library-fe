@@ -11,8 +11,8 @@ interface IBorrowConfirmProps {
 export default function BorrowConfirm({ open, borrow, onConfirm, onClose }: IBorrowConfirmProps) {
     return (
         <div>
-            <Popup variant="2xl" type="confirm" open={open} onConfirm={onConfirm} onClose={() => onClose(false)} title="Xác nhận">
-                Bạn có xác nhận xóa: {borrow?.borrow_code}?
+            <Popup variant="md" type="confirm" open={open} onConfirm={onConfirm} onClose={() => onClose(false)} title="Xác nhận">
+                Bạn có xác nhận xóa: <span className="text-blue-gray-500">{borrow?.borrow_code}</span>?
             </Popup>
         </div>
     )

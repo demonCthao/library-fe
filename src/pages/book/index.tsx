@@ -1,11 +1,10 @@
-import { useNotificationStore } from '@/store/notification.store';
-import BookTable from './book-table'
 import { TypeActionTable } from '@/hooks/useTable';
-import { useCallback, useRef, useState } from 'react';
 import { Book } from '@/models/book.model';
+import { useNotificationStore } from '@/store/notification.store';
 import { BaseTableRef } from '@/types/base-ref.type';
-import { Label } from '@/components/ui/label';
+import { useCallback, useRef, useState } from 'react';
 import { BookForm } from './book-form';
+import BookTable from './book-table';
 
 export default function BookPage() {
     const notification = useNotificationStore();
@@ -39,9 +38,6 @@ export default function BookPage() {
 
     return (
         <div className="h-full flex flex-col">
-            <div>
-                <Label className="text-[26px]">Quản lý sách</Label>
-            </div>
             <div className="flex-1">
                 <BookTable
                     ref={tableRef}

@@ -64,9 +64,6 @@ export default function AuthorPage() {
 
     return (
         <div className="h-full flex flex-col">
-            <div>
-                <Label className="text-[26px]">Quản lý tác giả</Label>
-            </div>
             <div className="flex-1">
                 <AuthorTable
                     ref={tableRef}

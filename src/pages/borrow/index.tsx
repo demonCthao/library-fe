@@ -1,13 +1,12 @@
-import { Label } from '@/components/ui/label';
 import { TypeActionTable } from '@/hooks/useTable';
 import { BorrowRecord } from '@/models/borrow-record.model';
 import { useNotificationStore } from '@/store/notification.store';
 import { BaseTableRef } from '@/types/base-ref.type';
-import { useCallback, useRef, useState } from 'react';
-import BorrowTable from './borrow-record-table';
 import { useNavigate } from '@tanstack/react-router';
-import BorrowConfirm from './borrow-record-confirm';
+import { useCallback, useRef, useState } from 'react';
 import { BorrowForm } from './borrow-form';
+import BorrowConfirm from './borrow-record-confirm';
+import BorrowTable from './borrow-record-table';
 
 export default function BorrowRecordPage() {
     const notification = useNotificationStore();
@@ -60,9 +59,6 @@ export default function BorrowRecordPage() {
 
     return (
         <div className="h-full flex flex-col">
-            <div>
-                <Label className="text-[26px]">Quản lý danh sách mượn sách</Label>
-            </div>
             <div className="flex-1">
                 <BorrowTable
                     ref={tableRef}

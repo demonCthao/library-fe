@@ -90,13 +90,12 @@ const CategoryTable = forwardRef<BaseTableRef, ICategoryTableProps>(({ onChooseC
     }));
 
     return (
-        <div className="h-full">
-            <div className="flex mt-[20px] justify-between w-full mb-5">
-                <div className="grid grid-cols-2 gap-3">
+        <div className="h-full flex flex-col">
+            <div className="grid grid-cols-4 w-full mb-5">
+                <div className="col-span-3 grid grid-cols-3 gap-3">
                     <div>
                         <FieldSearch
                             label="Tên danh mục"
-                            placeholder="Filter Name..."
                             onChange={handleChangeInput}
                             name="name"
                             className="w-full"
@@ -104,7 +103,7 @@ const CategoryTable = forwardRef<BaseTableRef, ICategoryTableProps>(({ onChooseC
                     </div>
                 </div>
 
-                <div className="ml-auto w-fit mt-7 flex gap-2">
+                <div className="ml-auto w-fit flex gap-2">
                     <div>
                         <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
                     </div>
@@ -114,7 +113,7 @@ const CategoryTable = forwardRef<BaseTableRef, ICategoryTableProps>(({ onChooseC
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table title="Danh sách danh mục" tableData={tableData} />}
         </div>
     )
 });

@@ -39,7 +39,7 @@ export const Popup = ({ open, form, type, title, description, variant, children,
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent className={`max-w-[80%] ${width[variant]}`}>
                 <DialogHeader>
-                    <DialogTitle>{title}</DialogTitle>
+                    <DialogTitle className="font-bold">{title}</DialogTitle>
                     {
                         !_.isNull(description) && <DialogDescription>
                             {description}

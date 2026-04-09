@@ -1,11 +1,12 @@
 import { DropdownHeaderTable } from "@/components/dropdown-header-table";
+import { FieldSearch } from "@/components/field-search";
 import Loading from "@/components/loading";
 import { DynamicTable as Table } from "@/components/table-dynamic";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { PAGE_SIZE_10 } from "@/enum/search.enum";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useFetch } from "@/hooks/useFetch";
+import { useMutationRequest } from "@/hooks/useMutation";
 import { TypeActionTable, useTable } from "@/hooks/useTable";
 import { convertObjectToParam } from "@/lib/utils";
 import { DataList } from "@/models/response.model";
@@ -16,8 +17,6 @@ import _ from "lodash";
 import { ArrowBigDownDash, UserPlus } from "lucide-react";
 import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
 import { userColumns } from "./user-column";
-import { useMutationRequest } from "@/hooks/useMutation";
-import { FieldSearch } from "@/components/field-search";
 
 interface IUserTableProps {
     onChooseUser: (type: TypeActionTable, user?: User) => void;
@@ -96,13 +95,12 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
     }));
 
     return (
-        <div className="h-full">
-            <div className="flex mt-[20px] justify-between w-full mb-5">
-                <div className="grid grid-cols-2 gap-3">
+        <div className="h-full flex flex-col">
+            <div className="grid grid-cols-4 w-full mb-5">
+                <div className="col-span-3 grid grid-cols-3 gap-3">
                     <div>
                         <FieldSearch
                             label="Tên người dùng"
-                            placeholder="Filter Full Name..."
                             onChange={handleChangeInput}
                             name="fullName"
                             className="w-full"
@@ -111,7 +109,6 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
                     <div>
                         <FieldSearch
                             label="Số điện thoại"
-                            placeholder="Filter Phone..."
                             onChange={handleChangeInput}
                             name="phone"
                             className="w-full"
@@ -119,7 +116,7 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
                     </div>
                 </div>
 
-                <div className="ml-auto w-fit mt-7 flex gap-2">
+                <div className="ml-auto w-fit flex gap-2">
                     <div>
                         <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
                     </div>
@@ -129,7 +126,7 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table title="Danh sách người dùng" tableData={tableData} />}
         </div>
     )
 });

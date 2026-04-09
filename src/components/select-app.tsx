@@ -15,6 +15,7 @@ export interface SelectOption {
     value: string;
     icon?: React.ReactNode;
     otherValue?: any;
+    default?: boolean
 }
 
 interface SelectApptProps {
@@ -37,20 +38,29 @@ const SelectApp = React.memo(
         disabled,
         className,
     }: SelectApptProps) => {
+
+        const getDefault = () => {
+            if (defaultValue) {
+                return defaultValue
+            }
+
+            return options.find(o => o.default)?.value
+        }
+
         return (
             <Select
                 value={value}
-                defaultValue={defaultValue}
+                defaultValue={getDefault()}
                 onValueChange={onValueChange}
                 disabled={disabled}
             >
-                <SelectTrigger className={cn("w-full", className)}>
+                <SelectTrigger className={cn("w-full font-sans font-bold text-blue-gray-500", className)}>
                     <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
 
                 <SelectContent>
                     {options.map((option) => (
-                        <SelectItem className="cursor-pointer" key={`${option.label}-${option.value}`} value={option.value}>
+                        <SelectItem className="cursor-pointer font-sans font-bold text-blue-gray-500" key={`${option.label}-${option.value}`} value={option.value}>
                             {option.label} {option?.icon}
                         </SelectItem>
                     ))}

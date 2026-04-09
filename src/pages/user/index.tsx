@@ -1,13 +1,12 @@
-import { Label } from "@/components/ui/label";
-import { User } from "@/models/user.model";
-import { useRef, useState, useCallback } from "react";
-import { UserForm } from "./user-form";
-import UserTable from "./user-table";
-import { TypeActionTable } from "@/hooks/useTable";
-import UserConfirm from "./user-confirm";
 import { useMutationRequest } from "@/hooks/useMutation";
+import { TypeActionTable } from "@/hooks/useTable";
+import { User } from "@/models/user.model";
 import { useNotificationStore } from "@/store/notification.store";
 import { BaseTableRef } from "@/types/base-ref.type";
+import { useCallback, useRef, useState } from "react";
+import UserConfirm from "./user-confirm";
+import { UserForm } from "./user-form";
+import UserTable from "./user-table";
 
 export default function UserPage() {
     const notification = useNotificationStore();
@@ -63,10 +62,6 @@ export default function UserPage() {
 
     return (
         <div className="h-full flex flex-col">
-            <div>
-                <Label className="text-[26px]">Danh sách người dùng</Label>
-            </div>
-
             <div className="flex-1">
                 <UserTable
                     ref={tableRef}

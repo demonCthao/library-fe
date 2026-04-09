@@ -28,7 +28,7 @@ export function AvatarUpload({ value, onChange }: AvatarUploadProps) {
                 onClick={() => inputRef.current?.click()}
             >
                 <Avatar className="h-28 w-28">
-                    <AvatarImage src={value} />
+                    <AvatarImage src={`http://127.0.0.1:3000${value}`} />
                     <AvatarFallback>U</AvatarFallback>
                 </Avatar>
 

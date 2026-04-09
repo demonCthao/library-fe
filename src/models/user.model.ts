@@ -1,3 +1,5 @@
+import { Account } from "./account.model"
+
 type Obj = {
     id: number
     full_name: string
@@ -12,4 +14,5 @@ type Obj = {
 
 export type User = Required<Obj> & {
     avatar_path?: string;
+    accounts?: Account
 };

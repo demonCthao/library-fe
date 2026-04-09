@@ -63,10 +63,6 @@ export default function ReaderPage() {
 
   return (
     <div className="h-full flex flex-col">
-      <div>
-        <Label className="text-[26px]">Danh sách người đọc</Label>
-      </div>
-
       <div className="flex-1">
         <ReaderTable
           ref={tableRef}

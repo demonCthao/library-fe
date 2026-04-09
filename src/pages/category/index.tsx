@@ -63,10 +63,6 @@ export default function CategoryPage() {
 
   return (
     <div className="h-full flex flex-col">
-      <div>
-        <Label className="text-[26px]">Danh sách danh mục</Label>
-      </div>
-
       <div className="flex-1">
         <CategoryTable
           ref={tableRef}

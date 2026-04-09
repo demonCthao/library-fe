@@ -68,13 +68,12 @@ const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader 
     }));
 
     return (
-        <div className="h-full">
-            <div className="flex mt-[20px] justify-between w-full mb-5">
-                <div className="grid grid-cols-3 gap-3">
+        <div className="h-full flex flex-col">
+            <div className="grid grid-cols-5 w-full mb-5">
+                <div className="col-span-4 grid grid-cols-4 gap-3">
                     <div >
                         <FieldSearch
                             type="text"
-                            placeholder="Filter Full Name..."
                             onChange={handleChangeInput}
                             className="w-full"
                             name="fullName"
@@ -84,7 +83,6 @@ const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader 
                     <div >
                         <FieldSearch
                             type="text"
-                            placeholder="Filter Phone..."
                             onChange={handleChangeInput}
                             name="phone"
                             className="w-full"
@@ -94,7 +92,6 @@ const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader 
                     <div >
                         <FieldSearch
                             type="text"
-                            placeholder="Filter Email..."
                             onChange={handleChangeInput}
                             name="email"
                             className="w-full"
@@ -103,14 +100,14 @@ const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader 
                     </div>
                 </div>
 
-                <div className="ml-auto w-fit mt-7 flex gap-2">
+                <div className="ml-auto w-fit flex gap-2">
                     <div>
                         <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddReader}><UserRoundPlus size={18} /> Add</Button>
                     </div>
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table title="Danh sách người đọc" tableData={tableData} />}
         </div>
     )
 });

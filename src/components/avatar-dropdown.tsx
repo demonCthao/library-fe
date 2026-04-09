@@ -62,10 +62,10 @@ export default function AvatarDropdownMenu() {
 
   return (
     <div className="flex gap-3 text-[16px] items-center">
-      <div>Hi: {userStore.user?.fullName}</div>
+      <div className="text-blue-gray-500 font-sans font-bold text-sm">Hi: {userStore.user?.fullName}</div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar>
+          <Avatar className="cursor-pointer">
             <AvatarImage alt="@shadcn" src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>

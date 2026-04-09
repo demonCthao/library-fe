@@ -63,10 +63,6 @@ export default function PublisherPage() {
 
   return (
     <div className="h-full flex flex-col">
-      <div>
-        <Label className="text-[26px]">Danh sách nhà xuất bản</Label>
-      </div>
-
       <div className="flex-1">
         <PublisherTable
           ref={tableRef}

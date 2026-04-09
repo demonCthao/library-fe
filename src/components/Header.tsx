@@ -1,177 +1,49 @@
-import { Link } from "@tanstack/react-router";
 
-import {
-  BookmarkCheck,
-  BookText,
-  BookUser,
-  Building2,
-  Flag,
-  FolderClosed,
-  Menu,
-  SquareFunction,
-  User,
-  UsersRound,
-  X
-} from "lucide-react";
-import { useState } from "react";
+import { Settings, Settings2, SlidersHorizontal } from "lucide-react";
 import AvatarDropdownMenu from "./avatar-dropdown";
 import { SelectApp } from "./select-app";
 
 export function Header() {
-  const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <>
-      <header className="p-4 flex items-center bg-sky-700 text-white shadow-lg justify-between w-full">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="p-2 hover:bg-sky-200 hover:text-black rounded-lg transition-colors cursor-pointer"
-          aria-label="Open menu"
-        >
-          <Menu size={24} />
-        </button>
-        <div className="flex gap-3 items-center">
-          <div>
-            <SelectApp placeholder="Chọn ngôn ngữ" className="data-[placeholder]:text-white" options={[{ value: "vi", label: "Tiếng Việt" }, { value: "en", label: "English" }]} />
+    <nav className="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
+      <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
+        <div className="capitalize">
+          <nav aria-label="breadcrumb" className="w-max">
+            <ol className="flex flex-wrap items-center w-full bg-opacity-60 rounded-md bg-transparent p-0 transition-all">
+              <li className="flex items-center text-blue-gray-900 antialiased font-sans text-sm font-normal leading-normal cursor-pointer transition-colors duration-300 hover:text-light-blue-500">
+                <a href="#/dashboard">
+                  <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100">dashboard</p>
+                </a>
+                <span className="text-blue-gray-500 text-sm antialiased font-sans font-normal leading-normal mx-2 pointer-events-none select-none">/</span>
+              </li>
+              <li className="flex items-center text-blue-gray-900 antialiased font-sans text-sm font-normal leading-normal cursor-pointer transition-colors duration-300 hover:text-light-blue-500">
+                <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">tables</p>
+              </li>
+            </ol>
+          </nav>
+          <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900">tables</h6>
+        </div>
+        <div className="flex items-center gap-2">
+          <button className="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden" type="button">
+            <span className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" stroke-width="3" className="h-6 w-6 text-blue-gray-500">
+                <path fill-rule="evenodd" d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z" clip-rule="evenodd"></path>
+              </svg>
+            </span>
+          </button>
+          <button aria-expanded="false" aria-haspopup="menu" id=":r2:" className="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[20px] h-10 max-h-[20px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30" type="button">
+            <Settings size={20} />
+          </button>
+          <button className="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[20px] h-10 max-h-[20px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30" type="button">
+            <SlidersHorizontal size={20} />
+          </button>
+          <div className="w-40">
+            <SelectApp placeholder="Chọn ngôn ngữ" className="gb-white data-[placeholder]:text-white text-sm " options={[{ value: "vi", label: "Tiếng Việt" }, { value: "en", label: "English" }]} />
           </div>
           <AvatarDropdownMenu />
         </div>
-      </header>
-
-      <aside
-        className={`fixed top-0 left-0 h-full w-80 bg-white text-black shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${isOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
-      >
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          <h2 className="text-xl font-bold">Quản lý thư viện</h2>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="p-2 hover:bg-sky-200 cursor-pointer rounded-lg transition-colors"
-            aria-label="Close menu"
-          >
-            <X size={24} />
-          </button>
-        </div>
-
-        <nav className="flex-1 p-4 overflow-y-auto">
-          <Link
-            to="/user"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
-            activeProps={{
-              className:
-                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
-            }}
-          >
-            <User size={20} />
-            <span className="font-medium">Quản lý người dùng</span>
-          </Link>
-
-          <Link
-            to="/account"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
-            activeProps={{
-              className:
-                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
-            }}
-          >
-            <SquareFunction size={20} />
-            <span className="font-medium">Quản lý tài khoản</span>
-          </Link>
-
-          <Link
-            to="/book"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
-            activeProps={{
-              className:
-                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
-            }}
-          >
-            <BookText size={20} />
-            <span className="font-medium">Quản lý sách</span>
-          </Link>
-
-          <Link
-            to="/author"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
-            activeProps={{
-              className:
-                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
-            }}
-          >
-            <BookUser size={20} />
-            <span className="font-medium">Danh sách tác giả</span>
-          </Link>
-
-          <Link
-            to="/borrow-records"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
-            activeProps={{
-              className:
-                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
-            }}
-          >
-            <BookmarkCheck size={20} />
-            <span className="font-medium">Phiếu mượn</span>
-          </Link>
-
-          <Link
-            to="/category"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
-            activeProps={{
-              className:
-                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
-            }}
-          >
-            <FolderClosed size={20} />
-            <span className="font-medium">Danh sách thể loại</span>
-          </Link>
-
-          <Link
-            to="/reader"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
-            activeProps={{
-              className:
-                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
-            }}
-          >
-            <UsersRound size={20} />
-            <span className="font-medium">Quản lý người đọc</span>
-          </Link>
-
-          <Link
-            to="/publisher"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
-            activeProps={{
-              className:
-                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
-            }}
-          >
-            <Building2 size={20} />
-            <span className="font-medium">Danh sách nhà xuất bản</span>
-          </Link>
-
-          <Link
-            to="/fine"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2"
-            activeProps={{
-              className:
-                "flex items-center gap-3 p-3 rounded-lg bg-sky-200 hover:bg-sky-200 hover:text-sky-500 transition-colors mb-2 text-sky-500",
-            }}
-          >
-            <Flag size={20} />
-            <span className="font-medium">Danh sách phiếu phạt</span>
-          </Link>
-        </nav>
-      </aside>
-    </>
+      </div>
+    </nav>
   )
 }

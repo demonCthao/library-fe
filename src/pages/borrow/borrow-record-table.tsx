@@ -81,13 +81,12 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
   }));
 
   return (
-    <div className="h-full">
-      <div className="grid grid-cols-3 mt-[20px] mb-5 justify-between w-full">
-        <div className="col-span-2 grid grid-cols-5 gap-3">
+    <div className="h-full flex flex-col">
+      <div className="grid grid-cols-5 mb-5 justify-between w-full">
+        <div className="col-span-4 grid grid-cols-5 gap-3">
           <div>
             <FieldSearch
               label="Tên độc giả"
-              placeholder="Nhập tên độc giả..."
               onChange={handleChangeInput}
               name="readerName"
             />
@@ -95,7 +94,6 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
           <div>
             <FieldSearch
               label="Số điện thoại độc giả"
-              placeholder="Nhập số điện thoại..."
               onChange={handleChangeInput}
               name="phone"
             />
@@ -132,14 +130,14 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
           </div>
         </div>
 
-        <div className="ml-auto w-fit flex gap-2 mt-7">
+        <div className="ml-auto w-fit flex gap-2">
           <div>
             <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddBorrow}><BookmarkPlus size={18} /> Add</Button>
           </div>
           <DropdownHeaderTable table={tableData.table} />
         </div>
       </div>
-      {isLoading ? <Loading /> : <Table tableData={tableData} />}
+      {isLoading ? <Loading /> : <Table title="Quản lý danh sách mượn sách" tableData={tableData} />}
     </div>
   )
 });

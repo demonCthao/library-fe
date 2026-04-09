@@ -1,25 +1,23 @@
-import { ChangeEvent, forwardRef, useImperativeHandle } from "react";
+import { DropdownHeaderTable } from "@/components/dropdown-header-table";
+import { FieldSearch } from "@/components/field-search";
 import Loading from "@/components/loading";
+import { SelectApp } from "@/components/select-app";
+import { DynamicTable as Table } from "@/components/table-dynamic";
+import { Button } from "@/components/ui/button";
 import { PAGE_SIZE_10 } from "@/enum/search.enum";
+import { useDebounce } from "@/hooks/useDebounce";
 import { useFetch } from "@/hooks/useFetch";
+import { useMutationRequest } from "@/hooks/useMutation";
 import { TypeActionTable, useTable } from "@/hooks/useTable";
 import { convertObjectToParam } from "@/lib/utils";
 import { Book } from "@/models/book.model";
-import { DataList } from "@/models/response.model";
-import { PaginationState } from "@tanstack/react-table";
-import { useState } from "react";
-import { bookColumns } from "./book-column";
-import { DynamicTable as Table } from "@/components/table-dynamic";
-import { Input } from "@/components/ui/input";
-import { DropdownHeaderTable } from "@/components/dropdown-header-table";
-import { Button } from "@/components/ui/button";
-import { ArrowBigDownDash, BookPlus } from "lucide-react";
-import { BaseTableRef } from "@/types/base-ref.type";
 import { Category } from "@/models/category.model";
-import { SelectApp } from "@/components/select-app";
-import { useDebounce } from "@/hooks/useDebounce";
-import { useMutationRequest } from "@/hooks/useMutation";
-import { FieldSearch } from "@/components/field-search";
+import { DataList } from "@/models/response.model";
+import { BaseTableRef } from "@/types/base-ref.type";
+import { PaginationState } from "@tanstack/react-table";
+import { ArrowBigDownDash, BookPlus } from "lucide-react";
+import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
+import { bookColumns } from "./book-column";
 
 interface IBookTableProps {
   onChooseBook: (type: TypeActionTable, book?: Book) => void;
@@ -115,13 +113,12 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
   }));
 
   return (
-    <div className="h-full">
-      <div className="grid grid-cols-3 mt-[20px] justify-between w-full mb-5 items-center">
+    <div className="h-full flex flex-col">
+      <div className="grid grid-cols-3 w-full mb-5 items-center">
         <div className="col-span-2 grid grid-cols-4 gap-3">
           <div>
             <FieldSearch
               type="text"
-              placeholder="Filter Title..."
               name="title"
               onChange={handleChangeInput}
               className="w-full"
@@ -131,7 +128,6 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
           <div>
             <FieldSearch
               type="text"
-              placeholder="Filter Description..."
               name="description"
               onChange={handleChangeInput}
               className="full"
@@ -141,7 +137,6 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
           <div>
             <FieldSearch
               type="text"
-              placeholder="Filter Publish Year..."
               name="publish_year"
               onChange={handleChangeInput}
               className="full"
@@ -167,7 +162,7 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
           </div>
         </div>
 
-        <div className="ml-auto w-fit mt-7 flex gap-2">
+        <div className="ml-auto w-fit flex gap-2">
           <div>
             <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
           </div>
@@ -177,7 +172,7 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
           <DropdownHeaderTable table={tableData.table} />
         </div>
       </div>
-      {isLoading ? <Loading /> : <Table tableData={tableData} />}
+      {isLoading ? <Loading /> : <Table title="Quản lý sách" tableData={tableData} />}
     </div>
   )
 });

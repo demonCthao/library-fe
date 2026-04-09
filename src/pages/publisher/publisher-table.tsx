@@ -16,6 +16,7 @@ import { PaginationState } from "@tanstack/react-table";
 import { ArrowBigDownDash, Blinds } from "lucide-react";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { publisherColumns } from "./publisher-column";
+import { FieldSearch } from "@/components/field-search";
 
 interface IPublisherTableProps {
     onChoosePublisher: (type: TypeActionTable, publisher?: Publisher) => void;
@@ -90,20 +91,21 @@ const PublisherTable = forwardRef<BaseTableRef, IPublisherTableProps>(({ onChoos
     }));
 
     return (
-        <div className="h-full">
-            <div className="flex mt-[20px] justify-between w-full">
-                <div className="grid grid-cols-2 gap-3">
+        <div className="h-full flex flex-col">
+            <div className="grid grid-cols-4 w-full mb-5">
+                <div className="col-span-3 grid grid-cols-3 gap-3">
                     <div >
-                        <Input type="text"
-                            placeholder="Filter Name..."
-                            name="name"
+                        <FieldSearch
+                            type="text"
                             onChange={handleChangeInput}
-                            className="w-80"
+                            className="w-full"
+                            name="name"
+                            label="Tên nhà xuất bản"
                         />
                     </div>
                 </div>
 
-                <div className="ml-auto w-fit mb-[20px] flex gap-2">
+                <div className="ml-auto w-fit flex gap-2">
                     <div>
                         <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
                     </div>
@@ -113,7 +115,7 @@ const PublisherTable = forwardRef<BaseTableRef, IPublisherTableProps>(({ onChoos
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table title="Danh sách nhà xuất bản" tableData={tableData} />}
         </div>
     )
 });

@@ -1,8 +1,4 @@
 import * as React from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import { Search } from "lucide-react";
 
 interface FieldSearchProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -17,26 +13,31 @@ export const FieldSearch = React.forwardRef<
     FieldSearchProps
 >(({ isHideIcon = false, label, className, wrapperClassName, children, ...props }, ref) => {
     return (
-        <div className={cn("flex flex-col gap-2 w-full", wrapperClassName)}>
-            {label && (
-                <Label className="text-sm font-medium text-gray-700">
-                    {label}
-                </Label>
-            )}
-
-            <div className="relative">
-                {
-                    !isHideIcon? <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" /> : null
-                }
-                {
-                    children ? children : <Input
-                        ref={ref}
-                        className={cn(isHideIcon? "pl-2" :"pl-9", className)}
+        <div className="relative w-full">
+            {
+                children ?? <>
+                    <input
+                        type="text"
+                        placeholder=" "
+                        className="peer w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-gray-900 transition-all"
                         {...props}
+                        ref={ref}
                     />
-                }
 
-            </div>
+                    <label
+                        className="absolute left-3 top-1/2 -translate-y-1/2 
+                            px-2 text-sm text-gray-500
+                            transition-all duration-200
+                            peer-focus:top-0 peer-focus:text-xs peer-focus:text-gray-900
+                            peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs
+                            bg-gray-100
+                            before:absolute before:inset-0 before:bg-gray-100 before:z-[-1]
+                            pointer-events-none"
+                    >
+                        {label}
+                    </label>
+                </>
+            }
         </div>
     );
 });

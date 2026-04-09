@@ -52,6 +52,8 @@ code {
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.871 0.006 286.286);
+  --tw-text-opacity: 1;
+  --tw-border-opacity: 1;
 }
 
 .dark {
@@ -132,7 +134,24 @@ code {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.text-blue-gray-500 {
+  color: rgb(96 125 139 / var(--tw-text-opacity));
+}
+
+.text-blue-gray-900 {
+  color: rgb(38 50 56 / var(--tw-text-opacity));
+}
+
+.peer:focus~.peer-focus\:text-gray-900 {
+  color: rgb(33 33 33/ var(--tw-text-opacity));
+}
+
+.peer:focus~.peer-focus\:leading-tight {
+  line-height: 1.25;
 }

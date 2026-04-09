@@ -62,10 +62,6 @@ export default function FinePage() {
 
     return (
         <div className="h-full flex flex-col">
-            <div>
-                <Label className="text-[26px]">Danh sách phiếu phạt</Label>
-            </div>
-
             <div className="flex-1">
                 <FineTable
                     ref={tableRef}

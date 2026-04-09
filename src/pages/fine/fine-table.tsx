@@ -92,13 +92,12 @@ const FineTable = forwardRef<BaseTableRef, IFineTableProps>(({ onChooseFine }, r
     }));
 
     return (
-        <div className="h-full">
-            <div className="flex mt-[20px] justify-between w-full mb-5">
-                <div className="grid grid-cols-2 gap-3">
+        <div className="h-full flex flex-col">
+            <div className="grid grid-cols-4 w-full mb-5">
+                <div className="col-span-3 grid grid-cols-3 gap-3">
                     <div>
                         <FieldSearch
                             label="Tên độc giả"
-                            placeholder="Nhập tên độc giả..."
                             onChange={handleChangeInput}
                             name="name"
                         />
@@ -106,13 +105,12 @@ const FineTable = forwardRef<BaseTableRef, IFineTableProps>(({ onChooseFine }, r
                     <div>
                         <FieldSearch
                             label="Số điện thoại"
-                            placeholder="Nhập số điện thoại..."
                             onChange={handleChangeInput}
                             name="phone"
                         />
                     </div>
                 </div>
-                <div className="ml-auto w-fit flex gap-2 mt-7">
+                <div className="ml-auto w-fit flex gap-2">
                     <div>
                         <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
                     </div>
@@ -122,7 +120,7 @@ const FineTable = forwardRef<BaseTableRef, IFineTableProps>(({ onChooseFine }, r
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table title="Danh sách phiếu phạt" tableData={tableData} />}
         </div>
     )
 });
