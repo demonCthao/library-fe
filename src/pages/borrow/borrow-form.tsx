@@ -152,13 +152,12 @@ export function BorrowForm({ open, onClose }: IBorrowPopupProps) {
     });
 
     return (
-        <Popup onConfirm={handleConfirm} variant="lg" type="confirm" open={open} onClose={onClose} title="Thông tin sách">
+        <Popup onConfirm={handleConfirm} variant="lg" type="confirm" open={open} onClose={onClose} title="Phiếu mượn">
             <div className="grid grid-cols-2 gap-2">
                 <div>
                     <div className="relative">
                         <FieldSearch
                             label="Tên độc giả"
-                            placeholder="Nhập tên độc giả..."
                             onChange={handleChangeInput}
                             name="readerKey"
                             value={reader ? `${reader.full_name} - ${reader.phone}` : search.readerKey}
@@ -188,7 +187,6 @@ export function BorrowForm({ open, onClose }: IBorrowPopupProps) {
                 <div>
                     <FieldSearch
                         label="Hạn trả"
-                        placeholder="Nhập tên độc giả..."
                         onChange={handleChangeInput}
                         name="dueDate"
                         type="date"
@@ -208,7 +206,6 @@ export function BorrowForm({ open, onClose }: IBorrowPopupProps) {
                 <div>
                     <FieldSearch
                         label="Tên sách"
-                        placeholder="Nhập tên tên sách..."
                         onChange={handleChangeInput}
                         name="bookKey"
                     />

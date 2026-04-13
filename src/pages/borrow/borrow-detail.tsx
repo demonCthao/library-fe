@@ -2,7 +2,9 @@ import Loading from "@/components/loading";
 import { Button } from "@/components/ui/button";
 import { LazyImage } from "@/components/ui/image";
 import { statusBorrowMap } from "@/constants/borrow-status";
+import { BorrowStatus } from "@/enum/borrow-status";
 import { useFetch } from "@/hooks/useFetch";
+import { useMutationRequest } from "@/hooks/useMutation";
 import { formatDate } from "@/lib/utils";
 import { BorrowDetail } from "@/models/borrow-detail.model";
 import { useNotificationStore } from "@/store/notification.store";
@@ -17,12 +19,28 @@ export default function BorrowDetailPage() {
     const notification = useNotificationStore();
     const [openPopup, setOpenPopup] = useState<boolean>(false);
 
-    const { data, isLoading, error } = useFetch<BorrowDetail>({
+    const { data, isLoading, error, refetch } = useFetch<BorrowDetail>({
         url: `borrow-record/${id}`,
         key: ["borrow-detail", id],
     });
 
+    const { mutate } = useMutationRequest({
+        key: ["update-borrow-record"],
+        url: `borrow-record/${id}`,
+        method: "put", options: {
+            onSuccess: () => {
+                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                refetch();
+                setOpenPopup(false)
+            },
+            onError: () => {
+                notification.updateState({ message: "Cập nhật dữ liệu thất bại", type: "error", open: true });
+            }
+        }
+    });
+
     if (isLoading) return <Loading />;
+
     if (error instanceof Error) return <div>{error.message}</div>;
 
     const status = statusBorrowMap[data?.status ?? ""] ?? {
@@ -59,6 +77,11 @@ export default function BorrowDetailPage() {
             });
             return;
         }
+
+        mutate({
+            status: BorrowStatus.RETURNED,
+            return_date: new Date().toISOString()
+        })
     }
 
     return (

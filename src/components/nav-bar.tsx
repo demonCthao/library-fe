@@ -29,8 +29,8 @@ const NavbarItem = ({ link, label, icon }: { link: string, label: string, icon: 
 
 export default function Navbar() {
     return (
-        <div>
-            <aside className="bg-white shadow-sm -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100">
+        <div className="max-h-[calc(100vh-100px)] overflow-y-auto">
+            <aside className="bg-white shadow-sm -translate-x-80 fixed inset-0 z-50 mt-4 w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100">
                 <div className="relative">
                     <a className="py-6 px-8 text-center" href="#/">
                         <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900">Hệ thống quản lý sách</h6>
@@ -43,7 +43,7 @@ export default function Navbar() {
                         </span>
                     </button>
                 </div>
-                <div className="m-4">
+                <div className="m-4 max-h-[calc(100vh-100px)] overflow-y-auto">
                     <ul className="mb-4 flex flex-col gap-1">
                         <li>
                             <NavbarItem link="/dashboard" label="dashboard" icon={<House size={20} />} />

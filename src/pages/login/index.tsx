@@ -21,7 +21,7 @@ export default function LoginPage() {
       onSuccess: (data) => {
         localStorage.setItem("jwt", JSON.stringify(data));
         navigate({
-          to: "/user",
+          to: "/dashboard",
           replace: true
         });
         notification.updateState({ message: "Đăng nhập thành công", type: "success", open: true });

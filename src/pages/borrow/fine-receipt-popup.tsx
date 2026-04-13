@@ -45,11 +45,11 @@ export default function FineReceiptPopup({
     }
 
     const onConfirm = () => {
-        // handleConfirm(paymentMethod)
+        handleConfirm(paymentMethod)
 
-        if (paymentMethod === "money") {
+        // if (paymentMethod === "money") {
 
-        }
+        // }
     }
 
     const { data: bankOptions } = useFetch<
@@ -86,37 +86,40 @@ export default function FineReceiptPopup({
                     </span>
                 </div>
 
-                {/* Customer Info */}
-                <div className="bg-gray-50 rounded-xl p-4 shadow-sm">
-                    <h3 className="text-sm font-semibold mb-3 text-gray-700">
-                        Thông tin khách hàng
-                    </h3>
+                <div className="grid grid-cols-2 gap-3">
+                    {/* Customer Info */}
+                    <div className="bg-gray-50 rounded-xl p-4 shadow-sm">
+                        <h3 className="text-sm font-semibold mb-3 text-gray-700">
+                            Thông tin khách hàng
+                        </h3>
 
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                        <Info label="Khách hàng" value={borrow?.reader?.full_name} />
-                        <Info label="Số điện thoại" value={borrow?.reader?.phone} />
-                        <Info label="Email" value={borrow?.reader?.email} />
-                        <Info label="Địa chỉ" value={borrow?.reader?.address} />
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                            <Info label="Khách hàng" value={borrow?.reader?.full_name} />
+                            <Info label="Số điện thoại" value={borrow?.reader?.phone} />
+                            <Info label="Email" value={borrow?.reader?.email} />
+                            <Info label="Địa chỉ" value={borrow?.reader?.address} />
+                        </div>
+                    </div>
+
+                    {/* Borrow Info */}
+                    <div className="bg-gray-50 rounded-xl p-4 shadow-sm">
+                        <h3 className="text-sm font-semibold mb-3 text-gray-700">
+                            Thông tin mượn
+                        </h3>
+
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                            <Info
+                                label="Ngày mượn"
+                                value={formatDate(borrow?.borrow_date)}
+                            />
+                            <Info
+                                label="Hạn trả"
+                                value={formatDate(borrow?.due_date)}
+                            />
+                        </div>
                     </div>
                 </div>
 
-                {/* Borrow Info */}
-                <div className="bg-gray-50 rounded-xl p-4 shadow-sm">
-                    <h3 className="text-sm font-semibold mb-3 text-gray-700">
-                        Thông tin mượn
-                    </h3>
-
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                        <Info
-                            label="Ngày mượn"
-                            value={formatDate(borrow?.borrow_date)}
-                        />
-                        <Info
-                            label="Hạn trả"
-                            value={formatDate(borrow?.due_date)}
-                        />
-                    </div>
-                </div>
 
                 {/* Fine */}
                 {diffDays > 0 && (

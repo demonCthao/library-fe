@@ -1,15 +1,14 @@
+import { DropdownHeaderTable } from "@/components/dropdown-header-table";
 import Loading from "@/components/loading";
 import { DynamicTable as Table } from "@/components/table-dynamic";
+import { Button } from "@/components/ui/button";
 import { useFetch } from "@/hooks/useFetch";
 import { TypeActionTable, useTable } from "@/hooks/useTable";
 import { BankAccount } from "@/models/bank.model";
-import { DataList } from "@/models/response.model";
 import { BaseTableRef } from "@/types/base-ref.type";
+import { Landmark } from "lucide-react";
 import { forwardRef, useImperativeHandle } from "react";
 import { bankAccountColumns } from "./banking-column";
-import { Button } from "@/components/ui/button";
-import { DropdownHeaderTable } from "@/components/dropdown-header-table";
-import { Landmark } from "lucide-react";
 
 interface IBankingTableProps {
     onChooseBank: (type: TypeActionTable, bank?: BankAccount) => void;
