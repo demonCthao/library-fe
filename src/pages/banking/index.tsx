@@ -12,10 +12,10 @@ export default function BankingPage() {
   return (
     <div className="h-full flex flex-col">
       <div className="flex-1">
-        {/* <BankingTable
+        <BankingTable
           ref={tableRef}
           onChooseBank={handleChooseBank}
-        /> */}
+        />
       </div>
     </div>
   )

@@ -1,14 +1,13 @@
+import ConfirmDialog from '@/components/confirm-dialog';
+import { useMutationRequest } from '@/hooks/useMutation';
 import { TypeActionTable } from '@/hooks/useTable';
 import { Category } from '@/models/category.model';
-import { BaseTableRef } from '@/types/base-ref.type';
-import { useCallback, useRef, useState } from 'react';
-import CategoryTable from './category-table';
-import { Label } from '@/components/ui/label';
-import { CategoryForm } from './category-form';
-import ConfirmDialog from '@/components/confirm-dialog';
-import _ from 'lodash';
-import { useMutationRequest } from '@/hooks/useMutation';
 import { useNotificationStore } from '@/store/notification.store';
+import { BaseTableRef } from '@/types/base-ref.type';
+import _ from 'lodash';
+import { useCallback, useRef, useState } from 'react';
+import { CategoryForm } from './category-form';
+import CategoryTable from './category-table';
 
 export default function CategoryPage() {
   const notification = useNotificationStore();
