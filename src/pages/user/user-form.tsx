@@ -14,6 +14,7 @@ import { useNotificationStore } from "@/store/notification.store";
 import { useForm } from "@tanstack/react-form";
 import _ from "lodash";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 interface IUserFormProps {
     open: boolean
@@ -22,6 +23,7 @@ interface IUserFormProps {
 }
 
 export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
+    const { t } = useTranslation();
     const notification = useNotificationStore();
     const { mutate } = useMutationRequest({
         key: ["create-user", "update-user"],
@@ -60,7 +62,7 @@ export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
 
     return (
         <div>
-            <Popup variant="2xl" type="form" open={open} onClose={() => onClose(false)} title="Thông tin người dùng" form={form}>
+            <Popup variant="2xl" type="form" open={open} onClose={() => onClose(false)} title={t("userInformation")} form={form}>
                 <FieldGroup className="grid grid-cols-2 gap-3">
                     <form.Field
                         name="full_name"
@@ -69,7 +71,7 @@ export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
                                 field.state.meta.isTouched && !field.state.meta.isValid
                             return (
                                 <Field data-invalid={isInvalid} className="gap-1">
-                                    <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
+                                    <FieldLabel htmlFor={field.name}>{t("fullName")}</FieldLabel>
                                     <Input
                                         id={field.name}
                                         name={field.name}
@@ -120,7 +122,7 @@ export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
                                 field.state.meta.isTouched && !field.state.meta.isValid
                             return (
                                 <Field data-invalid={isInvalid} className="gap-1">
-                                    <FieldLabel htmlFor={field.name}>Phone</FieldLabel>
+                                    <FieldLabel htmlFor={field.name}>{t("phone")}</FieldLabel>
                                     <Input
                                         id={field.name}
                                         name={field.name}
@@ -145,7 +147,7 @@ export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
                                 field.state.meta.isTouched && !field.state.meta.isValid
                             return (
                                 <Field data-invalid={isInvalid} className="gap-1">
-                                    <FieldLabel htmlFor={field.name}>Role</FieldLabel>
+                                    <FieldLabel htmlFor={field.name}>{t("role")}</FieldLabel>
                                     <SelectApp
                                         placeholder="Chức vụ"
                                         options={[
@@ -169,7 +171,7 @@ export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
                                 field.state.meta.isTouched && !field.state.meta.isValid
                             return (
                                 <Field data-invalid={isInvalid} className="gap-1">
-                                    <FieldLabel htmlFor={field.name}>Ngôn ngữ</FieldLabel>
+                                    <FieldLabel htmlFor={field.name}>{t("language")}</FieldLabel>
                                     <SelectApp
                                         placeholder="Chọn ngôn ngữ hiển thị"
                                         options={[

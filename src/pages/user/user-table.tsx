@@ -17,12 +17,14 @@ import _ from "lodash";
 import { ArrowBigDownDash, UserPlus } from "lucide-react";
 import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
 import { userColumns } from "./user-column";
+import { useTranslation } from "react-i18next";
 
 interface IUserTableProps {
     onChooseUser: (type: TypeActionTable, user?: User) => void;
 }
 
 const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, ref) => {
+    const { t } = useTranslation();
     const [search, setSearch] = useState<PaginationState & { fullName: string, phone: string }>({
         fullName: "",
         phone: "",
@@ -100,7 +102,7 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
                 <div className="col-span-3 grid grid-cols-3 gap-3">
                     <div>
                         <FieldSearch
-                            label="Tên người dùng"
+                            label={t("username")}
                             onChange={handleChangeInput}
                             name="fullName"
                             className="w-full"
@@ -108,7 +110,7 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
                     </div>
                     <div>
                         <FieldSearch
-                            label="Số điện thoại"
+                            label={t("phone")}
                             onChange={handleChangeInput}
                             name="phone"
                             className="w-full"
@@ -118,15 +120,15 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
 
                 <div className="ml-auto w-fit flex gap-2">
                     <div>
-                        <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
+                        <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> {t("exportData")}</Button>
                     </div>
                     <div>
-                        <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddUser}><UserPlus size={18} /> Add</Button>
+                        <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddUser}><UserPlus size={18} /> {t("add")}</Button>
                     </div>
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title="Danh sách người dùng" tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table title={t("userList")} tableData={tableData} />}
         </div>
     )
 });

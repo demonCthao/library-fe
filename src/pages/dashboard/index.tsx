@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import ChartDashboard from './chart-dashboard'
 
 export default function Dashboard() {
+    const { t } = useTranslation();
+
     return (
         <div>
             <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
@@ -13,7 +16,7 @@ export default function Dashboard() {
                         </svg>
                     </div>
                     <div className="p-4 text-right">
-                        <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">Today's Money</p>
+                        <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">{t("todayMoney")}</p>
                         <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">$53k</h4>
                     </div>
                     <div className="border-t border-blue-gray-50 p-4">

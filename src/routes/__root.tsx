@@ -1,33 +1,33 @@
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import { HeadContent, Scripts, createRootRoute, useLocation } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import appCss from '../styles.css?url'
-import { Toaster } from '@/components/ui/sonner'
-import { Header } from '@/components/Header'
-import { cn } from '@/lib/utils'
-import { useEffect } from 'react'
-import { useNotificationStore } from '@/store/notification.store'
-import { toast } from 'sonner'
-import _ from 'lodash'
-import Navbar from '@/components/nav-bar'
+import { Header } from "@/components/Header"
+import Navbar from "@/components/nav-bar"
+import { Toaster } from "@/components/ui/sonner"
+import { useNotificationStore } from "@/store/notification.store"
+import { TanStackDevtools } from "@tanstack/react-devtools"
+import { HeadContent, Scripts, createRootRoute, useLocation } from "@tanstack/react-router"
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
+import _ from "lodash"
+import { useEffect } from "react"
+import { toast } from "sonner"
+import appCss from "../styles.css?url"
+import "../configs/i18n"
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
-        charSet: 'utf-8',
+        charSet: "utf-8",
       },
       {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
       },
       {
-        title: 'Library Web',
+        title: "Library Web",
       },
     ],
     links: [
       {
-        rel: 'stylesheet',
+        rel: "stylesheet",
         href: appCss,
       },
     ],
@@ -45,10 +45,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       if (_.isEqual(notification.type, "success")) {
         toast.success(notification.message, {
           style: {
-            '--normal-bg':
-              'color-mix(in oklab, light-dark(var(--color-green-600), var(--color-green-400)) 10%, var(--background))',
-            '--normal-text': 'light-dark(var(--color-green-600), var(--color-green-400))',
-            '--normal-border': 'light-dark(var(--color-green-600), var(--color-green-400))'
+            "--normal-bg":
+              "color-mix(in oklab, light-dark(var(--color-green-600), var(--color-green-400)) 10%, var(--background))",
+            "--normal-text": "light-dark(var(--color-green-600), var(--color-green-400))",
+            "--normal-border": "light-dark(var(--color-green-600), var(--color-green-400))"
           } as React.CSSProperties,
           position: "top-center"
         })
@@ -57,10 +57,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       if (_.isEqual(notification.type, "warning")) {
         toast.warning(notification.message, {
           style: {
-            '--normal-bg':
-              'color-mix(in oklab, light-dark(var(--color-amber-600), var(--color-amber-400)) 10%, var(--background))',
-            '--normal-text': 'light-dark(var(--color-amber-600), var(--color-amber-400))',
-            '--normal-border': 'light-dark(var(--color-amber-600), var(--color-amber-400))'
+            "--normal-bg":
+              "color-mix(in oklab, light-dark(var(--color-amber-600), var(--color-amber-400)) 10%, var(--background))",
+            "--normal-text": "light-dark(var(--color-amber-600), var(--color-amber-400))",
+            "--normal-border": "light-dark(var(--color-amber-600), var(--color-amber-400))"
           } as React.CSSProperties,
           position: "top-center"
         })
@@ -69,9 +69,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       if (_.isEqual(notification.type, "error")) {
         toast.error(notification.message, {
           style: {
-            '--normal-bg': 'color-mix(in oklab, var(--destructive) 10%, var(--background))',
-            '--normal-text': 'var(--destructive)',
-            '--normal-border': 'var(--destructive)'
+            "--normal-bg": "color-mix(in oklab, var(--destructive) 10%, var(--background))",
+            "--normal-text": "var(--destructive)",
+            "--normal-border": "var(--destructive)"
           } as React.CSSProperties,
           position: "top-center"
         })
@@ -102,11 +102,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Toaster />
         <TanStackDevtools
           config={{
-            position: 'bottom-right',
+            position: "bottom-right",
           }}
           plugins={[
             {
-              name: 'Tanstack Router',
+              name: "Tanstack Router",
               render: <TanStackRouterDevtoolsPanel />,
             },
           ]}

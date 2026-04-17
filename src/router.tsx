@@ -1,25 +1,38 @@
-// src/router.tsx
-import { createRouter } from '@tanstack/react-router'
-import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
-import { queryClient } from './lib/query-client'
-import { routeTree } from './routeTree.gen'
+import { createRouter } from '@tanstack/react-router';
+import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query';
+import { queryClient } from './lib/query-client';
+import { routeTree } from './routeTree.gen';
+import i18n from "./configs/i18n";
+
+// 1. Define the Context type correctly
+export interface MyRouterContext {
+  queryClient: typeof queryClient;
+  i18n: typeof i18n; // 'typeof' is the keyword that fixes your specific error
+}
 
 export function getRouter() {
   const router = createRouter({
     routeTree,
-    // optionally expose the QueryClient via router context
-    context: { queryClient },
+    // 2. Pass the instance into context
+    context: { 
+      queryClient, 
+      i18n 
+    } as MyRouterContext, 
     scrollRestoration: true,
     defaultPreload: 'intent',
-  })
+  });
 
   setupRouterSsrQueryIntegration({
     router,
     queryClient,
-    // optional:
-    // handleRedirects: true,
-    // wrapQueryClient: true,
-  })
+  });
 
-  return router
+  return router;
+}
+
+// 3. Register the router for global type safety
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: ReturnType<typeof getRouter>;
+  }
 }

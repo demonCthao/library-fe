@@ -1,18 +1,21 @@
 import { type Table as TanStackTTable } from "@tanstack/react-table";
-import { Settings2 } from 'lucide-react';
-import { Button } from './ui/button';
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
+import { Settings2 } from "lucide-react";
+import { Button } from "./ui/button";
+import { useTranslation } from "react-i18next";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 interface IDropdownHeaderTableProps<TData> {
     table: TanStackTTable<TData>;
 }
 
 export const DropdownHeaderTable = <TData,>({ table }: IDropdownHeaderTableProps<TData>) => {
+    const { t } = useTranslation();
+
     return (
         <div><DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button type="button">
-                    <Settings2 size={18} /> View
+                    <Settings2 size={18} /> {t("view")}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent

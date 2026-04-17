@@ -6,6 +6,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Button } from "./ui/button";
 import { TypeActionTable } from "@/hooks/useTable";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface IDynamicTableProps<TData> {
     title: string;
@@ -17,6 +18,7 @@ interface IDynamicTableProps<TData> {
 }
 
 export const DynamicTable = <TData,>({ title, tableData }: IDynamicTableProps<TData>) => {
+    const { t } = useTranslation();
     const { table, onChoose } = tableData;
 
     const onChooseRow = (data: TData, type: TypeActionTable) => {
@@ -36,7 +38,7 @@ export const DynamicTable = <TData,>({ title, tableData }: IDynamicTableProps<TD
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow>
                                 <TableHead className="border-b border-blue-gray-50 py-3 px-5 text-left">
-                                    <p className="block antialiased font-sans text-[11px] font-bold uppercase text-blue-gray-400">No</p>
+                                    <p className="block antialiased font-sans text-[11px] font-bold uppercase text-blue-gray-400">{t("no")}</p>
                                 </TableHead>
                                 {headerGroup.headers.map((header) => {
                                     return (
@@ -79,7 +81,7 @@ export const DynamicTable = <TData,>({ title, tableData }: IDynamicTableProps<TD
                                 {
                                     onChoose &&
                                     <TableHead className="border-b border-blue-gray-50 py-3 px-5 text-center">
-                                        <p className="block antialiased font-sans text-[11px] font-bold uppercase text-blue-gray-400">Actions</p>
+                                        <p className="block antialiased font-sans text-[11px] font-bold uppercase text-blue-gray-400">{t("actions")}</p>
                                     </TableHead>
                                 }
 

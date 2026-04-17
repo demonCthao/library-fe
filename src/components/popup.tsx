@@ -2,6 +2,7 @@ import { AnyFormApi } from "@tanstack/react-form"
 import _ from "lodash"
 import { Button } from "./ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog"
+import { useTranslation } from "react-i18next";
 
 type BasePopupProps = {
     open: boolean
@@ -27,6 +28,7 @@ type NonFormPopupProps = BasePopupProps & {
 type PopupProps = FormPopupProps | NonFormPopupProps
 
 export const Popup = ({ open, form, type, title, description, variant, children, onClose, onConfirm }: PopupProps) => {
+    const { t } = useTranslation();
     const width: Record<string, string> = {
         sm: "sm:max-w-md",
         md: "sm:max-w-lg",
@@ -56,9 +58,9 @@ export const Popup = ({ open, form, type, title, description, variant, children,
                             {children}
                             <DialogFooter className="mt-3">
                                 <DialogClose asChild>
-                                    <Button className="cursor-pointer" variant="outline">Cancel</Button>
+                                    <Button className="cursor-pointer" variant="outline">{t("cancel")}</Button>
                                 </DialogClose>
-                                <Button className="cursor-pointer" type="submit" onClick={onConfirm}>Save changes</Button>
+                                <Button className="cursor-pointer" type="submit" onClick={onConfirm}>{t("save")}</Button>
                             </DialogFooter>
                         </form> :
                         <div>
@@ -68,9 +70,9 @@ export const Popup = ({ open, form, type, title, description, variant, children,
                                     _.isEqual(type, "confirm") ?
                                         <>
                                             <DialogClose asChild>
-                                                <Button variant="outline">Cancel</Button>
+                                                <Button variant="outline">{t("cancel")}</Button>
                                             </DialogClose>
-                                            <Button type="button" onClick={onConfirm}>Confirm</Button>
+                                            <Button type="button" onClick={onConfirm}>{t("confirm")}</Button>
                                         </>
                                         :
                                         <DialogClose asChild>
