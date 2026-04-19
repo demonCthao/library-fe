@@ -10,6 +10,8 @@ import { useEffect } from "react"
 import { toast } from "sonner"
 import appCss from "../styles.css?url"
 import "../configs/i18n"
+import { useSyncLanguage } from "@/hooks/use-sync-language"
+import { useAccountStore } from "@/store/account.store"
 
 export const Route = createRootRoute({
   head: () => ({
@@ -36,7 +38,9 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  useSyncLanguage();
   const location = useLocation();
+  // const hasHydrated = useAccountStore((s) => s.hasHydrated);
   const notification = useNotificationStore();
   const checkLoginPage = location.pathname.includes("login");
 
@@ -82,6 +86,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       }, 2500);
     }
   }, [notification.message, notification.open])
+
+  // if (!hasHydrated) {
+  //   return <div>Loading...</div>;
+  // }
+
 
   return (
     <html lang="en">

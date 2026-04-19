@@ -112,7 +112,6 @@ export function BorrowForm({ open, onClose }: IBorrowPopupProps) {
     }
 
     const onSelectReader = (opt: SelectOption) => {
-        console.log("🚀 ~ onSelectReader ~ opt: SelectOption:", opt)
         setReader(opt.otherValue);
         setShowReaderSelect(false);
     }

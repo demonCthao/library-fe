@@ -3,13 +3,31 @@ import { Settings, SlidersHorizontal } from "lucide-react";
 import AvatarDropdownMenu from "./avatar-dropdown";
 import { SelectApp } from "./select-app";
 import { useTranslation } from "react-i18next";
+import { useAccountStore } from "@/store/account.store";
+import { useEffect, useState } from "react";
 
 export function Header() {
   const { t, i18n } = useTranslation();
+  const user = useAccountStore((s) => {
+    return s.user;
+  });
+  const [language, setLanguage] = useState<string>("en")
 
   const handleChangeLangue = (lang: string) => {
+    setLanguage(lang)
     i18n.changeLanguage(lang);
   }
+
+  useEffect(() => {
+    const defaultLanguage = () => {
+      if (user) {
+        setLanguage(user.lang)
+      }
+    }
+
+    return () => defaultLanguage()
+  }, [user])
+
 
   return (
     <nav className="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
@@ -49,6 +67,7 @@ export function Header() {
               className="gb-white data-[placeholder]:text-white text-sm "
               options={[{ value: "vi", label: "Tiếng Việt" }, { value: "en", label: "English" }]}
               onValueChange={handleChangeLangue}
+              value={language}
             />
           </div>
           <AvatarDropdownMenu />

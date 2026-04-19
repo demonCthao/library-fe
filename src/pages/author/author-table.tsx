@@ -16,12 +16,18 @@ import { PaginationState } from "@tanstack/react-table";
 import { ArrowBigDownDash, BookUser } from "lucide-react";
 import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
 import { authorColumns } from "./author-column";
+import { useTranslation } from "react-i18next";
+import { useCan } from "@/hooks/use-can";
+import { PERMISSIONS } from "@/types/permission.type";
 
 interface IAuthorTableProps {
   onChooseAuthor: (type: TypeActionTable, author?: Author) => void;
 }
 
 const AuthorTable = forwardRef<BaseTableRef, IAuthorTableProps>(({ onChooseAuthor }, ref) => {
+  const { t } = useTranslation();
+  const canExportAuthor = useCan([PERMISSIONS.authors[3]]);
+  const canMutationAuthor = useCan([PERMISSIONS.authors[1]]);
   const [search, setSearch] = useState<PaginationState & { name: string, bio: string }>({
     name: "",
     bio: "",
@@ -101,7 +107,7 @@ const AuthorTable = forwardRef<BaseTableRef, IAuthorTableProps>(({ onChooseAutho
         <div className="col-span-2 grid grid-cols-4 gap-3">
           <div>
             <FieldSearch
-              label="Tên tác giả"
+              label={t("authorName")}
               onChange={handleChangeInput}
               name="name"
               className="w-full"
@@ -109,7 +115,7 @@ const AuthorTable = forwardRef<BaseTableRef, IAuthorTableProps>(({ onChooseAutho
           </div>
           <div>
             <FieldSearch
-              label="Tiểu sử"
+              label={t("biography")}
               onChange={handleChangeInput}
               name="bio"
               className="w-full"
@@ -118,16 +124,22 @@ const AuthorTable = forwardRef<BaseTableRef, IAuthorTableProps>(({ onChooseAutho
         </div>
 
         <div className="ml-auto w-fit flex gap-2">
-          <div>
-            <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
-          </div>
-          <div>
-            <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddAuthor}><BookUser size={18} /> Add</Button>
-          </div>
+          {
+            canExportAuthor &&
+            <div>
+              <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> {t("exportData")}</Button>
+            </div>
+          }
+          {
+            canMutationAuthor &&
+            <div>
+              <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddAuthor}><BookUser size={18} /> {t("add")}</Button>
+            </div>
+          }
           <DropdownHeaderTable table={tableData.table} />
         </div>
       </div>
-      {isLoading ? <Loading /> : <Table title="Danh sách tác giả" tableData={tableData} />}
+      {isLoading ? <Loading /> : <Table useCanMutaion={canMutationAuthor} title={t("authorList")} tableData={tableData} />}
     </div>
   )
 });

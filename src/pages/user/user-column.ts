@@ -8,25 +8,25 @@ const columnHelper = createColumnHelper<User>()
 
 export const userColumns = [
   columnHelper.accessor("full_name", {
-    header: "Name",
+    header: "fullName",
     cell: (info) => info.renderValue(),
     sortUndefined: 'last',
     sortDescFirst: false,
     footer: (info) => info.column.id,
     filterFn: "includesString",
     meta: {
-      label: "Name",
+      label: "fullName",
     }
   }),
   columnHelper.accessor("phone", {
-    header: "Phone",
+    header: "phone",
     cell: (info) => info.renderValue(),
     sortUndefined: 'last',
     sortDescFirst: false,
     footer: (info) => info.column.id,
     filterFn: "includesString",
     meta: {
-      label: "Phone",
+      label: "phone",
     }
   }),
   columnHelper.accessor("email", {
@@ -42,32 +42,32 @@ export const userColumns = [
   }),
   columnHelper.accessor("role", {
     cell: (info) => info.renderValue(),
-    header: "Role",
+    header: "role",
     footer: (info) => info.column.id,
     meta: {
-      label: "Role",
+      label: "role",
     }
   }),
   columnHelper.accessor("updated_at", {
-    header: "Updated At",
+    header: "updatedAt",
     cell: ({ getValue }) => format(new Date(getValue() as string), "dd/MM/yyyy HH:mm"),
     sortUndefined: 'last',
     sortDescFirst: false,
     footer: (info) => info.column.id,
     filterFn: "includesString",
     meta: {
-      label: "Updated At",
+      label: "updatedAt",
     }
   }),
   columnHelper.accessor("status", {
-    header: "Status",
+    header: "status",
     cell: (info) => info.renderValue(),
     sortUndefined: 'last',
     sortDescFirst: false,
     footer: (info) => info.column.id,
     filterFn: "includesString",
     meta: {
-      label: "Status",
+      label: "status",
     }
   }),
 ]

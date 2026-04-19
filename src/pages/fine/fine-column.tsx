@@ -8,14 +8,14 @@ const columnHelper = createColumnHelper<Fine>()
 
 export const fineColumns = [
     columnHelper.accessor("borrow_records.readers.full_name", {
-        header: "Name",
+        header: "readerName",
         cell: (info) => info.renderValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Name",
+            label: "readerName",
         }
     }),
     columnHelper.accessor("borrow_records.readers.email", {
@@ -30,62 +30,62 @@ export const fineColumns = [
         }
     }),
     columnHelper.accessor("borrow_records.readers.phone", {
-        header: "Phone",
+        header: "phone",
         cell: (info) => info.renderValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Phone",
+            label: "phone",
         }
     }),
     columnHelper.accessor("borrow_records.readers.address", {
-        header: "Address",
+        header: "address",
         cell: (info) => info.renderValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Address",
+            label: "address",
         }
     }),
     columnHelper.accessor("amount", {
-        header: "Amount",
+        header: "amount",
         cell: (info) => info.renderValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Amount",
+            label: "amount",
         }
     }),
     columnHelper.accessor("reason", {
-        header: "Reason",
+        header: "reason",
         cell: (info) => info.renderValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Reason",
+            label: "reason",
         }
     }),
     columnHelper.accessor("borrow_records.return_date", {
-        header: "Return date",
+        header: "returnDate",
         cell: ({ getValue }) => formatDate(getValue()),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Return date",
+            label: "returnDate",
         }
     }),
     columnHelper.accessor("paid", {
-        header: "Paid",
+        header: "status",
         cell: (info) => {
             const value = info.getValue();
 
@@ -104,7 +104,7 @@ export const fineColumns = [
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Paid",
+            label: "status",
         }
     }),
 ]

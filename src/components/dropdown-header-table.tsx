@@ -24,7 +24,7 @@ export const DropdownHeaderTable = <TData,>({ table }: IDropdownHeaderTableProps
                 sideOffset={4}
             >
                 <DropdownMenuLabel className="font-normal font-semibold">
-                    Toggle columns
+                    {t("toggleColumns")}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {table.getAllLeafColumns().map(column => (
@@ -36,7 +36,7 @@ export const DropdownHeaderTable = <TData,>({ table }: IDropdownHeaderTableProps
                         }
                         className="cursor-pointer py-2 font-normal"
                     >
-                        {column.columnDef.meta?.label ?? column.id}
+                        {t(column.columnDef.meta?.label ?? column.id)}
                     </DropdownMenuCheckboxItem>
                 ))}
             </DropdownMenuContent>

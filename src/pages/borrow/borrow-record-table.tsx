@@ -16,12 +16,17 @@ import { PaginationState } from "@tanstack/react-table";
 import { BookmarkPlus } from "lucide-react";
 import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
 import { borrowRecordColumns } from "./borrow-record-column";
+import { useTranslation } from "react-i18next";
+import { PERMISSIONS } from "@/types/permission.type";
+import { useCan } from "@/hooks/use-can";
 
 interface IBorrowTableProps {
   onChooseBorrow: (type: TypeActionTable, borrow?: BorrowRecord) => void;
 }
 
 const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorrow }, ref) => {
+  const { t } = useTranslation();
+  const canMutationBorrow = useCan([PERMISSIONS.borrows[1]]);
   const [search, setSearch] = useState<PaginationState & { readerName: string, phone: string, borrowDate: string, dueDate: string, returnDate: string, status: string }>({
     readerName: "",
     phone: "",
@@ -86,21 +91,21 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
         <div className="col-span-4 grid grid-cols-5 gap-3">
           <div>
             <FieldSearch
-              label="Tên độc giả"
+              label={t("readerName")}
               onChange={handleChangeInput}
               name="readerName"
             />
           </div>
           <div>
             <FieldSearch
-              label="Số điện thoại độc giả"
+              label={t("phone")}
               onChange={handleChangeInput}
               name="phone"
             />
           </div>
           <div >
             <FieldSearch
-              label="Ngày mượn"
+              label={t("borrowDate")}
               onChange={handleChangeInput}
               name="borrowDate"
               type="date"
@@ -109,7 +114,7 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
           </div>
           <div >
             <FieldSearch
-              label="Ngày hết hạn"
+              label={t("dueDate")}
               onChange={handleChangeInput}
               name="dueDate"
               type="date"
@@ -118,7 +123,7 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
           </div>
           <div>
             <FieldSearch
-              label="Trạng thái"
+              label={t("status")}
               isHideIcon
             >
               <SelectApp
@@ -131,13 +136,16 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
         </div>
 
         <div className="ml-auto w-fit flex gap-2">
-          <div>
-            <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddBorrow}><BookmarkPlus size={18} /> Add</Button>
-          </div>
+          {
+            canMutationBorrow && 
+            <div>
+              <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddBorrow}><BookmarkPlus size={18} /> {t("add")}</Button>
+            </div>
+          }
           <DropdownHeaderTable table={tableData.table} />
         </div>
       </div>
-      {isLoading ? <Loading /> : <Table title="Quản lý danh sách mượn sách" tableData={tableData} />}
+      {isLoading ? <Loading /> : <Table useCanMutaion={canMutationBorrow} title={t("borrowingList")} tableData={tableData} />}
     </div>
   )
 });

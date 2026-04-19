@@ -8,47 +8,47 @@ const columnHelper = createColumnHelper<Reader>()
 
 export const readerColumns = [
     columnHelper.accessor("reader_code", {
-        header: "Name",
+        header: "readerCode",
         cell: ({ getValue }) => getValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Reader Code",
+            label: "readerCode",
         }
     }),
     columnHelper.accessor("full_name", {
-        header: "Name",
+        header: "name",
         cell: ({ getValue }) => getValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Name",
+            label: "name",
         }
     }),
     columnHelper.accessor("gender", {
-        header: "Gender",
+        header: "gender",
         cell: ({ getValue }) => getValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Gender",
+            label: "gender",
         }
     }),
     columnHelper.accessor("phone", {
-        header: "Phone",
+        header: "phone",
         cell: ({ getValue }) => getValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Phone",
+            label: "phone",
         }
     }),
     columnHelper.accessor("email", {
@@ -64,21 +64,21 @@ export const readerColumns = [
     }),
     columnHelper.accessor("date_of_birth", {
         cell: ({ getValue }) => format(new Date(getValue() as string), "dd/MM/yyyy"),
-        header: "Date of birth",
+        header: "dateOfBirth",
         footer: (info) => info.column.id,
         meta: {
-            label: "Date of birth",
+            label: "dateOfBirth",
         }
     }),
     columnHelper.accessor("address", {
-        header: "Address",
+        header: "address",
         cell: ({ getValue }) => getValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Address",
+            label: "address",
         }
     }),
 ]

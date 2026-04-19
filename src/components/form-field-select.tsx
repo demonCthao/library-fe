@@ -25,7 +25,6 @@ export function FormFieldSelect<TFormData>({
   return (
     <form.Field name={name}>
       {(field: any) => {
-        console.log("🚀 ~ FormFieldSelect ~ field.state.value:", field.state.value)
         const isInvalid =
           field.state.meta.isTouched &&
           !field.state.meta.isValid

@@ -18,12 +18,18 @@ import { PaginationState } from "@tanstack/react-table";
 import { ArrowBigDownDash, BookPlus } from "lucide-react";
 import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
 import { bookColumns } from "./book-column";
+import { useTranslation } from "react-i18next";
+import { useCan } from "@/hooks/use-can";
+import { PERMISSIONS } from "@/types/permission.type";
 
 interface IBookTableProps {
   onChooseBook: (type: TypeActionTable, book?: Book) => void;
 }
 
 const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, ref) => {
+  const { t } = useTranslation();
+  const canMutationBook = useCan([PERMISSIONS.books[1]]);
+  const canExportPBook = useCan([PERMISSIONS.books[3]]);
   const [search, setSearch] = useState<PaginationState & { title: string, description: string, publish_year: string, category_id: string }>({
     title: "",
     description: "",
@@ -122,7 +128,7 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
               name="title"
               onChange={handleChangeInput}
               className="w-full"
-              label="Tên sách"
+              label={t("bookName")}
             />
           </div>
           <div>
@@ -131,7 +137,7 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
               name="description"
               onChange={handleChangeInput}
               className="full"
-              label="Mô tả"
+              label={t("description")}
             />
           </div>
           <div>
@@ -140,7 +146,7 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
               name="publish_year"
               onChange={handleChangeInput}
               className="full"
-              label="Năm xuất bản"
+              label={t("publishYear")}
             />
           </div>
           <div>
@@ -163,16 +169,20 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
         </div>
 
         <div className="ml-auto w-fit flex gap-2">
-          <div>
-            <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
-          </div>
-          <div>
-            <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddBook}><BookPlus size={18} /> Add</Button>
-          </div>
+          {
+            canExportPBook && <div>
+              <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> {t("exportData")}</Button>
+            </div>
+          }
+          {
+            canMutationBook && <div>
+              <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddBook}><BookPlus size={18} /> {t("add")}</Button>
+            </div>
+          }
           <DropdownHeaderTable table={tableData.table} />
         </div>
       </div>
-      {isLoading ? <Loading /> : <Table title="Quản lý sách" tableData={tableData} />}
+      {isLoading ? <Loading /> : <Table useCanMutaion={canMutationBook} title={t("bookList")} tableData={tableData} />}
     </div>
   )
 });

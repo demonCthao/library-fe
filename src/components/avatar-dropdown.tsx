@@ -8,15 +8,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { useUserStore } from "@/store/account.store";
+import { useAccountStore } from "@/store/account.store";
+import { Role } from "@/types/role.type";
 import { useNavigate } from "@tanstack/react-router";
-import { jwtDecode } from "jwt-decode";
-import { useEffect } from "react";
 
 export interface JwtPayload {
   userId: number;
   email: string;
-  role: string;
+  role: Role;
   exp: number;
   fullName: string;
   userName: string;
@@ -25,11 +24,12 @@ export interface JwtPayload {
 
 export default function AvatarDropdownMenu() {
   const navigate = useNavigate();
-  const userStore = useUserStore();
+  const userStore = useAccountStore();
 
   const handleLogout = () => {
     if (userStore.user) {
       localStorage.clear();
+      useAccountStore.getState().setUser(null);
       navigate({
         to: "/login",
         replace: true
@@ -50,15 +50,6 @@ export default function AvatarDropdownMenu() {
       replace: true
     });
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("jwt");
-
-    if (token) {
-      const decoded = jwtDecode<JwtPayload>(token);
-      userStore.updateUser(decoded);
-    }
-  }, [])
 
   return (
     <div className="flex gap-3 text-[16px] items-center">

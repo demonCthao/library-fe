@@ -43,7 +43,6 @@ export default function ProfilePage() {
   }
 
   const handleSave = () => {
-    console.log("Submit:", form)
   }
 
   return (

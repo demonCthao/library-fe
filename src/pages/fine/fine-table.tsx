@@ -16,12 +16,18 @@ import { PaginationState } from '@tanstack/react-table';
 import { ArrowBigDownDash, Blinds } from 'lucide-react';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { fineColumns } from './fine-column';
+import { useTranslation } from 'react-i18next';
+import { useCan } from '@/hooks/use-can';
+import { PERMISSIONS } from '@/types/permission.type';
 
 interface IFineTableProps {
     onChooseFine: (type: TypeActionTable, fine?: Fine) => void;
 }
 
 const FineTable = forwardRef<BaseTableRef, IFineTableProps>(({ onChooseFine }, ref) => {
+    const { t } = useTranslation();
+    const canExportFine = useCan([PERMISSIONS.fines[3]]);
+    const canMutationFine = useCan([PERMISSIONS.fines[1]]);
     const [search, setSearch] = useState<PaginationState & { name: string; phone: string }>({
         name: "",
         phone: "",
@@ -97,30 +103,36 @@ const FineTable = forwardRef<BaseTableRef, IFineTableProps>(({ onChooseFine }, r
                 <div className="col-span-3 grid grid-cols-3 gap-3">
                     <div>
                         <FieldSearch
-                            label="Tên độc giả"
+                            label={t("readerName")}
                             onChange={handleChangeInput}
                             name="name"
                         />
                     </div>
                     <div>
                         <FieldSearch
-                            label="Số điện thoại"
+                            label={t("phone")}
                             onChange={handleChangeInput}
                             name="phone"
                         />
                     </div>
                 </div>
                 <div className="ml-auto w-fit flex gap-2">
-                    <div>
-                        <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
-                    </div>
-                    <div>
-                        <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddFine}><Blinds size={18} /> Add</Button>
-                    </div>
+                    {
+                        canExportFine &&
+                        <div>
+                            <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> {t("exportData")}</Button>
+                        </div>
+                    }
+                    {
+                        canMutationFine &&
+                        <div>
+                            <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddFine}><Blinds size={18} /> {t("add")}</Button>
+                        </div>
+                    }
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title="Danh sách phiếu phạt" tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table useCanMutaion={canMutationFine} title={t("penaltyList")} tableData={tableData} />}
         </div>
     )
 });

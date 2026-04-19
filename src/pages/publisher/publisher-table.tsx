@@ -1,9 +1,10 @@
 import { DropdownHeaderTable } from "@/components/dropdown-header-table";
+import { FieldSearch } from "@/components/field-search";
 import Loading from "@/components/loading";
 import { DynamicTable as Table } from "@/components/table-dynamic";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { PAGE_SIZE_10 } from "@/enum/search.enum";
+import { useCan } from "@/hooks/use-can";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useFetch } from "@/hooks/useFetch";
 import { useMutationRequest } from "@/hooks/useMutation";
@@ -12,17 +13,21 @@ import { convertObjectToParam } from "@/lib/utils";
 import { Publisher } from "@/models/publisher.model";
 import { DataList } from "@/models/response.model";
 import { BaseTableRef } from "@/types/base-ref.type";
+import { PERMISSIONS } from "@/types/permission.type";
 import { PaginationState } from "@tanstack/react-table";
 import { ArrowBigDownDash, Blinds } from "lucide-react";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { publisherColumns } from "./publisher-column";
-import { FieldSearch } from "@/components/field-search";
+import { useTranslation } from "react-i18next";
 
 interface IPublisherTableProps {
     onChoosePublisher: (type: TypeActionTable, publisher?: Publisher) => void;
 }
 
 const PublisherTable = forwardRef<BaseTableRef, IPublisherTableProps>(({ onChoosePublisher }, ref) => {
+    const { t } = useTranslation();
+    const canCreatePublisher = useCan([PERMISSIONS.publishers[1]]);
+    const canExportPublisher = useCan([PERMISSIONS.publishers[3]]);
     const [search, setSearch] = useState<PaginationState & { name: string }>({
         name: "",
         pageIndex: 1,
@@ -100,22 +105,26 @@ const PublisherTable = forwardRef<BaseTableRef, IPublisherTableProps>(({ onChoos
                             onChange={handleChangeInput}
                             className="w-full"
                             name="name"
-                            label="Tên nhà xuất bản"
+                            label={t("publisherName")}
                         />
                     </div>
                 </div>
 
                 <div className="ml-auto w-fit flex gap-2">
-                    <div>
-                        <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
-                    </div>
-                    <div>
-                        <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddPublisher}><Blinds size={18} /> Add</Button>
-                    </div>
+                    {
+                        canExportPublisher && <div>
+                            <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
+                        </div>
+                    }
+                    {
+                        canCreatePublisher && <div>
+                            <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddPublisher}><Blinds size={18} /> Add</Button>
+                        </div>
+                    }
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title="Danh sách nhà xuất bản" tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table title={t("publisherList")} tableData={tableData} />}
         </div>
     )
 });

@@ -6,19 +6,19 @@ const columnHelper = createColumnHelper<Book>();
 
 export const bookColumns = [
   columnHelper.accessor("title", {
-    header: "Name",
+    header: "name",
     cell: (info) => info.getValue(),
     sortUndefined: "last",
     sortDescFirst: false,
     footer: (info) => info.column.id,
     filterFn: "includesString",
     meta: {
-      label: "Name",
+      label: "name",
     },
   }),
 
   columnHelper.accessor("avatar_path", {
-    header: "Avatar",
+    header: "avatar",
     cell: ({ row }) => {
       const avatar = row.original.avatar_path;
 
@@ -43,43 +43,43 @@ export const bookColumns = [
     footer: (info) => info.column.id,
     enableColumnFilter: false,
     meta: {
-      label: "Avatar",
+      label: "avatar",
     },
   }),
 
   columnHelper.accessor("description", {
-    header: "Description",
+    header: "description",
     cell: (info) => info.getValue(),
     sortUndefined: "last",
     sortDescFirst: false,
     footer: (info) => info.column.id,
     filterFn: "includesString",
     meta: {
-      label: "Description",
+      label: "description",
     },
   }),
 
   columnHelper.accessor("language", {
-    header: "Language",
+    header: "language",
     cell: (info) => info.getValue(),
     sortUndefined: "last",
     sortDescFirst: false,
     footer: (info) => info.column.id,
     filterFn: "includesString",
     meta: {
-      label: "Language",
+      label: "language",
     },
   }),
 
   columnHelper.accessor("publish_year", {
-    header: "Publish Year",
+    header: "publishYear",
     cell: (info) => info.getValue(),
     sortUndefined: "last",
     sortDescFirst: false,
     footer: (info) => info.column.id,
     filterFn: "includesString",
     meta: {
-      label: "Publish Year",
+      label: "publishYear",
     },
   }),
 ];

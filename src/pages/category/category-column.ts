@@ -7,25 +7,25 @@ const columnHelper = createColumnHelper<Category>()
 
 export const categoryColumns = [
   columnHelper.accessor("name", {
-    header: "Name",
+    header: "name",
     cell: (info) => info.renderValue(),
     sortUndefined: 'last',
     sortDescFirst: false,
     footer: (info) => info.column.id,
     filterFn: "includesString",
     meta: {
-      label: "Name",
+      label: "name",
     }
   }),
   columnHelper.accessor("other_category_names", {
-    header: "Other Category",
+    header: "otherCategory",
     cell: (info) => info.renderValue(),
     sortUndefined: 'last',
     sortDescFirst: false,
     footer: (info) => info.column.id,
     filterFn: "includesString",
     meta: {
-      label: "Other Category",
+      label: "otherCategory",
     }
   }),
 ]

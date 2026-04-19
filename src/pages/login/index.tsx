@@ -1,3 +1,4 @@
+import { JwtPayload } from "@/components/avatar-dropdown";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -8,9 +9,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { useMutationRequest } from "@/hooks/useMutation";
 import { loginSchema } from "@/schema/login.schema";
+import { useAccountStore } from "@/store/account.store";
 import { useNotificationStore } from "@/store/notification.store";
 import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
+import { jwtDecode } from "jwt-decode";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -18,13 +21,29 @@ export default function LoginPage() {
   const { mutate } = useMutationRequest({
     key: ["login"],
     url: "auth/login", method: "post", options: {
-      onSuccess: (data) => {
+      onSuccess: (data: {
+        user: JwtPayload,
+        access_token: string
+      }) => {
+        console.log("🚀 ~ LoginPage ~ data:", data)
+        const token = data.access_token;
+
         localStorage.setItem("jwt", JSON.stringify(data));
+
+        const decoded = jwtDecode<JwtPayload>(token);
+
+        useAccountStore.getState().setUser(decoded);
+
         navigate({
           to: "/dashboard",
           replace: true
         });
-        notification.updateState({ message: "Đăng nhập thành công", type: "success", open: true });
+
+        notification.updateState({
+          message: "Đăng nhập thành công",
+          type: "success",
+          open: true
+        });
       },
       onError: (error) => {
         notification.updateState({ message: error.message, type: "error", open: true });
@@ -90,7 +109,7 @@ export default function LoginPage() {
                   field.state.meta.isTouched && !field.state.meta.isValid
                 return (
                   <Field data-invalid={isInvalid} className="gap-2">
-                    <FieldLabel htmlFor={field.name}>Account Pass</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>Password</FieldLabel>
                     <Input
                       id={field.name}
                       name={field.name}

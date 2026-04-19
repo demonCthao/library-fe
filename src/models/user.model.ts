@@ -1,10 +1,11 @@
+import { Role } from "@/types/role.type"
 import { Account } from "./account.model"
 
 type Obj = {
     id: number
     full_name: string
     email: string
-    role: "admin" | "librarian"
+    role: Role
     phone: string
     status: "active" | "inactive"
     lang: string

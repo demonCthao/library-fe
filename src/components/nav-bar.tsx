@@ -1,21 +1,13 @@
+import { hasPermission } from "@/lib/has-permission";
+import { useAccountStore } from "@/store/account.store";
+import { iconMap, menuPermissions } from "@/types/permission.type";
 import { Link } from "@tanstack/react-router";
-import {
-    BookmarkCheck,
-    BookText,
-    BookUser,
-    Building2,
-    Flag,
-    FolderClosed,
-    House,
-    User,
-    UserLock,
-    UsersRound
-} from "lucide-react";
+import _ from "lodash";
 import { useTranslation } from "react-i18next";
 
 const NavbarItem = ({ link, label, icon }: { link: string, label: string, icon: React.ReactNode }) => {
     return <Link to={link}
-        
+
         activeProps={{
             className:
                 "align-middle select-none font-sans font-bold cursor-pointer text-left transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] w-full flex items-center gap-2 px-2 capitalize"
@@ -30,6 +22,7 @@ const NavbarItem = ({ link, label, icon }: { link: string, label: string, icon: 
 
 export default function Navbar() {
     const { t } = useTranslation();
+    const user = useAccountStore((s) => s.user);
 
     return (
         <div className="max-h-[calc(100vh-100px)] overflow-y-auto">
@@ -47,46 +40,40 @@ export default function Navbar() {
                     </button>
                 </div>
                 <div className="m-4 max-h-[calc(100vh-100px)] overflow-y-auto">
-                    <ul className="mb-4 flex flex-col gap-1">
-                        <li>
-                            <NavbarItem link="/dashboard" label={t("dashboard")} icon={<House size={20} />} />
-                        </li>
-                        <li>
-                            <NavbarItem link="/user" label={t("userManager")} icon={<User size={20} />} />
-                        </li>
-                        <li>
-                            <NavbarItem link="/book" label={t("bookManagement")} icon={<BookText size={20} />} />
-                        </li>
-                        <li>
-                            <NavbarItem link="/author" label={t("authorList")} icon={<BookUser size={20} />} />
-                        </li>
-                        <li>
-                            <NavbarItem link="/borrow-records" label={t("borrowingRecord")} icon={<BookmarkCheck size={20} />} />
-                        </li>
-                        <li>
-                            <NavbarItem link="/category" label={t("categoryList")} icon={<FolderClosed size={20} />} />
-                        </li>
-                        <li>
-                            <NavbarItem link="/reader" label={t("patronManagement")} icon={<UsersRound size={20} />} />
-                        </li>
-                        <li>
-                            <NavbarItem link="/publisher" label={t("publisherList")} icon={<Building2 size={20} />} />
-                        </li>
-                        <li>
-                            <NavbarItem link="/fine" label={t("penaltyList")} icon={<Flag size={20} />} />
-                        </li>
-                    </ul>
-                    <ul className="mb-4 flex flex-col gap-1">
-                        <li className="mx-3.5 mt-4 mb-2">
-                            <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-black uppercase opacity-75">{t("systemAdministration")}</p>
-                        </li>
-                        <li>
-                            <NavbarItem link="/fine" label={t("accessControl")} icon={<UserLock size={20} />} />
-                        </li>
-                        <li>
-                            <NavbarItem link="/banking" label={t("bankAccount")} icon={<UserLock size={20} />} />
-                        </li>
-                    </ul>
+                    {menuPermissions.map((group) => {
+                        const visibleItems = group.items.filter(item =>
+                            hasPermission(user, item.permission)
+                        );
+
+                        if (visibleItems.length === 0) return null;
+
+                        return (
+                            <ul key={group.group} className="mb-4 flex flex-col gap-1">
+
+                                {group.group === "systemAdministration" && (
+                                    <li className="mx-3.5 mt-4 mb-2">
+                                        <p className="block text-sm font-black uppercase opacity-75">
+                                            {t("systemAdministration")}
+                                        </p>
+                                    </li>
+                                )}
+
+                                {visibleItems.map((item) => {
+                                    const Icon = iconMap[item.icon];
+
+                                    return (
+                                        <li key={item.path}>
+                                            <NavbarItem
+                                                link={item.path}
+                                                label={t(item.label)}
+                                                icon={Icon ? <Icon size={20} /> : null}
+                                            />
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        );
+                    })}
                 </div>
             </aside>
         </div>

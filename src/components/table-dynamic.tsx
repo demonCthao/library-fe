@@ -15,9 +15,10 @@ interface IDynamicTableProps<TData> {
         setPagination: Dispatch<SetStateAction<PaginationState>>;
         onChoose?: (data: TData, type: TypeActionTable) => void
     }
+    useCanMutaion?: boolean
 }
 
-export const DynamicTable = <TData,>({ title, tableData }: IDynamicTableProps<TData>) => {
+export const DynamicTable = <TData,>({ title, tableData, useCanMutaion }: IDynamicTableProps<TData>) => {
     const { t } = useTranslation();
     const { table, onChoose } = tableData;
 
@@ -36,7 +37,7 @@ export const DynamicTable = <TData,>({ title, tableData }: IDynamicTableProps<TD
                 <Table className="w-full min-w-[640px] table-auto">
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow>
+                            <TableRow key={headerGroup.id}>
                                 <TableHead className="border-b border-blue-gray-50 py-3 px-5 text-left">
                                     <p className="block antialiased font-sans text-[11px] font-bold uppercase text-blue-gray-400">{t("no")}</p>
                                 </TableHead>
@@ -65,10 +66,14 @@ export const DynamicTable = <TData,>({ title, tableData }: IDynamicTableProps<TD
                                                             : undefined
                                                     }
                                                 >
-                                                    {header.column.getIsVisible() && flexRender(
-                                                        header.column.columnDef.header,
-                                                        header.getContext(),
-                                                    )}
+                                                    {header.column.getIsVisible() &&
+                                                        (typeof header.column.columnDef.header === "string"
+                                                            ? t(header.column.columnDef.header)
+                                                            : flexRender(
+                                                                header.column.columnDef.header,
+                                                                header.getContext()
+                                                            )
+                                                        )}
                                                     {{
                                                         asc: <ArrowDown size={16} />,
                                                         desc: <ArrowUp size={16} />,
@@ -79,7 +84,7 @@ export const DynamicTable = <TData,>({ title, tableData }: IDynamicTableProps<TD
                                     )
                                 })}
                                 {
-                                    onChoose &&
+                                    onChoose && useCanMutaion &&
                                     <TableHead className="border-b border-blue-gray-50 py-3 px-5 text-center">
                                         <p className="block antialiased font-sans text-[11px] font-bold uppercase text-blue-gray-400">{t("actions")}</p>
                                     </TableHead>
@@ -103,7 +108,7 @@ export const DynamicTable = <TData,>({ title, tableData }: IDynamicTableProps<TD
                                     </TableCell>
                                 ))}
                                 {
-                                    onChoose &&
+                                    onChoose && useCanMutaion &&
                                     <TableCell className="w-[200px] border-b">
                                         <div className="flex gap-2 flex justify-center">
                                             <Button className="bg-green-500 hover:bg-green-600 cursor-pointer" onClick={() => onChooseRow(row.original, TypeActionTable.edit)}><Edit size={18} /></Button>

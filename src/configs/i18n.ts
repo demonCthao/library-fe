@@ -13,7 +13,7 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
       translation: vn
     },
   },
-  lng: "vi",
+  lng: "en",
   fallbackLng: "en",
 });
 

@@ -16,12 +16,17 @@ import _ from "lodash";
 import { UserRoundPlus } from "lucide-react";
 import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
 import { readerColumns } from "./reader-column";
+import { useTranslation } from "react-i18next";
+import { useCan } from "@/hooks/use-can";
+import { PERMISSIONS } from "@/types/permission.type";
 
 interface IUserTableProps {
     onChooseReader: (type: TypeActionTable, reader?: Reader) => void;
 }
 
 const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader }, ref) => {
+    const { t } = useTranslation();
+    const canMutationReader = useCan([PERMISSIONS.readers[1]]);
     const [search, setSearch] = useState<PaginationState & { fullName: string, phone: string, email: string }>({
         fullName: "",
         phone: "",
@@ -77,7 +82,7 @@ const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader 
                             onChange={handleChangeInput}
                             className="w-full"
                             name="fullName"
-                            label="Tên người đọc"
+                            label={t("name")}
                         />
                     </div>
                     <div >
@@ -86,7 +91,7 @@ const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader 
                             onChange={handleChangeInput}
                             name="phone"
                             className="w-full"
-                            label="Số điện thoại"
+                            label={t("phone")}
                         />
                     </div>
                     <div >
@@ -101,13 +106,15 @@ const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader 
                 </div>
 
                 <div className="ml-auto w-fit flex gap-2">
-                    <div>
-                        <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddReader}><UserRoundPlus size={18} /> Add</Button>
-                    </div>
+                    {
+                        canMutationReader && <div>
+                            <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddReader}><UserRoundPlus size={18} /> {t("add")}</Button>
+                        </div>
+                    }
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title="Danh sách người đọc" tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table title={t("patronList")} tableData={tableData} />}
         </div>
     )
 });

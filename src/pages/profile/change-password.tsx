@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useMutationRequest } from "@/hooks/useMutation"
 import { passSchema } from "@/schema/pass.schema"
-import { useUserStore } from "@/store/account.store"
+import { useAccountStore } from "@/store/account.store"
 import { useNotificationStore } from "@/store/notification.store"
 import { useForm } from "@tanstack/react-form"
 import { useNavigate, useParams } from "@tanstack/react-router"
@@ -11,7 +11,7 @@ import z from "zod"
 
 export default function ChangePassword() {
     const { id } = useParams({ from: "/change-pass/$id" });
-    const userStore = useUserStore();
+    const userStore = useAccountStore();
     const navigate = useNavigate();
     const notification = useNotificationStore();
     type PassForm = z.infer<typeof passSchema>;

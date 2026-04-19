@@ -18,6 +18,8 @@ import { ArrowBigDownDash, UserPlus } from "lucide-react";
 import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
 import { userColumns } from "./user-column";
 import { useTranslation } from "react-i18next";
+import { useCan } from "@/hooks/use-can";
+import { PERMISSIONS } from "@/types/permission.type";
 
 interface IUserTableProps {
     onChooseUser: (type: TypeActionTable, user?: User) => void;
@@ -25,6 +27,8 @@ interface IUserTableProps {
 
 const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, ref) => {
     const { t } = useTranslation();
+    const canCreateUser = useCan([PERMISSIONS.users[1]]);
+    const canExportPUser = useCan([PERMISSIONS.users[3]]);
     const [search, setSearch] = useState<PaginationState & { fullName: string, phone: string }>({
         fullName: "",
         phone: "",
@@ -119,12 +123,16 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
                 </div>
 
                 <div className="ml-auto w-fit flex gap-2">
-                    <div>
-                        <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> {t("exportData")}</Button>
-                    </div>
-                    <div>
-                        <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddUser}><UserPlus size={18} /> {t("add")}</Button>
-                    </div>
+                    {
+                        canCreateUser && <div>
+                            <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> {t("exportData")}</Button>
+                        </div>
+                    }
+                    {
+                        canExportPUser && <div>
+                            <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddUser}><UserPlus size={18} /> {t("add")}</Button>
+                        </div>
+                    }
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>

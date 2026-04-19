@@ -1,8 +1,8 @@
 import { createRouter } from '@tanstack/react-router';
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query';
+import i18n from "./configs/i18n";
 import { queryClient } from './lib/query-client';
 import { routeTree } from './routeTree.gen';
-import i18n from "./configs/i18n";
 
 // 1. Define the Context type correctly
 export interface MyRouterContext {
@@ -14,10 +14,10 @@ export function getRouter() {
   const router = createRouter({
     routeTree,
     // 2. Pass the instance into context
-    context: { 
-      queryClient, 
-      i18n 
-    } as MyRouterContext, 
+    context: {
+      queryClient,
+      i18n,
+    } as MyRouterContext,
     scrollRestoration: true,
     defaultPreload: 'intent',
   });

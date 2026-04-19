@@ -5,50 +5,50 @@ const columnHelper = createColumnHelper<BankAccount>();
 
 export const bankAccountColumns = [
     columnHelper.accessor("owner_name", {
-        header: "Owner Name",
+        header: "ownerName",
         cell: (info) => info.getValue(),
         sortUndefined: "last",
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Owner Name",
+            label: "ownerName",
         },
     }),
 
     columnHelper.accessor("account_number", {
-        header: "Account Number",
+        header: "accountNumber",
         cell: (info) => info.getValue(),
         sortUndefined: "last",
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Account Number",
+            label: "accountNumber",
         },
     }),
 
     columnHelper.accessor("bank_name", {
-        header: "Bank Name",
+        header: "bankName",
         cell: (info) => info.getValue(),
         sortUndefined: "last",
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Bank Name",
+            label: "bankName",
         },
     }),
 
     columnHelper.accessor("is_default", {
-        header: "Default",
+        header: "default",
         cell: (info) => info.getValue() === 1? "True": "False",
         sortUndefined: "last",
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Default",
+            label: "default",
         },
     }),
 

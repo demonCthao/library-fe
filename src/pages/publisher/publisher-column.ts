@@ -7,14 +7,14 @@ const columnHelper = createColumnHelper<Publisher>()
 
 export const publisherColumns = [
     columnHelper.accessor("name", {
-        header: "Name",
+        header: "name",
         cell: (info) => info.renderValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Name",
+            label: "name",
         }
     }),
     columnHelper.accessor("email", {
@@ -29,25 +29,25 @@ export const publisherColumns = [
         }
     }),
     columnHelper.accessor("phone", {
-        header: "Phone",
+        header: "phone",
         cell: (info) => info.renderValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Phone",
+            label: "phone",
         }
     }),
     columnHelper.accessor("address", {
-        header: "Address",
+        header: "address",
         cell: (info) => info.renderValue(),
         sortUndefined: 'last',
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Address",
+            label: "address",
         }
     }),
 ]

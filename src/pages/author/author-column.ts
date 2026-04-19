@@ -5,26 +5,26 @@ const columnHelper = createColumnHelper<Author>();
 
 export const authorColumns = [
     columnHelper.accessor("name", {
-        header: "Name",
+        header: "authorName",
         cell: (info) => info.getValue(),
         sortUndefined: "last",
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Name",
+            label: "authorName",
         },
     }),
 
     columnHelper.accessor("bio", {
-        header: "Biography",
+        header: "biography",
         cell: (info) => info.getValue(),
         sortUndefined: "last",
         sortDescFirst: false,
         footer: (info) => info.column.id,
         filterFn: "includesString",
         meta: {
-            label: "Biography",
+            label: "biography",
         },
     })
 ];

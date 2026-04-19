@@ -16,12 +16,18 @@ import { PaginationState } from '@tanstack/react-table';
 import { ArrowBigDownDash, Blinds } from 'lucide-react';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { categoryColumns } from './category-column';
+import { useCan } from '@/hooks/use-can';
+import { PERMISSIONS } from '@/types/permission.type';
+import { useTranslation } from 'react-i18next';
 
 interface ICategoryTableProps {
     onChooseCategory: (type: TypeActionTable, category?: Category) => void;
 }
 
 const CategoryTable = forwardRef<BaseTableRef, ICategoryTableProps>(({ onChooseCategory }, ref) => {
+    const { t } = useTranslation();
+    const canMutationCategory = useCan([PERMISSIONS.categories[1]]);
+    const canExportPCategory = useCan([PERMISSIONS.categories[3]]);
     const [search, setSearch] = useState<PaginationState & { name: string }>({
         name: "",
         pageIndex: 1,
@@ -95,7 +101,7 @@ const CategoryTable = forwardRef<BaseTableRef, ICategoryTableProps>(({ onChooseC
                 <div className="col-span-3 grid grid-cols-3 gap-3">
                     <div>
                         <FieldSearch
-                            label="Tên danh mục"
+                            label={t("categoryName")}
                             onChange={handleChangeInput}
                             name="name"
                             className="w-full"
@@ -104,16 +110,20 @@ const CategoryTable = forwardRef<BaseTableRef, ICategoryTableProps>(({ onChooseC
                 </div>
 
                 <div className="ml-auto w-fit flex gap-2">
-                    <div>
-                        <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> Xuất dữ liệu</Button>
-                    </div>
-                    <div>
-                        <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddCategory}><Blinds size={18} /> Add</Button>
-                    </div>
+                    {
+                        canExportPCategory && <div>
+                            <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> {t("exportData")}</Button>
+                        </div>
+                    }
+                    {
+                        canMutationCategory && <div>
+                            <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddCategory}><Blinds size={18} /> {t("add")}</Button>
+                        </div>
+                    }
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title="Danh sách danh mục" tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table useCanMutaion={canMutationCategory} title={t("categoryList")} tableData={tableData} />}
         </div>
     )
 });

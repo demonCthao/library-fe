@@ -13,6 +13,7 @@ import { readerSchema } from "@/schema/reader.schema";
 import { useNotificationStore } from "@/store/notification.store";
 import { useForm } from "@tanstack/react-form";
 import _ from "lodash";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import z from "zod";
 
@@ -23,6 +24,7 @@ interface IReaderFormProps {
 }
 
 export const ReaderForm = ({ open, onClose, reader }: IReaderFormProps) => {
+    const { t } = useTranslation();
     const notification = useNotificationStore();
     type ReaderForm = z.infer<typeof readerSchema>;
     const { mutate } = useMutationRequest({
@@ -69,11 +71,11 @@ export const ReaderForm = ({ open, onClose, reader }: IReaderFormProps) => {
 
     return (
         <div>
-            <Popup variant="2xl" type="form" open={open} onClose={() => onClose(false)} title="Thông tin người đọc" form={form}>
+            <Popup variant="2xl" type="form" open={open} onClose={() => onClose(false)} title={t("userInfomation")} form={form}>
                 <FieldGroup className="grid grid-cols-2 gap-3">
-                    <FormFieldInput form={form} label="Full Name" name="full_name" type="text" placeholder="Nhập tên người đọc..." />
-                    <FormFieldInput form={form} label="Email" name="email" type="text" placeholder="Nhập email..." />
-                    <FormFieldInput form={form} label="Phone" name="phone" type="text" placeholder="Nhập số điện thoại..." />
+                    <FormFieldInput form={form} label={t("fullName")} name="full_name" type="text" placeholder="Nhập tên người đọc..." />
+                    <FormFieldInput form={form} label={t("email")} name="email" type="text" placeholder="Nhập email..." />
+                    <FormFieldInput form={form} label={t("phone")} name="phone" type="text" placeholder="Nhập số điện thoại..." />
                     <form.Field
                         name="gender"
                         children={(field) => {
@@ -81,7 +83,7 @@ export const ReaderForm = ({ open, onClose, reader }: IReaderFormProps) => {
                                 field.state.meta.isTouched && !field.state.meta.isValid
                             return (
                                 <Field data-invalid={isInvalid} className="gap-1">
-                                    <FieldLabel htmlFor={field.name}>Giới tính</FieldLabel>
+                                    <FieldLabel htmlFor={field.name}>{t("gender")}</FieldLabel>
                                     <SelectApp
                                         placeholder="Giới tính"
                                         options={[
@@ -98,8 +100,8 @@ export const ReaderForm = ({ open, onClose, reader }: IReaderFormProps) => {
                             )
                         }}
                     />
-                    <FormFieldInput form={form} label="Date of birth" name="date_of_birth" type="date" />
-                    <FormFieldInput form={form} label="Addres" name="address" type="text" placeholder="Nhập địa chỉ..." />
+                    <FormFieldInput form={form} label={t("dateOfBirth")} name="date_of_birth" type="date" />
+                    <FormFieldInput form={form} label={t("address")} name="address" type="text" placeholder="Nhập địa chỉ..." />
                 </FieldGroup>
             </Popup>
         </div>

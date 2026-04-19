@@ -109,7 +109,6 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
       if (preview?.file) {
         formData.append("image", preview.file)
       }
-      console.log("🚀 ~ BookForm ~ formData:",[...formData.entries()])
 
       await mutate(formData);
     },
