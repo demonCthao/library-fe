@@ -11,23 +11,51 @@ import { useParams } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 import { AvatarUpload } from "./avatar-upload"
 import { PiggyBank } from "lucide-react"
+import { useMutationRequest } from "@/hooks/useMutation"
+import { useNotificationStore } from "@/store/notification.store"
 
 export default function ProfilePage() {
   const { id } = useParams({ from: "/profile/$id" });
+  const notification = useNotificationStore();
+  const [form, setForm] = useState<User | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<{
+    file: File | undefined,
+    src: string | undefined
+  } | undefined>();
+  console.log("🚀 ~ ProfilePage ~ avatarPreview:", avatarPreview)
 
   const { data: user, isLoading, error } = useFetch<User>({
     url: `users/profile/${id}`,
     key: ["user-detail", id],
   });
 
-  const [form, setForm] = useState<User | null>(null)
-  const [avatarPreview, setAvatarPreview] = useState<string | undefined>()
+  const { mutate } = useMutationRequest({
+    key: ["update-profile"],
+    url: `users/${id}`, method: "put", options: {
+      onSuccess: () => {
+        notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+      },
+      onError: (error) => {
+        notification.updateState({ message: error.message, type: "error", open: true });
+      }
+    }
+  });
 
   useEffect(() => {
     if (user) {
-      setForm(user)
-      setAvatarPreview(user?.avatar_path)
-    }
+        setForm(user)
+        if (avatarPreview) {
+          setAvatarPreview({
+            ...avatarPreview,
+            src: user?.avatar_path
+          })
+        } else {
+          setAvatarPreview({
+            file: undefined,
+            src: user?.avatar_path
+          })
+        }
+      }
   }, [user]);
 
   if (isLoading) {
@@ -43,6 +71,19 @@ export default function ProfilePage() {
   }
 
   const handleSave = () => {
+    const formValue = form;
+    delete formValue?.accounts
+    const formData = new FormData();
+    formData.append(
+      "data",
+      JSON.stringify(formValue)
+    )
+
+    if (avatarPreview?.file) {
+      formData.append("image", avatarPreview.file)
+    }
+
+    mutate(formData)
   }
 
   return (
@@ -55,9 +96,12 @@ export default function ProfilePage() {
           <div className="mb-6 flex items-center justify-between flex-wrap gap-6">
             <div className="flex items-center gap-6">
               <AvatarUpload
-                value={avatarPreview}
+                value={avatarPreview?.src}
                 onChange={(file, preview) => {
-                  setAvatarPreview(preview)
+                  setAvatarPreview({
+                    file: file,
+                    src: preview
+                  })
                   handleChange("avatar_path", preview)
                 }}
               />
@@ -182,7 +226,7 @@ export default function ProfilePage() {
               <a href="#" target="_blank" className="transition-colors hover:text-blue-500 font-bold"> Bui Cong Dat</a> for a better web.</p>
           </div>
         </footer>
-        </div>
+      </div>
     </div>
   )
 }

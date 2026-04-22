@@ -19,7 +19,7 @@ import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
 import { userColumns } from "./user-column";
 import { useTranslation } from "react-i18next";
 import { useCan } from "@/hooks/use-can";
-import { PERMISSIONS } from "@/types/permission.type";
+import { MUTATION, PERMISSIONS } from "@/types/permission.type";
 
 interface IUserTableProps {
     onChooseUser: (type: TypeActionTable, user?: User) => void;
@@ -27,7 +27,7 @@ interface IUserTableProps {
 
 const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, ref) => {
     const { t } = useTranslation();
-    const canCreateUser = useCan([PERMISSIONS.users[1]]);
+    const canCreateUser = useCan([MUTATION.users]);
     const canExportPUser = useCan([PERMISSIONS.users[3]]);
     const [search, setSearch] = useState<PaginationState & { fullName: string, phone: string }>({
         fullName: "",
