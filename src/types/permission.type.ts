@@ -78,6 +78,18 @@ export const iconMap = {
   banking: UserLock,
 } as const;
 
+export const EXPORT = {
+  users: PERMISSIONS.users[3],
+  books: PERMISSIONS.books[3],
+  authors: PERMISSIONS.authors[3],
+  borrows: PERMISSIONS.borrows[3],
+  categories: PERMISSIONS.categories[3],
+  readers: PERMISSIONS.readers[3],
+  publishers: PERMISSIONS.publishers[3],
+  fines: PERMISSIONS.fines[3],
+  bank: PERMISSIONS.bank[3],
+}
+
 export type IconKey = keyof typeof iconMap;
 
 export const menuPermissions = [

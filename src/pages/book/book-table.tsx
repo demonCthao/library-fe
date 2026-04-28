@@ -20,7 +20,7 @@ import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
 import { bookColumns } from "./book-column";
 import { useTranslation } from "react-i18next";
 import { useCan } from "@/hooks/use-can";
-import { PERMISSIONS } from "@/types/permission.type";
+import { DELETE, EXPORT, MUTATION, PERMISSIONS } from "@/types/permission.type";
 
 interface IBookTableProps {
   onChooseBook: (type: TypeActionTable, book?: Book) => void;
@@ -28,8 +28,8 @@ interface IBookTableProps {
 
 const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, ref) => {
   const { t } = useTranslation();
-  const canMutationBook = useCan([PERMISSIONS.books[1]]);
-  const canExportPBook = useCan([PERMISSIONS.books[3]]);
+  const canMutationBook = useCan([MUTATION.books, DELETE.books]);
+  const canExportPBook = useCan([EXPORT.books]);
   const [search, setSearch] = useState<PaginationState & { title: string, description: string, publish_year: string, category_id: string }>({
     title: "",
     description: "",

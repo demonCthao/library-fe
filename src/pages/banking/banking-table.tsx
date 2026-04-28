@@ -9,12 +9,15 @@ import { BaseTableRef } from "@/types/base-ref.type";
 import { Landmark } from "lucide-react";
 import { forwardRef, useImperativeHandle } from "react";
 import { bankAccountColumns } from "./banking-column";
+import { useCan } from "@/hooks/use-can";
+import { DELETE, MUTATION } from "@/types/permission.type";
 
 interface IBankingTableProps {
     onChooseBank: (type: TypeActionTable, bank?: BankAccount) => void;
 }
 
 const BankingTable = forwardRef<BaseTableRef, IBankingTableProps>(({ onChooseBank }, ref) => {
+    const canMutationBook = useCan([MUTATION.bank, DELETE.bank]);
     const { data, isLoading, error, refetch } = useFetch<BankAccount[]>({
         url: "banks",
         key: ["banks"],
@@ -53,7 +56,7 @@ const BankingTable = forwardRef<BaseTableRef, IBankingTableProps>(({ onChooseBan
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title="Quản lý danh sách tài khoản" tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table useCanMutaion={canMutationBook} title="Quản lý danh sách tài khoản" tableData={tableData} />}
         </div>
     )
 });
