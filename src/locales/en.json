@@ -61,5 +61,6 @@
     "accountNumber": "Account Number",
     "bankName": "Bank Name",
     "default": "Default",
-    "loginSuccess": "Login Success"
+    "loginSuccess": "Login Success",
+    "bank": "Bank"
 }

@@ -4,6 +4,7 @@ import Loading from "@/components/loading";
 import { DynamicTable as Table } from "@/components/table-dynamic";
 import { Button } from "@/components/ui/button";
 import { PAGE_SIZE_10 } from "@/enum/search.enum";
+import { useCan } from "@/hooks/use-can";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useFetch } from "@/hooks/useFetch";
 import { TypeActionTable, useTable } from "@/hooks/useTable";
@@ -11,14 +12,13 @@ import { convertObjectToParam } from "@/lib/utils";
 import { Reader } from "@/models/reader.model";
 import { DataList } from "@/models/response.model";
 import { BaseTableRef } from "@/types/base-ref.type";
+import { DELETE, MUTATION } from "@/types/permission.type";
 import { PaginationState } from "@tanstack/react-table";
 import _ from "lodash";
 import { UserRoundPlus } from "lucide-react";
 import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
-import { readerColumns } from "./reader-column";
 import { useTranslation } from "react-i18next";
-import { useCan } from "@/hooks/use-can";
-import { PERMISSIONS } from "@/types/permission.type";
+import { readerColumns } from "./reader-column";
 
 interface IUserTableProps {
     onChooseReader: (type: TypeActionTable, reader?: Reader) => void;
@@ -26,7 +26,7 @@ interface IUserTableProps {
 
 const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader }, ref) => {
     const { t } = useTranslation();
-    const canMutationReader = useCan([PERMISSIONS.readers[1]]);
+    const canMutationReader = useCan([MUTATION.readers, DELETE.readers]);
     const [search, setSearch] = useState<PaginationState & { fullName: string, phone: string, email: string }>({
         fullName: "",
         phone: "",
@@ -114,7 +114,7 @@ const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader 
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title={t("patronList")} tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table title={t("patronList")} tableData={tableData} useCanMutaion={canMutationReader} />}
         </div>
     )
 });

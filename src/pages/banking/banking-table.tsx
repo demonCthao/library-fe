@@ -11,12 +11,14 @@ import { forwardRef, useImperativeHandle } from "react";
 import { bankAccountColumns } from "./banking-column";
 import { useCan } from "@/hooks/use-can";
 import { DELETE, MUTATION } from "@/types/permission.type";
+import { useTranslation } from "react-i18next";
 
 interface IBankingTableProps {
     onChooseBank: (type: TypeActionTable, bank?: BankAccount) => void;
 }
 
 const BankingTable = forwardRef<BaseTableRef, IBankingTableProps>(({ onChooseBank }, ref) => {
+    const { t } = useTranslation();
     const canMutationBook = useCan([MUTATION.bank, DELETE.bank]);
     const { data, isLoading, error, refetch } = useFetch<BankAccount[]>({
         url: "banks",
@@ -51,7 +53,7 @@ const BankingTable = forwardRef<BaseTableRef, IBankingTableProps>(({ onChooseBan
             <div className="w-full mb-5">
                 <div className="ml-auto w-fit flex gap-2">
                     <div>
-                        <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddBorrow}><Landmark size={18} /> Add</Button>
+                        <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddBorrow}><Landmark size={18} /> {t("add")}</Button>
                     </div>
                     <DropdownHeaderTable table={tableData.table} />
                 </div>

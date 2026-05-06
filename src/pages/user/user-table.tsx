@@ -27,7 +27,7 @@ interface IUserTableProps {
 
 const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, ref) => {
     const { t } = useTranslation();
-    const canCreateUser = useCan([MUTATION.users]);
+    const canMutationUser = useCan([MUTATION.users]);
     const canExportPUser = useCan([PERMISSIONS.users[3]]);
     const [search, setSearch] = useState<PaginationState & { fullName: string, phone: string }>({
         fullName: "",
@@ -124,7 +124,7 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
 
                 <div className="ml-auto w-fit flex gap-2">
                     {
-                        canCreateUser && <div>
+                        canMutationUser && <div>
                             <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> {t("exportData")}</Button>
                         </div>
                     }
@@ -136,7 +136,7 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title={t("userList")} tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table title={t("userList")} tableData={tableData} useCanMutaion={canMutationUser} />}
         </div>
     )
 });

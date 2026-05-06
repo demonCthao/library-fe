@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 
 export interface SelectOption {
     label: string;
@@ -38,6 +39,7 @@ const SelectApp = React.memo(
         disabled,
         className,
     }: SelectApptProps) => {
+        const { t } = useTranslation();
 
         const getDefault = () => {
             if (defaultValue) {
@@ -55,7 +57,7 @@ const SelectApp = React.memo(
                 disabled={disabled}
             >
                 <SelectTrigger className={cn("w-full font-sans font-bold text-blue-gray-500", className)}>
-                    <SelectValue placeholder={placeholder} />
+                    <SelectValue placeholder={t(placeholder)} />
                 </SelectTrigger>
 
                 <SelectContent>

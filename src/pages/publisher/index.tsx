@@ -1,5 +1,4 @@
 import ConfirmDialog from "@/components/confirm-dialog";
-import { Label } from "@/components/ui/label";
 import { useMutationRequest } from "@/hooks/useMutation";
 import { TypeActionTable } from "@/hooks/useTable";
 import { Publisher } from "@/models/publisher.model";

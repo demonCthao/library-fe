@@ -13,7 +13,7 @@ import { convertObjectToParam } from "@/lib/utils";
 import { Publisher } from "@/models/publisher.model";
 import { DataList } from "@/models/response.model";
 import { BaseTableRef } from "@/types/base-ref.type";
-import { PERMISSIONS } from "@/types/permission.type";
+import { EXPORT, MUTATION, PERMISSIONS } from "@/types/permission.type";
 import { PaginationState } from "@tanstack/react-table";
 import { ArrowBigDownDash, Blinds } from "lucide-react";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
@@ -26,8 +26,8 @@ interface IPublisherTableProps {
 
 const PublisherTable = forwardRef<BaseTableRef, IPublisherTableProps>(({ onChoosePublisher }, ref) => {
     const { t } = useTranslation();
-    const canCreatePublisher = useCan([PERMISSIONS.publishers[1]]);
-    const canExportPublisher = useCan([PERMISSIONS.publishers[3]]);
+    const canMutatePublisher = useCan([MUTATION.publishers]);
+    const canExportPublisher = useCan([EXPORT.publishers]);
     const [search, setSearch] = useState<PaginationState & { name: string }>({
         name: "",
         pageIndex: 1,
@@ -117,14 +117,14 @@ const PublisherTable = forwardRef<BaseTableRef, IPublisherTableProps>(({ onChoos
                         </div>
                     }
                     {
-                        canCreatePublisher && <div>
+                        canMutatePublisher && <div>
                             <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddPublisher}><Blinds size={18} /> Add</Button>
                         </div>
                     }
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title={t("publisherList")} tableData={tableData} />}
+            {isLoading ? <Loading /> : <Table title={t("publisherList")} tableData={tableData} useCanMutaion={canMutatePublisher} />}
         </div>
     )
 });
