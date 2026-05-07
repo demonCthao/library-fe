@@ -13,6 +13,7 @@ export const bankAccountColumns = [
         filterFn: "includesString",
         meta: {
             label: "ownerName",
+            headerClassName: "text-left"
         },
     }),
 
@@ -25,6 +26,7 @@ export const bankAccountColumns = [
         filterFn: "includesString",
         meta: {
             label: "accountNumber",
+            className: "text-center"
         },
     }),
 
@@ -37,6 +39,7 @@ export const bankAccountColumns = [
         filterFn: "includesString",
         meta: {
             label: "bankName",
+            className: "text-center"
         },
     }),
 
@@ -49,6 +52,7 @@ export const bankAccountColumns = [
         filterFn: "includesString",
         meta: {
             label: "default",
+            className: "text-center"
         },
     }),
 

@@ -62,5 +62,7 @@
     "default": "Mặc định",
     "loginSuccess": "Đăng nhập thành công",
     "bank": "Ngân hàng",
-    "accountNumber": "Số tài khoản"
+    "accountNumber": "Số tài khoản",
+    "borrowedQuantity": "Số lượng mượn",
+    "availableQuantity": "Số lượng khả dụng"
 }

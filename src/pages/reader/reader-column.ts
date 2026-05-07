@@ -16,6 +16,7 @@ export const readerColumns = [
         filterFn: "includesString",
         meta: {
             label: "readerCode",
+            className: "text-center"
         }
     }),
     columnHelper.accessor("full_name", {
@@ -27,6 +28,8 @@ export const readerColumns = [
         filterFn: "includesString",
         meta: {
             label: "name",
+            className: "text-left",
+            headerClassName: "text-left"
         }
     }),
     columnHelper.accessor("gender", {
@@ -38,6 +41,7 @@ export const readerColumns = [
         filterFn: "includesString",
         meta: {
             label: "gender",
+            className: "text-center"
         }
     }),
     columnHelper.accessor("phone", {
@@ -49,6 +53,7 @@ export const readerColumns = [
         filterFn: "includesString",
         meta: {
             label: "phone",
+            className: "text-center"
         }
     }),
     columnHelper.accessor("email", {
@@ -60,6 +65,7 @@ export const readerColumns = [
         filterFn: "includesString",
         meta: {
             label: "Email",
+            headerClassName: "text-left"
         }
     }),
     columnHelper.accessor("date_of_birth", {
@@ -68,6 +74,7 @@ export const readerColumns = [
         footer: (info) => info.column.id,
         meta: {
             label: "dateOfBirth",
+            className: "text-center"
         }
     }),
     columnHelper.accessor("address", {
@@ -79,6 +86,7 @@ export const readerColumns = [
         filterFn: "includesString",
         meta: {
             label: "address",
+            headerClassName: "text-left"
         }
     }),
 ]

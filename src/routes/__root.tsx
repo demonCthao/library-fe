@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header"
 import Navbar from "@/components/nav-bar"
 import { Toaster } from "@/components/ui/sonner"
+import { useSyncLanguage } from "@/hooks/use-sync-language"
 import { useNotificationStore } from "@/store/notification.store"
 import { TanStackDevtools } from "@tanstack/react-devtools"
 import { HeadContent, Scripts, createRootRoute, useLocation } from "@tanstack/react-router"
@@ -8,10 +9,8 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import _ from "lodash"
 import { useEffect } from "react"
 import { toast } from "sonner"
-import appCss from "../styles.css?url"
 import "../configs/i18n"
-import { useSyncLanguage } from "@/hooks/use-sync-language"
-import { useAccountStore } from "@/store/account.store"
+import appCss from "../styles.css?url"
 
 export const Route = createRootRoute({
   head: () => ({

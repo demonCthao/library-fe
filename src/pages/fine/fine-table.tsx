@@ -99,23 +99,20 @@ const FineTable = forwardRef<BaseTableRef, IFineTableProps>(({ onChooseFine }, r
 
     return (
         <div className="h-full flex flex-col">
-            <div className="grid grid-cols-4 w-full mb-5">
-                <div className="col-span-3 grid grid-cols-3 gap-3">
-                    <div>
-                        <FieldSearch
-                            label={t("readerName")}
-                            onChange={handleChangeInput}
-                            name="name"
-                        />
-                    </div>
-                    <div>
-                        <FieldSearch
-                            label={t("phone")}
-                            onChange={handleChangeInput}
-                            name="phone"
-                        />
-                    </div>
+            <div className="grid grid-cols-3 justify-between w-full mb-5">
+                <div className="col-span-2 grid grid-cols-3 gap-3">
+                    <FieldSearch
+                        label={t("readerName")}
+                        onChange={handleChangeInput}
+                        name="name"
+                    />
+                    <FieldSearch
+                        label={t("phone")}
+                        onChange={handleChangeInput}
+                        name="phone"
+                    />
                 </div>
+
                 <div className="ml-auto w-fit flex gap-2">
                     {
                         canExportFine &&

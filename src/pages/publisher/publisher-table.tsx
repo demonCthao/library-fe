@@ -13,12 +13,12 @@ import { convertObjectToParam } from "@/lib/utils";
 import { Publisher } from "@/models/publisher.model";
 import { DataList } from "@/models/response.model";
 import { BaseTableRef } from "@/types/base-ref.type";
-import { EXPORT, MUTATION, PERMISSIONS } from "@/types/permission.type";
+import { EXPORT, MUTATION } from "@/types/permission.type";
 import { PaginationState } from "@tanstack/react-table";
 import { ArrowBigDownDash, Blinds } from "lucide-react";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
-import { publisherColumns } from "./publisher-column";
 import { useTranslation } from "react-i18next";
+import { publisherColumns } from "./publisher-column";
 
 interface IPublisherTableProps {
     onChoosePublisher: (type: TypeActionTable, publisher?: Publisher) => void;
@@ -97,17 +97,15 @@ const PublisherTable = forwardRef<BaseTableRef, IPublisherTableProps>(({ onChoos
 
     return (
         <div className="h-full flex flex-col">
-            <div className="grid grid-cols-4 w-full mb-5">
-                <div className="col-span-3 grid grid-cols-3 gap-3">
-                    <div >
-                        <FieldSearch
-                            type="text"
-                            onChange={handleChangeInput}
-                            className="w-full"
-                            name="name"
-                            label={t("publisherName")}
-                        />
-                    </div>
+            <div className="grid grid-cols-3 justify-between w-full mb-5">
+                <div className="col-span-2 grid grid-cols-2 gap-3">
+                    <FieldSearch
+                        type="text"
+                        onChange={handleChangeInput}
+                        className="w-full"
+                        name="name"
+                        label={t("publisherName")}
+                    />
                 </div>
 
                 <div className="ml-auto w-fit flex gap-2">

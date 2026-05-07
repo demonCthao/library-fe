@@ -4,6 +4,7 @@ import { iconMap, menuPermissions } from "@/types/permission.type";
 import { Link } from "@tanstack/react-router";
 import _ from "lodash";
 import { useTranslation } from "react-i18next";
+import { LazyImage } from "./ui/image";
 
 const NavbarItem = ({ link, label, icon }: { link: string, label: string, icon: React.ReactNode }) => {
     return <Link to={link}
@@ -28,8 +29,8 @@ export default function Navbar() {
         <div className="max-h-[calc(100vh-100px)] overflow-y-auto">
             <aside className="bg-white shadow-sm -translate-x-80 fixed inset-0 z-50 mt-4 w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100">
                 <div className="relative">
-                    <a className="py-6 px-8 text-center" href="#/">
-                        <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900">{t("bookManagementSystem")}</h6>
+                    <a className="px-8 mt-3 text-center flex justify-center" href="#/">
+                        <LazyImage className="w-[80%] h-[100px]" src="../../src/assets/images/image.png" />
                     </a>
                     <button className="align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[32px] h-8 max-h-[32px] rounded-lg text-xs text-white hover:bg-white/10 active:bg-white/30 absolute right-0 top-0 grid rounded-br-none rounded-tl-none xl:hidden" type="button">
                         <span className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">

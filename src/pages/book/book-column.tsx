@@ -14,6 +14,7 @@ export const bookColumns = [
     filterFn: "includesString",
     meta: {
       label: "name",
+      headerClassName: "text-left"
     },
   }),
 
@@ -44,6 +45,7 @@ export const bookColumns = [
     enableColumnFilter: false,
     meta: {
       label: "avatar",
+      className: "flex justify-center"
     },
   }),
 
@@ -68,6 +70,7 @@ export const bookColumns = [
     filterFn: "includesString",
     meta: {
       label: "language",
+      className: "text-center"
     },
   }),
 
@@ -80,6 +83,33 @@ export const bookColumns = [
     filterFn: "includesString",
     meta: {
       label: "publishYear",
+      className: "text-center"
+    },
+  }),
+
+  columnHelper.accessor("borrowed_quantity", {
+    header: "borrowedQuantity",
+    cell: (info) => info.getValue(),
+    sortUndefined: "last",
+    sortDescFirst: false,
+    footer: (info) => info.column.id,
+    filterFn: "includesString",
+    meta: {
+      label: "borrowedQuantity",
+      className: "text-center"
+    },
+  }),
+
+  columnHelper.accessor("available_quantity", {
+    header: "availableQuantity",
+    cell: (info) => info.getValue(),
+    sortUndefined: "last",
+    sortDescFirst: false,
+    footer: (info) => info.column.id,
+    filterFn: "includesString",
+    meta: {
+      label: "availableQuantity",
+      className: "text-center"
     },
   }),
 ];

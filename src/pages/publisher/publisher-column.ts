@@ -15,6 +15,7 @@ export const publisherColumns = [
         filterFn: "includesString",
         meta: {
             label: "name",
+            headerClassName: "text-left"
         }
     }),
     columnHelper.accessor("email", {
@@ -26,6 +27,7 @@ export const publisherColumns = [
         filterFn: "includesString",
         meta: {
             label: "Email",
+            headerClassName: "text-left"
         }
     }),
     columnHelper.accessor("phone", {
@@ -37,6 +39,7 @@ export const publisherColumns = [
         filterFn: "includesString",
         meta: {
             label: "phone",
+            className: "text-center"
         }
     }),
     columnHelper.accessor("address", {
@@ -48,6 +51,7 @@ export const publisherColumns = [
         filterFn: "includesString",
         meta: {
             label: "address",
+            headerClassName: "text-left"
         }
     }),
 ]

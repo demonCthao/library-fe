@@ -16,6 +16,7 @@ export const fineColumns = [
         filterFn: "includesString",
         meta: {
             label: "readerName",
+            headerClassName: "text-left"
         }
     }),
     columnHelper.accessor("borrow_records.readers.email", {
@@ -27,6 +28,7 @@ export const fineColumns = [
         filterFn: "includesString",
         meta: {
             label: "Email",
+            headerClassName: "text-left"
         }
     }),
     columnHelper.accessor("borrow_records.readers.phone", {
@@ -38,6 +40,7 @@ export const fineColumns = [
         filterFn: "includesString",
         meta: {
             label: "phone",
+            className: "text-center"
         }
     }),
     columnHelper.accessor("borrow_records.readers.address", {
@@ -49,6 +52,7 @@ export const fineColumns = [
         filterFn: "includesString",
         meta: {
             label: "address",
+            headerClassName: "text-left"
         }
     }),
     columnHelper.accessor("amount", {
@@ -60,6 +64,8 @@ export const fineColumns = [
         filterFn: "includesString",
         meta: {
             label: "amount",
+            className: "text-right",
+            headerClassName: "text-right"
         }
     }),
     columnHelper.accessor("reason", {
@@ -71,6 +77,8 @@ export const fineColumns = [
         filterFn: "includesString",
         meta: {
             label: "reason",
+            className: "text-left",
+            headerClassName: "text-left"
         }
     }),
     columnHelper.accessor("borrow_records.return_date", {
@@ -82,6 +90,7 @@ export const fineColumns = [
         filterFn: "includesString",
         meta: {
             label: "returnDate",
+            className: "text-center"
         }
     }),
     columnHelper.accessor("paid", {

@@ -20,11 +20,13 @@ export interface JwtPayload {
   fullName: string;
   userName: string;
   lang: string;
+  avatarPath: string;
 }
 
 export default function AvatarDropdownMenu() {
   const navigate = useNavigate();
   const userStore = useAccountStore();
+  console.log("🚀 ~ AvatarDropdownMenu ~ userStore:", userStore, `http://127.0.0.1:3000${userStore.user?.avatarPath}`)
 
   const handleLogout = () => {
     if (userStore.user) {
@@ -57,7 +59,7 @@ export default function AvatarDropdownMenu() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="cursor-pointer">
-            <AvatarImage alt="@shadcn" src="https://github.com/shadcn.png" />
+            <AvatarImage alt="@shadcn" src={`http://127.0.0.1:3000${userStore.user?.avatarPath}`} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>

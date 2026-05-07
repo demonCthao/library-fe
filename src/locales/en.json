@@ -62,5 +62,7 @@
     "bankName": "Bank Name",
     "default": "Default",
     "loginSuccess": "Login Success",
-    "bank": "Bank"
+    "bank": "Bank",
+    "borrowedQuantity": "Borrowed Quantity",
+    "availableQuantity": "Available Quantity"
 }

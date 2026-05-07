@@ -13,6 +13,7 @@ export const authorColumns = [
         filterFn: "includesString",
         meta: {
             label: "authorName",
+            className: "text-center"
         },
     }),
 
@@ -25,6 +26,7 @@ export const authorColumns = [
         filterFn: "includesString",
         meta: {
             label: "biography",
+            className: "text-center"
         },
     })
 ];

@@ -97,16 +97,14 @@ const CategoryTable = forwardRef<BaseTableRef, ICategoryTableProps>(({ onChooseC
 
     return (
         <div className="h-full flex flex-col">
-            <div className="grid grid-cols-4 w-full mb-5">
-                <div className="col-span-3 grid grid-cols-3 gap-3">
-                    <div>
-                        <FieldSearch
-                            label={t("categoryName")}
-                            onChange={handleChangeInput}
-                            name="name"
-                            className="w-full"
-                        />
-                    </div>
+            <div className="grid grid-cols-3 justify-between w-full mb-5">
+                <div className="col-span-2 grid grid-cols-2 gap-3">
+                    <FieldSearch
+                        label={t("categoryName")}
+                        onChange={handleChangeInput}
+                        name="name"
+                        className="w-full"
+                    />
                 </div>
 
                 <div className="ml-auto w-fit flex gap-2">

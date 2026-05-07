@@ -15,6 +15,7 @@ export const borrowRecordColumns = [
         filterFn: "includesString",
         meta: {
             label: "Borrow Code",
+            className: "text-center"
         },
     }),
 
@@ -27,6 +28,8 @@ export const borrowRecordColumns = [
         filterFn: "includesString",
         meta: {
             label: "Customer Name",
+            className: "text-left",
+            headerClassName: "text-left"
         },
     }),
 
@@ -39,6 +42,7 @@ export const borrowRecordColumns = [
         filterFn: "includesString",
         meta: {
             label: "Phone",
+            className: "text-center"
         },
     }),
 
@@ -51,6 +55,7 @@ export const borrowRecordColumns = [
         filterFn: "includesString",
         meta: {
             label: "Email",
+            headerClassName: "text-left"
         },
     }),
 
@@ -63,6 +68,7 @@ export const borrowRecordColumns = [
         filterFn: "includesString",
         meta: {
             label: "Borrow Date",
+            className: "text-center"
         },
     }),
 
@@ -75,6 +81,7 @@ export const borrowRecordColumns = [
         filterFn: "includesString",
         meta: {
             label: "Due Date",
+            className: "text-center"
         },
     }),
 
@@ -87,6 +94,7 @@ export const borrowRecordColumns = [
         filterFn: "includesString",
         meta: {
             label: "Return Date",
+            className: "text-center"
         },
     }),
 

@@ -15,6 +15,8 @@ export const categoryColumns = [
     filterFn: "includesString",
     meta: {
       label: "name",
+      className: "text-left",
+      headerClassName: "text-left"
     }
   }),
   columnHelper.accessor("other_category_names", {
@@ -26,6 +28,8 @@ export const categoryColumns = [
     filterFn: "includesString",
     meta: {
       label: "otherCategory",
+      className: "text-left",
+      headerClassName: "text-left"
     }
   }),
 ]

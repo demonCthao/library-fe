@@ -61,6 +61,7 @@ export default function CategoryPage() {
   });
 
   return (
+
     <div className="h-full flex flex-col">
       <div className="flex-1">
         <CategoryTable

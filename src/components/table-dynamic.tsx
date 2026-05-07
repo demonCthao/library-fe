@@ -43,7 +43,7 @@ export const DynamicTable = <TData,>({ title, tableData, useCanMutaion }: IDynam
                                 </TableHead>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead className="border-b border-blue-gray-50 py-3 px-5 text-left" key={header.id} colSpan={header.colSpan}>
+                                        <TableHead className="border-b border-blue-gray-50 py-3 text-center" key={header.id} colSpan={header.colSpan}>
                                             {header.isPlaceholder ? null : (
                                                 <div
                                                     className={
@@ -51,7 +51,8 @@ export const DynamicTable = <TData,>({ title, tableData, useCanMutaion }: IDynam
                                                             header.column.getCanSort()
                                                                 ? "cursor-pointer select-none flex items-center gap-1"
                                                                 : "",
-                                                            "block antialiased font-sans text-[11px] font-bold uppercase text-blue-gray-400 flex"
+                                                            "block antialiased font-sans text-[11px] font-bold uppercase text-blue-gray-400 text-center w-full",
+                                                            header.column.columnDef.meta?.headerClassName
                                                         )
 
                                                     }
@@ -103,7 +104,7 @@ export const DynamicTable = <TData,>({ title, tableData, useCanMutaion }: IDynam
                                     {(pageIndex - 1) * pageSize + row.index + 1}
                                 </TableCell>
                                 {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id} className="border-b">
+                                    <TableCell key={cell.id} className={cn("border-b", cell.column.columnDef.meta?.className)}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </TableCell>
                                 ))}
