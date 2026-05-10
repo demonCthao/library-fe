@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Camera } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 interface AvatarUploadProps {
     value?: string
@@ -11,9 +12,9 @@ interface AvatarUploadProps {
 const FALLBACK_SRC = "./../src/assets/icons/default_avatar.jpg"
 
 export function AvatarUpload({ value, onChange }: AvatarUploadProps) {
+    const { t } = useTranslation();
     const inputRef = useRef<HTMLInputElement>(null)
     const [preview, setPreview] = useState<string | undefined>(value)
-    console.log("🚀 ~ AvatarUpload ~ preview:", preview)
 
     // sync khi value từ ngoài thay đổi
     useEffect(() => {
@@ -81,7 +82,7 @@ export function AvatarUpload({ value, onChange }: AvatarUploadProps) {
                 size="sm"
                 onClick={() => inputRef.current?.click()}
             >
-                Change Avatar
+                {t("changeAvatar")}
             </Button>
 
             <input

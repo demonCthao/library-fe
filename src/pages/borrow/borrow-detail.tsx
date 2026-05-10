@@ -25,9 +25,9 @@ export default function BorrowDetailPage() {
     });
 
     const { mutate } = useMutationRequest({
-        key: ["update-borrow-record"],
-        url: `borrow-record/${id}`,
-        method: "put", options: {
+        key: ["return-book-record"],
+        url: `borrow-record/return-book/${id}`,
+        method: "post", options: {
             onSuccess: () => {
                 notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
                 refetch();
@@ -78,10 +78,7 @@ export default function BorrowDetailPage() {
             return;
         }
 
-        mutate({
-            status: BorrowStatus.RETURNED,
-            return_date: new Date().toISOString()
-        })
+        mutate({})
     }
 
     return (

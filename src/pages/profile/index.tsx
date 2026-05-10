@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { useFetch } from "@/hooks/useFetch"
-import { cn } from "@/lib/utils"
+import { cn, formatDate } from "@/lib/utils"
 import { User } from "@/models/user.model"
 import { useParams } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
@@ -13,16 +13,17 @@ import { AvatarUpload } from "./avatar-upload"
 import { PiggyBank } from "lucide-react"
 import { useMutationRequest } from "@/hooks/useMutation"
 import { useNotificationStore } from "@/store/notification.store"
+import { useTranslation } from "react-i18next"
 
 export default function ProfilePage() {
   const { id } = useParams({ from: "/profile/$id" });
+  const { t } = useTranslation();
   const notification = useNotificationStore();
   const [form, setForm] = useState<User | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<{
     file: File | undefined,
     src: string | undefined
   } | undefined>();
-  console.log("🚀 ~ ProfilePage ~ avatarPreview:", avatarPreview)
 
   const { data: user, isLoading, error } = useFetch<User>({
     url: `users/profile/${id}`,
@@ -118,15 +119,15 @@ export default function ProfilePage() {
           </div>
           <div className="grid-cols-3">
             <div>
-              <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-2">Platform Settings</h6>
+              <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-2">{t("platformSettings")}</h6>
               <div className="flex flex-col gap-5 w-full">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <p className="antialiased font-sans mb-2 block text-xs font-semibold uppercase text-blue-gray-500">User</p>
+                    <p className="antialiased font-sans mb-2 block text-xs font-semibold uppercase text-blue-gray-500">{t("user")}</p>
                     <div className="flex flex-col gap-1">
                       <div>
                         <div>
-                          <label className="text-sm font-medium">User ID</label>
+                          <label className="text-sm font-medium">{t("userId")}</label>
                           <Input value={form?.id} disabled />
                         </div>
 
@@ -145,7 +146,7 @@ export default function ProfilePage() {
                       </div>
                       <div>
                         <div>
-                          <label className="text-sm font-medium">Phone</label>
+                          <label className="text-sm font-medium">{t("phone")}</label>
                           <Input
                             value={form?.phone}
                             onChange={(e) =>
@@ -157,11 +158,11 @@ export default function ProfilePage() {
                     </div>
                   </div>
                   <div>
-                    <p className="antialiased font-sans mb-2 block text-xs font-semibold uppercase text-blue-gray-500">Account</p>
+                    <p className="antialiased font-sans mb-2 block text-xs font-semibold uppercase text-blue-gray-500">{t("account")}</p>
                     <div className="flex flex-col gap-1">
                       <div>
                         <div>
-                          <label className="text-sm font-medium">User Name</label>
+                          <label className="text-sm font-medium">{t("account")}</label>
                           <Input
                             value={form?.accounts?.username}
                             disabled
@@ -169,7 +170,7 @@ export default function ProfilePage() {
                         </div>
                       </div>
                       <div>
-                        <label className="text-sm font-medium">Language</label>
+                        <label className="text-sm font-medium">{t("language")}</label>
                         <SelectApp
                           value={form?.lang}
                           options={[
@@ -183,9 +184,9 @@ export default function ProfilePage() {
                       </div>
                       <div>
                         <div>
-                          <label className="text-sm font-medium">Created At</label>
+                          <label className="text-sm font-medium">{t("createdAt")}</label>
                           <Input
-                            value={form?.accounts?.created_at}
+                            value={formatDate(form?.accounts?.created_at)}
                             disabled
                           />
                         </div>
@@ -212,7 +213,7 @@ export default function ProfilePage() {
                 className="px-10 shadow-md hover:shadow-lg transition"
                 onClick={handleSave}
               >
-                Save Changes
+                {t("saveChanges")}
               </Button>
             </div>
           </div>

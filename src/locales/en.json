@@ -64,5 +64,16 @@
     "loginSuccess": "Login Success",
     "bank": "Bank",
     "borrowedQuantity": "Borrowed Quantity",
-    "availableQuantity": "Available Quantity"
+    "availableQuantity": "Available Quantity",
+    "changeAvatar": "Change Avatar",
+    "platformSettings": "Platform Settings",
+    "user": "User",
+    "account": "Account",
+    "createdAt": "Created At",
+    "userId": "User ID",
+    "saveChanges": "Save Changes",
+    "profile": "Profile",
+    "changePassword": "Change Password",
+    "logOut": "Log out",
+    "stockQuantity": "Stock Quantity"
 }

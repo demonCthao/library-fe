@@ -165,7 +165,7 @@ export function BorrowForm({ open, onClose }: IBorrowPopupProps) {
                             <Button
                                 type="button"
                                 onClick={handleClearReader}
-                                className="absolute bg-white right-1 top-8 text-gray-400 hover:bg-white h-7 w-6"
+                                className="absolute bg-white right-1 top-1 text-gray-400 hover:bg-white h-7 w-6"
                             >
                                 ✕
                             </Button>

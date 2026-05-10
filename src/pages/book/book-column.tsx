@@ -112,4 +112,17 @@ export const bookColumns = [
       className: "text-center"
     },
   }),
+
+  columnHelper.accessor("stock_quantity", {
+    header: "stockQuantity",
+    cell: (info) => info.getValue(),
+    sortUndefined: "last",
+    sortDescFirst: false,
+    footer: (info) => info.column.id,
+    filterFn: "includesString",
+    meta: {
+      label: "stockQuantity",
+      className: "text-center"
+    },
+  }),
 ];

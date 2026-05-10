@@ -11,6 +11,7 @@ import {
 import { useAccountStore } from "@/store/account.store";
 import { Role } from "@/types/role.type";
 import { useNavigate } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 export interface JwtPayload {
   userId: number;
@@ -26,7 +27,7 @@ export interface JwtPayload {
 export default function AvatarDropdownMenu() {
   const navigate = useNavigate();
   const userStore = useAccountStore();
-  console.log("🚀 ~ AvatarDropdownMenu ~ userStore:", userStore, `http://127.0.0.1:3000${userStore.user?.avatarPath}`)
+  const { t } = useTranslation();
 
   const handleLogout = () => {
     if (userStore.user) {
@@ -66,12 +67,12 @@ export default function AvatarDropdownMenu() {
         <DropdownMenuContent align="start" className="w-40">
           <DropdownMenuGroup>
             <DropdownMenuLabel>{userStore.user?.email}</DropdownMenuLabel>
-            <DropdownMenuItem className="hover:bg-gray-300" onClick={handleGotoProfilePage}>Profile</DropdownMenuItem>
-            <DropdownMenuItem className="hover:bg-gray-300" onClick={handleChangePassword}>Change Password</DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-gray-300" onClick={handleGotoProfilePage}>{t("profile")}</DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-gray-300" onClick={handleChangePassword}>{t("changePassword")}</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem  className="hover:bg-gray-300" variant="destructive" onClick={handleLogout}>Log out</DropdownMenuItem>
+            <DropdownMenuItem  className="hover:bg-gray-300" variant="destructive" onClick={handleLogout}>{t("logOut")}</DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>

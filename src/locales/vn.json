@@ -64,5 +64,16 @@
     "bank": "Ngân hàng",
     "accountNumber": "Số tài khoản",
     "borrowedQuantity": "Số lượng mượn",
-    "availableQuantity": "Số lượng khả dụng"
+    "availableQuantity": "Số lượng mượn khả dụng",
+    "changeAvatar": "Thay ảnh đại diện",
+    "platformSettings": "Cài đặt thông tin",
+    "user": "Người dùng",
+    "account": "Tài khoản",
+    "createdAt": "Đã tạo lúc",
+    "userId": "Mã người dùng",
+    "saveChanges": "Lưu thay đổi",
+    "profile": "Thông tin cá nhân",
+    "changePassword": "Thay đổi mật khẩu",
+    "logOut": "Đăng xuất",
+    "stockQuantity": "Số lượng tồn kho"
 }
