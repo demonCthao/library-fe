@@ -12,6 +12,7 @@ type Obj = {
     borrowed_quantity: number;
     reserved_quantity: number;
     available_quantity: number;
+    price: number
 }
 
 export type Book = Required<Obj>

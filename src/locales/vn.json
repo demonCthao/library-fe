@@ -75,5 +75,11 @@
     "profile": "Thông tin cá nhân",
     "changePassword": "Thay đổi mật khẩu",
     "logOut": "Đăng xuất",
-    "stockQuantity": "Số lượng tồn kho"
+    "stockQuantity": "Số lượng tồn kho",
+    "purchaseOrderList": "Phiếu mua sách",
+    "buyerName": "Người mua hàng",
+    "price": "Giá",
+    "buyerPhone": "Số điện thoại người mua",
+    "purchaseOrderCode": "Mã mua hàng",
+    "tableEmpty": "Không có dữ liệu"
 }

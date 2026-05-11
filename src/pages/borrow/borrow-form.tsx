@@ -117,6 +117,12 @@ export function BorrowForm({ open, onClose }: IBorrowPopupProps) {
     }
 
     const onSelectBook = (opt: SelectOption) => {
+
+        if (opt.otherValue?.stock_quantity === 0) {
+            notification.updateState({ open: true, message: "Số lượng sách này không đủ", type: "warning" });
+            return
+        }
+
         const checkExist = _.includes(books, opt?.otherValue);
 
         if (!checkExist) {

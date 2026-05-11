@@ -87,6 +87,22 @@ export const bookColumns = [
     },
   }),
 
+  columnHelper.accessor("price", {
+    header: "price",
+    cell: (info) => Number(info.getValue()).toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND"
+    }),
+    sortUndefined: "last",
+    sortDescFirst: false,
+    footer: (info) => info.column.id,
+    filterFn: "includesString",
+    meta: {
+      label: "price",
+      className: "text-center"
+    },
+  }),
+
   columnHelper.accessor("borrowed_quantity", {
     header: "borrowedQuantity",
     cell: (info) => info.getValue(),

@@ -75,5 +75,11 @@
     "profile": "Profile",
     "changePassword": "Change Password",
     "logOut": "Log out",
-    "stockQuantity": "Stock Quantity"
+    "stockQuantity": "Stock Quantity",
+    "purchaseOrderList": "Purchase Order List",
+    "buyerName": "Buyer Name",
+    "price": "Price",
+    "buyerPhone": "Buyer Phone",
+    "purchaseOrderCode": "Purchase Order Code",
+    "tableEmpty": "Empty"
 }

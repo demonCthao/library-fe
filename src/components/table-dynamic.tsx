@@ -1,5 +1,5 @@
 import { flexRender, PaginationState, type Table as TanStackTTable } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, Edit, Trash } from "lucide-react";
+import { ArrowDown, ArrowUp, Edit, FilePlusCorner, Trash } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { PaginationTable } from "./pagination-table";
 import { Dispatch, SetStateAction } from "react";
@@ -33,8 +33,8 @@ export const DynamicTable = <TData,>({ title, tableData, useCanMutaion }: IDynam
             <div className="relative bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-gray-900/20 shadow-lg -mt-6 mb-8 p-6">
                 <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white">{title}</h6>
             </div>
-            <div className="p-6 overflow-x-scroll px-0 pt-0 pb-2 flex-1">
-                <Table className="w-full min-w-[640px] table-auto">
+            <div className="p-6 px-0 pt-0 pb-2 flex-1">
+                <Table className="w-full min-w-[640px] table-auto h-full max-h-screen overflow-scroll">
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
@@ -94,7 +94,7 @@ export const DynamicTable = <TData,>({ title, tableData, useCanMutaion }: IDynam
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className={cn(table.getRowModel().rows.length? "": "bg-gray-200")}>
                         {table.getRowModel().rows.length ? table.getRowModel().rows.map((row) => {
                             const pageIndex = table.getState().pagination?.pageIndex ?? 1;
                             const pageSize = table.getState().pagination?.pageSize ?? row.index + 1;
@@ -119,8 +119,20 @@ export const DynamicTable = <TData,>({ title, tableData, useCanMutaion }: IDynam
                                 }
 
                             </TableRow>
-                        }) : <TableRow className="h-full">
-                            Empty
+                        }) : <TableRow className="min-h-40">
+                            <TableCell
+                                colSpan={useCanMutaion ? table.getAllColumns().length + 2 : table.getAllColumns().length + 1}
+                                className="h-40 text-center"
+                            >
+                                <div className="flex h-full items-center justify-center gap-2">
+                                    <div className="flex gap-2 items-center justify-center text-white text-lg">
+                                        <FilePlusCorner size={40} />
+                                        {
+                                            t("tableEmpty")
+                                        }
+                                    </div>
+                                </div>
+                            </TableCell>
                         </TableRow>}
                     </TableBody>
                 </Table>
