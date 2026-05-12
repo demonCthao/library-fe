@@ -34,7 +34,7 @@ export const DynamicTable = <TData,>({ title, tableData, useCanMutaion }: IDynam
                 <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white">{title}</h6>
             </div>
             <div className="p-6 px-0 pt-0 pb-2 flex-1">
-                <Table className="w-full min-w-[640px] table-auto h-full max-h-screen overflow-scroll">
+                <Table className="w-full min-w-[640px] table-auto overflow-scroll">
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>

@@ -19,31 +19,6 @@ export const purchaseOrderColumns = [
             className: "text-center"
         }
     }),
-    columnHelper.accessor("guest_name", {
-        header: "buyerName",
-        cell: ({ getValue }) => getValue(),
-        sortUndefined: 'last',
-        sortDescFirst: false,
-        footer: (info) => info.column.id,
-        filterFn: "includesString",
-        meta: {
-            label: "buyerName",
-            className: "text-center"
-        }
-    }),
-    columnHelper.accessor("guest_phone", {
-        header: "buyerPhone",
-        cell: ({ getValue }) => getValue(),
-        sortUndefined: 'last',
-        sortDescFirst: false,
-        footer: (info) => info.column.id,
-        filterFn: "includesString",
-        meta: {
-            label: "buyerPhone",
-            className: "text-left",
-            headerClassName: "text-left"
-        }
-    }),
     columnHelper.accessor(
         (row) => row.readers?.full_name ?? row.guest_name ?? "",
         {

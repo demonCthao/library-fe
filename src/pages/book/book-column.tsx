@@ -45,7 +45,7 @@ export const bookColumns = [
     enableColumnFilter: false,
     meta: {
       label: "avatar",
-      className: "flex justify-center"
+      className: ""
     },
   }),
 

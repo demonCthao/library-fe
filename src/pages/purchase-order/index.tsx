@@ -5,6 +5,7 @@ import { BaseTableRef } from "@/types/base-ref.type";
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useRef, useState } from "react";
 import PurchaseOrderTable from "./purchase-order-table";
+import PurchaseOrdeForm from "./purchase-order-form";
 
 export default function PurchaseOrderPage() {
   const notification = useNotificationStore();
@@ -63,6 +64,11 @@ export default function PurchaseOrderPage() {
           onChooseBorrow={handleChooseBorrow}
         />
       </div>
+      <PurchaseOrdeForm
+        open={isAddOpen}
+        key={`purchase-order-form`}
+        onClose={handleCloseForm}
+      />
     </div>
   )
 }
