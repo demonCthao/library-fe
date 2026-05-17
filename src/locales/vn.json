@@ -103,5 +103,6 @@
     "updateFail": "Cập nhật dữ liệu thất bại",
     "listBook": "Danh sách sách",
     "bookEnough": "Không đủ số lượng sách thì là gì nhỉ",
-    "requireBook": "Sách không được để trống"
+    "requireBook": "Sách không được để trống",
+    "gotoUserPage": "Tới trang người dùng"
 }

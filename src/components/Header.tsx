@@ -1,10 +1,10 @@
 
-import { Settings, SlidersHorizontal } from "lucide-react";
+import { useAccountStore } from "@/store/account.store";
+import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import AvatarDropdownMenu from "./avatar-dropdown";
 import { SelectApp } from "./select-app";
-import { useTranslation } from "react-i18next";
-import { useAccountStore } from "@/store/account.store";
-import { useEffect, useState } from "react";
 
 export function Header() {
   const { t, i18n } = useTranslation();
@@ -44,19 +44,12 @@ export function Header() {
           </nav>
         </div>
         <div className="flex items-center gap-2">
-          <button className="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden" type="button">
-            <span className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" stroke-width="3" className="h-6 w-6 text-blue-gray-500">
-                <path fill-rule="evenodd" d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z" clip-rule="evenodd"></path>
-              </svg>
-            </span>
-          </button>
-          <button aria-expanded="false" aria-haspopup="menu" id=":r2:" className="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[20px] h-10 max-h-[20px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30" type="button">
-            <Settings size={20} />
-          </button>
-          <button className="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[20px] h-10 max-h-[20px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30" type="button">
-            <SlidersHorizontal size={20} />
-          </button>
+          <Link
+            to="/user-page"
+            className="rounded-lg px-4 py-2 text-sm font-medium text-blue-400 transition hover:bg-white/10"
+          >
+            {t("gotoUserPage")}
+          </Link>
           <div className="w-40">
             <SelectApp placeholder={t("chooseLanguage")}
               className="gb-white data-[placeholder]:text-white text-sm "

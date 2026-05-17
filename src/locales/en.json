@@ -103,5 +103,6 @@
     "updateFail": "Updated information fail",
     "listBook": "List Books",
     "bookEnough": "Not enough books available",
-    "requireBook": "Book cannot be empty"
+    "requireBook": "Book cannot be empty",
+    "gotoUserPage": "Go to User Page"
 }
