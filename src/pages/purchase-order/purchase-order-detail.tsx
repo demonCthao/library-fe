@@ -7,13 +7,15 @@ import { formatDate } from '@/lib/utils';
 import { PurchaseOrder } from '@/models/purchase-order.model';
 import { useNotificationStore } from '@/store/notification.store';
 import { useNavigate, useParams } from '@tanstack/react-router';
-import { CirclePlus } from 'lucide-react';
+import { CirclePlus, X } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PurchaseOrderPayment from './purchase-order-payment';
 import { useMutationRequest } from '@/hooks/useMutation';
 import PurchaseOrderAdd from './purchase-order-add';
 import { Book } from '@/models/book.model';
+import ConfirmDialog from '@/components/confirm-dialog';
+import _ from 'lodash';
 
 export default function PurchaseOrderDetail() {
     const { id } = useParams({ from: "/purchase-order-detail/$id" });
@@ -23,6 +25,7 @@ export default function PurchaseOrderDetail() {
     const [isPayment, setIsPayment] = useState<boolean>(false);
     const [isAdd, setIsAdd] = useState<boolean>(false);
     const [isRemove, setIsRemove] = useState<boolean>(false);
+    const [bookSelected, setBookSelected] = useState<Book | null>(null)
 
     const { data, isLoading, error, refetch } = useFetch<PurchaseOrder>({
         url: `purchase-orders/${id}`,
@@ -37,6 +40,30 @@ export default function PurchaseOrderDetail() {
                 notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 refetch();
                 setIsPayment(false)
+            },
+            onError: () => {
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
+            }
+        }
+    });
+
+    const { mutate: mutateUpdateBooks } = useMutationRequest({
+        key: ["update-book-purchase-order"],
+        url: `purchase-orders/update-book/${id}`,
+        method: "post", options: {
+            onSuccess: () => {
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
+                refetch();
+                
+
+                if (isRemove) {
+                    setIsRemove(false);
+                    setBookSelected(null);
+                }
+
+                if (isAdd) {
+                    setIsAdd(false);
+                }
             },
             onError: () => {
                 notification.updateState({ message: t("updateFail"), type: "error", open: true });
@@ -64,11 +91,41 @@ export default function PurchaseOrderDetail() {
     }
 
     const onConfirmAdd = (books: Book[]) => {
+        mutateUpdateBooks({
+            purchase_order_items: books.map(book => {
+                return {
+                    purchase_order_id: Number(id),
+                    book_id: book.id,
+                    unit_price: book.price,
+                    quantity: 1
+                }
+            })
 
+        })
     }
 
-    const onRemoveBook = (id: number) => {
-        setIsRemove(true)
+    const onRemoveBook = (book: Book) => {
+        setIsRemove(true);
+        setBookSelected(book);
+    }
+
+    const handleCloseDelete = () => {
+        setIsRemove(false);
+        setBookSelected(null)
+    }
+
+    const handleConfirmDelete = () => {
+        mutateUpdateBooks({
+            purchase_order_items: data?.books.filter(book => book.id !== bookSelected?.id).map(book => {
+                return {
+                    purchase_order_id: Number(id),
+                    book_id: book.id,
+                    unit_price: book.price,
+                    quantity: 1
+                }
+            })
+
+        })
     }
 
     return (
@@ -175,8 +232,19 @@ export default function PurchaseOrderDetail() {
                     {data?.books.map((book) => (
                         <div
                             key={book.id}
-                            className="border rounded-xl overflow-hidden hover:shadow-lg transition"
+                            className="relative border rounded-xl overflow-hidden hover:shadow-lg transition"
                         >
+                            {/* Button X */}
+                            <Button
+                                size="icon"
+                                variant="ghost"
+                                onClick={() => onRemoveBook(book)}
+                                className="h-8 w-8 rounded-full bg-red-500 hover:bg-red-300 absolute top-2 right-2 z-10 h-7 w-7 rounded-full text-white"
+                            >
+                                <X className="w-4 h-4" />
+                            </Button>
+
+                            {/* Image */}
                             <div className="h-44 bg-gray-100">
                                 {book.avatar_path ? (
                                     <LazyImage
@@ -190,10 +258,9 @@ export default function PurchaseOrderDetail() {
                                 )}
                             </div>
 
+                            {/* Content */}
                             <div className="p-4 space-y-2">
-                                <h3 className="font-semibold line-clamp-1">
-                                    {book.title}
-                                </h3>
+                                <h3 className="font-semibold line-clamp-1">{book.title}</h3>
 
                                 <p className="text-sm text-gray-500 line-clamp-2">
                                     {book.description}
@@ -202,9 +269,7 @@ export default function PurchaseOrderDetail() {
                                 <div className="text-xs text-gray-400 pt-2 border-t">
                                     <p>Năm XB: {book.publish_year}</p>
                                     <p>Số trang: {book.pages}</p>
-                                    <p>
-                                        Giá: {Number(book.price).toLocaleString()}đ
-                                    </p>
+                                    <p>Giá: {Number(book.price).toLocaleString()}đ</p>
                                 </div>
                             </div>
                         </div>
@@ -212,18 +277,28 @@ export default function PurchaseOrderDetail() {
                 </div>
             </div>
             {
-                isPayment && 
-                <PurchaseOrderPayment 
-                handleConfirm={handlePayment} 
-                purchase={data}
-                onClose={() => setIsPayment(false)} 
+                isPayment &&
+                <PurchaseOrderPayment
+                    handleConfirm={handlePayment}
+                    purchase={data}
+                    onClose={() => setIsPayment(false)}
                 />
             }
             {
-                isAdd && 
+                isAdd &&
                 <PurchaseOrderAdd
                     onClose={onCloseAddForm}
-                    onConfirm={onConfirmAdd} 
+                    onConfirm={onConfirmAdd}
+                    booksDefault={data?.books ?? []}
+                />
+            }
+            {
+                isRemove &&
+                <ConfirmDialog
+                    label={_.defaultTo(bookSelected?.title, "")}
+                    onClose={handleCloseDelete}
+                    onConfirm={handleConfirmDelete}
+                    open={isRemove}
                 />
             }
         </div>

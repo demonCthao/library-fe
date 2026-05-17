@@ -1,18 +1,12 @@
 import { PURCHASE_ORDER } from "@/constants/purchase-order.constants"
 import { Reader } from "./reader.model"
+import { Book } from "./book.model"
 
 type PurchaseOrderItem = {
-    id: number
+    purchase_order_id: number
     book_id: number
-    quantity: number
     unit_price: number
-    created_at: string
-    avatar_path: string
-    title?: string
-    description?: string
-    publish_year?: string
-    pages?: number
-    price?: number
+    quantity: number
 }
 
 export type PurchaseOrder = {
@@ -27,5 +21,5 @@ export type PurchaseOrder = {
     purchase_order_items: PurchaseOrderItem[]
     reader?: Reader,
     payment_status: PURCHASE_ORDER
-    books: PurchaseOrderItem[]
+    books: Book[]
 }

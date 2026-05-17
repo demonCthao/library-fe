@@ -17,13 +17,14 @@ import { useTranslation } from "react-i18next"
 interface IPurchaseOrderAddProps {
     onClose: () => void
     onConfirm: (books: Book[]) => void
+    booksDefault: Book[]
 }
 
-export default function PurchaseOrderAdd({ onClose, onConfirm }: IPurchaseOrderAddProps) {
+export default function PurchaseOrderAdd({ onClose, onConfirm, booksDefault }: IPurchaseOrderAddProps) {
     const { t } = useTranslation();
     const notification = useNotificationStore();
     const bookRef = useRef<HTMLDivElement>(null);
-    const [books, setBooks] = useState<Book[]>([]);
+    const [books, setBooks] = useState<Book[]>(booksDefault);
     const [search, setSearch] = useState<{ bookKey: string }>({ bookKey: "" });
     const bookDebounce = useDebounce(search.bookKey);
     const [showBookSelect, setShowBookSelect] = useState(false);
