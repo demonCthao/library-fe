@@ -29,11 +29,11 @@ export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
         key: ["create-user", "update-user"],
         url: _.isNull(user) ? "users" : `users/${user.id}`, method: !_.isEmpty(user) ? "put" : "post", options: {
             onSuccess: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 onClose(true);
             },
-            onError: (error) => {
-                toast.info(error.message);
+            onError: () => {
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
             }
         }
     });
@@ -153,6 +153,7 @@ export const UserForm = ({ open, onClose, user }: IUserFormProps) => {
                                         options={[
                                             { label: "Admin", value: "admin" },
                                             { label: "Librarian", value: "librarian" },
+                                            { label: "User", value: "user" }
                                         ]}
                                         value={field.state.value}
                                         onValueChange={(value) => field.handleChange(value)}

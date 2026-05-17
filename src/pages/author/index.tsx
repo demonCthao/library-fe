@@ -8,9 +8,11 @@ import _ from 'lodash';
 import { useCallback, useRef, useState } from 'react';
 import { AuthorForm } from './author-form';
 import AuthorTable from './author-table';
+import { useTranslation } from 'react-i18next';
 
 export default function AuthorPage() {
     const notification = useNotificationStore();
+    const { t } = useTranslation();
     const [action, setAction] = useState<TypeActionTable | null>(null);
     const [selectedAuthor, setSelectedAuthor] = useState<Author | null>(null);
     const tableRef = useRef<BaseTableRef>(null);
@@ -51,12 +53,12 @@ export default function AuthorPage() {
         key: ["delete-author"],
         url: `authors/${selectedAuthor?.id}`, method: "delete", options: {
             onSuccess: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 resetState();
                 tableRef.current?.refresh();
             },
-            onError: (error) => {
-                notification.updateState({ message: error.message, type: "error", open: true });
+            onError: () => {
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
             }
         }
     });

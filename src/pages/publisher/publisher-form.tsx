@@ -7,7 +7,7 @@ import { publisherSchema } from "@/schema/publisher.schema"
 import { useNotificationStore } from "@/store/notification.store"
 import { useForm } from "@tanstack/react-form"
 import _ from "lodash"
-import { toast } from "sonner"
+import { useTranslation } from "react-i18next"
 import z from "zod"
 
 interface IPublisherFormProps {
@@ -18,16 +18,17 @@ interface IPublisherFormProps {
 
 export const PublisherForm = ({ open, onClose, publisher }: IPublisherFormProps) => {
   const notification = useNotificationStore();
+  const { t } = useTranslation();
   type PushlisherForm = z.infer<typeof publisherSchema>;
   const { mutate } = useMutationRequest({
     key: ["create-publisher", "update-publisher"],
     url: _.isNull(publisher) ? "publishers" : `publishers/${publisher.id}`, method: !_.isEmpty(publisher) ? "put" : "post", options: {
       onSuccess: () => {
-        notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+        notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
         onClose(true);
       },
       onError: (error) => {
-        toast.info(error.message);
+        notification.updateState({ message: t("updateFail"), type: "error", open: true });
       }
     }
   });

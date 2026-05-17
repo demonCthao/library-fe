@@ -7,10 +7,12 @@ import { useAccountStore } from "@/store/account.store"
 import { useNotificationStore } from "@/store/notification.store"
 import { useForm } from "@tanstack/react-form"
 import { useNavigate, useParams } from "@tanstack/react-router"
+import { useTranslation } from "react-i18next"
 import z from "zod"
 
 export default function ChangePassword() {
     const { id } = useParams({ from: "/change-pass/$id" });
+    const { t } = useTranslation();
     const userStore = useAccountStore();
     const navigate = useNavigate();
     const notification = useNotificationStore();
@@ -25,14 +27,14 @@ export default function ChangePassword() {
         key: ["change-password"],
         url: "accounts/change-pass", method: "post", options: {
             onSuccess: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 navigate({
                     to: "/profile/" + id,
                     replace: true
                 });
             },
-            onError: (error) => {
-                notification.updateState({ message: error.message, type: "error", open: true });
+            onError: () => {
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
             }
         }
     });

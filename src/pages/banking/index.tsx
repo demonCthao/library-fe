@@ -7,9 +7,11 @@ import BankingForm from './banking-form';
 import BankConfirm from './bank-confirm';
 import { useMutationRequest } from '@/hooks/useMutation';
 import { useNotificationStore } from '@/store/notification.store';
+import { useTranslation } from 'react-i18next';
 
 export default function BankingPage() {
   const notification = useNotificationStore();
+  const { t } = useTranslation();
   const tableRef = useRef<BaseTableRef>(null);
   const [action, setAction] = useState<TypeActionTable | null>(null);
   const [selectedBank, setSelectedBank] = useState<BankAccount | null>(null);
@@ -50,12 +52,12 @@ export default function BankingPage() {
     key: ["delete-bank"],
     url: `banks/${selectedBank?.id}`, method: "delete", options: {
       onSuccess: () => {
-        notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+        notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
         resetState();
         tableRef.current?.refresh();
       },
-      onError: (error) => {
-        notification.updateState({ message: error.message, type: "error", open: true });
+      onError: () => {
+        notification.updateState({ message: t("updateFail"), type: "error", open: true });
       }
     }
   });

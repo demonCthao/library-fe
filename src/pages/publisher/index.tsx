@@ -8,9 +8,11 @@ import _ from "lodash";
 import { useCallback, useRef, useState } from "react";
 import { PublisherForm } from "./publisher-form";
 import PublisherTable from "./publisher-table";
+import { useTranslation } from "react-i18next";
 
 export default function PublisherPage() {
   const notification = useNotificationStore();
+  const { t } = useTranslation();
   const [action, setAction] = useState<TypeActionTable | null>(null);
   const [selectedPublisher, setSelectedPublisher] = useState<Publisher | null>(null);
   const tableRef = useRef<BaseTableRef>(null);
@@ -50,12 +52,12 @@ export default function PublisherPage() {
     key: ["delete-publisher"],
     url: `categories/${selectedPublisher?.id}`, method: "delete", options: {
       onSuccess: () => {
-        notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+        notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
         resetState();
         tableRef.current?.refresh();
       },
-      onError: (error) => {
-        notification.updateState({ message: error.message, type: "error", open: true });
+      onError: () => {
+        notification.updateState({ message: t("updateFail"), type: "error", open: true });
       }
     }
   });

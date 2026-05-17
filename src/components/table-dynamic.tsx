@@ -13,133 +13,188 @@ interface IDynamicTableProps<TData> {
     tableData: {
         table: TanStackTTable<TData>;
         setPagination: Dispatch<SetStateAction<PaginationState>>;
-        onChoose?: (data: TData, type: TypeActionTable) => void
-    }
-    useCanMutaion?: boolean
+        onChoose?: (data: TData, type: TypeActionTable) => void;
+    };
+    useCanMutaion?: boolean;
 }
 
-export const DynamicTable = <TData,>({ title, tableData, useCanMutaion }: IDynamicTableProps<TData>) => {
+export const DynamicTable = <TData,>({
+    title,
+    tableData,
+    useCanMutaion,
+}: IDynamicTableProps<TData>) => {
     const { t } = useTranslation();
     const { table, onChoose } = tableData;
 
     const onChooseRow = (data: TData, type: TypeActionTable) => {
         if (onChoose) {
-            onChoose(data, type)
+            onChoose(data, type);
         }
-    }
+    };
 
     return (
-        <div className="relative top-6 flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md flex-1 mb-4 flex flex-col">
-            <div className="relative bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-gray-900/20 shadow-lg -mt-6 mb-8 p-6">
-                <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white">{title}</h6>
+        <div className="relative top-6 flex flex-col rounded-xl bg-white shadow-md flex-1 min-h-0 overflow-hidden">
+            {/* Header */}
+            <div className="relative mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-lg -mt-6 mb-4 p-6 shrink-0">
+                <h6 className="text-base font-semibold text-white">
+                    {title}
+                </h6>
             </div>
-            <div className="p-6 px-0 pt-0 pb-2 flex-1">
-                <Table className="w-full min-w-[640px] table-auto overflow-scroll">
-                    <TableHeader>
+
+            {/* Table Scroll Area */}
+            <div className="flex-1 min-h-0 overflow-auto px-6 pb-2">
+                <Table className="min-w-[640px]">
+                    <TableHeader className="sticky top-0 z-20 bg-white">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
-                                <TableHead className="border-b border-blue-gray-50 py-3 px-5 text-left">
-                                    <p className="block antialiased font-sans text-[11px] font-bold uppercase text-blue-gray-400">{t("no")}</p>
+                                {/* STT */}
+                                <TableHead className="sticky top-0 z-30 bg-white border-b py-3 px-5 text-left">
+                                    <p className="text-[11px] font-bold uppercase text-blue-gray-400">
+                                        {t("no")}
+                                    </p>
                                 </TableHead>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead className="border-b border-blue-gray-50 py-3 text-center" key={header.id} colSpan={header.colSpan}>
-                                            {header.isPlaceholder ? null : (
-                                                <div
-                                                    className={
-                                                        cn(
-                                                            header.column.getCanSort()
-                                                                ? "cursor-pointer select-none flex items-center gap-1"
-                                                                : "",
-                                                            "block antialiased font-sans text-[11px] font-bold uppercase text-blue-gray-400 text-center w-full",
-                                                            header.column.columnDef.meta?.headerClassName
-                                                        )
 
-                                                    }
-                                                    onClick={header.column.getToggleSortingHandler()}
-                                                    title={
-                                                        header.column.getCanSort()
-                                                            ? header.column.getNextSortingOrder() === 'asc'
-                                                                ? 'Sort ascending'
-                                                                : header.column.getNextSortingOrder() === 'desc'
-                                                                    ? 'Sort descending'
-                                                                    : 'Clear sort'
-                                                            : undefined
-                                                    }
-                                                >
-                                                    {header.column.getIsVisible() &&
-                                                        (typeof header.column.columnDef.header === "string"
-                                                            ? t(header.column.columnDef.header)
-                                                            : flexRender(
-                                                                header.column.columnDef.header,
-                                                                header.getContext()
-                                                            )
-                                                        )}
-                                                    {{
-                                                        asc: <ArrowDown size={16} />,
-                                                        desc: <ArrowUp size={16} />,
-                                                    }[header.column.getIsSorted() as string] ?? null}
-                                                </div>
-                                            )}
-                                        </TableHead>
-                                    )
-                                })}
-                                {
-                                    onChoose && useCanMutaion &&
-                                    <TableHead className="border-b border-blue-gray-50 py-3 px-5 text-center">
-                                        <p className="block antialiased font-sans text-[11px] font-bold uppercase text-blue-gray-400">{t("actions")}</p>
+                                {/* Columns */}
+                                {headerGroup.headers.map((header) => (
+                                    <TableHead
+                                        key={header.id}
+                                        colSpan={header.colSpan}
+                                        className="sticky top-0 z-30 bg-white border-b py-3 text-center"
+                                    >
+                                        {header.isPlaceholder ? null : (
+                                            <div
+                                                className={cn(
+                                                    header.column.getCanSort()
+                                                        ? "cursor-pointer select-none flex items-center justify-center gap-1"
+                                                        : "",
+                                                    "text-[11px] font-bold uppercase text-blue-gray-400 w-full",
+                                                    header.column.columnDef.meta?.headerClassName
+                                                )}
+                                                onClick={header.column.getToggleSortingHandler()}
+                                            >
+                                                {header.column.getIsVisible() &&
+                                                    (typeof header.column.columnDef.header === "string"
+                                                        ? t(header.column.columnDef.header)
+                                                        : flexRender(
+                                                            header.column.columnDef.header,
+                                                            header.getContext()
+                                                        ))}
+
+                                                {{
+                                                    asc: <ArrowDown size={16} />,
+                                                    desc: <ArrowUp size={16} />,
+                                                }[header.column.getIsSorted() as string] ?? null}
+                                            </div>
+                                        )}
                                     </TableHead>
-                                }
+                                ))}
 
+                                {/* Actions */}
+                                {onChoose && useCanMutaion && (
+                                    <TableHead className="sticky top-0 z-30 bg-white border-b py-3 px-5 text-center">
+                                        <p className="text-[11px] font-bold uppercase text-blue-gray-400">
+                                            {t("actions")}
+                                        </p>
+                                    </TableHead>
+                                )}
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody className={cn(table.getRowModel().rows.length? "": "bg-gray-200")}>
-                        {table.getRowModel().rows.length ? table.getRowModel().rows.map((row) => {
-                            const pageIndex = table.getState().pagination?.pageIndex ?? 1;
-                            const pageSize = table.getState().pagination?.pageSize ?? row.index + 1;
 
-                            return <TableRow key={row.id}>
-                                <TableCell className="py-3 px-5 border-b border-blue-gray-50">
-                                    {(pageIndex - 1) * pageSize + row.index + 1}
-                                </TableCell>
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id} className={cn("border-b", cell.column.columnDef.meta?.className)}>
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                    </TableCell>
-                                ))}
-                                {
-                                    onChoose && useCanMutaion &&
-                                    <TableCell className="w-[200px] border-b">
-                                        <div className="flex gap-2 flex justify-center">
-                                            <Button className="bg-green-500 hover:bg-green-600 cursor-pointer" onClick={() => onChooseRow(row.original, TypeActionTable.edit)}><Edit size={18} /></Button>
-                                            <Button className="bg-red-500 hover:bg-red-600 cursor-pointer" onClick={() => onChooseRow(row.original, TypeActionTable.delete)}><Trash size={18} /></Button>
-                                        </div>
-                                    </TableCell>
-                                }
+                    <TableBody>
+                        {table.getRowModel().rows.length ? (
+                            table.getRowModel().rows.map((row) => {
+                                const pageIndex =
+                                    table.getState().pagination?.pageIndex ?? 1;
 
-                            </TableRow>
-                        }) : <TableRow className="min-h-40">
-                            <TableCell
-                                colSpan={useCanMutaion ? table.getAllColumns().length + 2 : table.getAllColumns().length + 1}
-                                className="h-40 text-center"
-                            >
-                                <div className="flex h-full items-center justify-center gap-2">
-                                    <div className="flex gap-2 items-center justify-center text-white text-lg">
+                                const pageSize =
+                                    table.getState().pagination?.pageSize ??
+                                    row.index + 1;
+
+                                return (
+                                    <TableRow
+                                        key={row.id}
+                                        className="hover:bg-muted/50"
+                                    >
+                                        {/* STT */}
+                                        <TableCell className="py-3 px-5 border-b">
+                                            {(pageIndex - 1) * pageSize + row.index + 1}
+                                        </TableCell>
+
+                                        {/* Cells */}
+                                        {row.getVisibleCells().map((cell) => (
+                                            <TableCell
+                                                key={cell.id}
+                                                className={cn(
+                                                    "border-b",
+                                                    cell.column.columnDef.meta?.className
+                                                )}
+                                            >
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )}
+                                            </TableCell>
+                                        ))}
+
+                                        {/* Actions */}
+                                        {onChoose && useCanMutaion && (
+                                            <TableCell className="w-[200px] border-b">
+                                                <div className="flex justify-center gap-2">
+                                                    <Button
+                                                        className="bg-green-500 hover:bg-green-600"
+                                                        onClick={() =>
+                                                            onChooseRow(
+                                                                row.original,
+                                                                TypeActionTable.edit
+                                                            )
+                                                        }
+                                                    >
+                                                        <Edit size={18} />
+                                                    </Button>
+
+                                                    <Button
+                                                        className="bg-red-500 hover:bg-red-600"
+                                                        onClick={() =>
+                                                            onChooseRow(
+                                                                row.original,
+                                                                TypeActionTable.delete
+                                                            )
+                                                        }
+                                                    >
+                                                        <Trash size={18} />
+                                                    </Button>
+                                                </div>
+                                            </TableCell>
+                                        )}
+                                    </TableRow>
+                                );
+                            })
+                        ) : (
+                            <TableRow>
+                                <TableCell
+                                    colSpan={
+                                        useCanMutaion
+                                            ? table.getAllColumns().length + 2
+                                            : table.getAllColumns().length + 1
+                                    }
+                                    className="h-40 text-center"
+                                >
+                                    <div className="flex items-center justify-center gap-2 text-gray-500 text-lg">
                                         <FilePlusCorner size={40} />
-                                        {
-                                            t("tableEmpty")
-                                        }
+                                        {t("tableEmpty")}
                                     </div>
-                                </div>
-                            </TableCell>
-                        </TableRow>}
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
             </div>
-            <div className="mt-[10px] mb-5">
+
+            {/* Pagination */}
+            <div className="shrink-0 border-t bg-white py-4">
                 <PaginationTable tableData={tableData} />
             </div>
         </div>
-    )
-}
+    );
+};

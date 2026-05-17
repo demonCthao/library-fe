@@ -1,5 +1,4 @@
 import ConfirmDialog from '@/components/confirm-dialog';
-import { Label } from '@/components/ui/label';
 import { useMutationRequest } from '@/hooks/useMutation';
 import { TypeActionTable } from '@/hooks/useTable';
 import { Fine } from '@/models/fine.model';
@@ -8,9 +7,11 @@ import { BaseTableRef } from '@/types/base-ref.type';
 import _ from 'lodash';
 import { useCallback, useRef, useState } from 'react';
 import FineTable from './fine-table';
+import { useTranslation } from 'react-i18next';
 
 export default function FinePage() {
     const notification = useNotificationStore();
+    const { t } = useTranslation();
     const [action, setAction] = useState<TypeActionTable | null>(null);
     const [selectedFine, setSelectedFine] = useState<Fine | null>(null);
     const tableRef = useRef<BaseTableRef>(null);
@@ -50,12 +51,12 @@ export default function FinePage() {
         key: ["delete-category"],
         url: `categories/${selectedFine?.id}`, method: "delete", options: {
             onSuccess: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 resetState();
                 tableRef.current?.refresh();
             },
-            onError: (error) => {
-                notification.updateState({ message: error.message, type: "error", open: true });
+            onError: () => {
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
             }
         }
     });

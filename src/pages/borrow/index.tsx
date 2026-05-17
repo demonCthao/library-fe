@@ -7,9 +7,12 @@ import { useCallback, useRef, useState } from 'react';
 import { BorrowForm } from './borrow-form';
 import BorrowConfirm from './borrow-record-confirm';
 import BorrowTable from './borrow-record-table';
+import { BORROW_STATUS } from '@/constants/borrow-status.constants';
+import { useTranslation } from 'react-i18next';
 
 export default function BorrowRecordPage() {
     const notification = useNotificationStore();
+    const { t } = useTranslation();
     const navigation = useNavigate();
     const [action, setAction] = useState<TypeActionTable | null>(null);
     const [selectedBorrow, setSelectedBorrow] = useState<BorrowRecord | null>(null);
@@ -48,12 +51,14 @@ export default function BorrowRecordPage() {
     }
 
     const handleConfirmDelete = () => {
-        if (selectedBorrow) {
+        if (selectedBorrow?.status === BORROW_STATUS.RETURNED) {
             notification.updateState({
-                message: "Không thể xóa phiếu phạt",
+                message: t("cannotDeleteBorow"),
                 open: true,
                 type: "warning"
             });
+
+            return;
         }
     }
 

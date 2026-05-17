@@ -34,10 +34,10 @@ export default function ProfilePage() {
     key: ["update-profile"],
     url: `users/${id}`, method: "put", options: {
       onSuccess: () => {
-        notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+        notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
       },
-      onError: (error) => {
-        notification.updateState({ message: error.message, type: "error", open: true });
+      onError: () => {
+        notification.updateState({ message: t("updateFail"), type: "error", open: true });
       }
     }
   });

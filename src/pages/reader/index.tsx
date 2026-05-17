@@ -7,9 +7,11 @@ import { useCallback, useRef, useState } from "react";
 import ReaderConfirm from "./reader-confirm";
 import { ReaderForm } from "./reader-form";
 import ReaderTable from "./reader-table";
+import { useTranslation } from "react-i18next";
 
 export default function ReaderPage() {
   const notification = useNotificationStore();
+  const { t } = useTranslation();
   const [action, setAction] = useState<TypeActionTable | null>(null);
   const [selectedReader, setSelectedReader] = useState<Reader | null>(null);
   const tableRef = useRef<BaseTableRef>(null);
@@ -50,12 +52,12 @@ export default function ReaderPage() {
     key: ["delete-user"],
     url: `users/${selectedReader?.id}`, method: "delete", options: {
       onSuccess: () => {
-        notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+        notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
         resetState();
         tableRef.current?.refresh();
       },
-      onError: (error) => {
-        notification.updateState({ message: error.message, type: "error", open: true });
+      onError: () => {
+        notification.updateState({ message: t("updateFail"), type: "error", open: true });
       }
     }
   });

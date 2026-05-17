@@ -1,17 +1,17 @@
-import { Role } from "./role.type";
+import { ROLE } from "@/constants/role.constants";
 
 import {
-  House,
-  User,
   BookText,
   BookUser,
   BookmarkCheck,
-  FolderClosed,
-  UsersRound,
   Building2,
   Flag,
-  UserLock,
+  FolderClosed,
+  House,
   ShoppingBag,
+  User,
+  UserLock,
+  UsersRound,
 } from "lucide-react";
 
 export const PERMISSIONS = {
@@ -126,7 +126,7 @@ export const menuPermissions = [
 export type Permission =
   typeof PERMISSIONS[keyof typeof PERMISSIONS][number];
 
-type RolePermissions = Record<Role, readonly (Permission | "*")[]>;
+type RolePermissions = Record<ROLE, readonly (Permission | "*")[]>;
 
 export const rolePermissions: RolePermissions = {
   admin: ["*"],
@@ -143,4 +143,8 @@ export const rolePermissions: RolePermissions = {
     ...PERMISSIONS.borrows,
     ...PERMISSIONS.extra,
   ],
+
+  user: [
+    
+  ]
 };

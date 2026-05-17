@@ -2,7 +2,6 @@ import Loading from "@/components/loading";
 import { Button } from "@/components/ui/button";
 import { LazyImage } from "@/components/ui/image";
 import { statusBorrowMap } from "@/constants/borrow-status";
-import { BorrowStatus } from "@/enum/borrow-status";
 import { useFetch } from "@/hooks/useFetch";
 import { useMutationRequest } from "@/hooks/useMutation";
 import { formatDate } from "@/lib/utils";
@@ -12,8 +11,10 @@ import { useNavigate, useParams } from "@tanstack/react-router";
 import _ from "lodash";
 import { useState } from "react";
 import FineReceiptPopup from "./fine-receipt-popup";
+import { useTranslation } from "react-i18next";
 
 export default function BorrowDetailPage() {
+    const { t } = useTranslation();
     const { id } = useParams({ from: "/borrow-detail/$id" });
     const navigation = useNavigate();
     const notification = useNotificationStore();
@@ -29,12 +30,12 @@ export default function BorrowDetailPage() {
         url: `borrow-record/return-book/${id}`,
         method: "post", options: {
             onSuccess: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 refetch();
                 setOpenPopup(false)
             },
             onError: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thất bại", type: "error", open: true });
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
             }
         }
     });
@@ -71,7 +72,7 @@ export default function BorrowDetailPage() {
     const confirmReturnBook = (payment: string | null) => {
         if (!payment) {
             notification.updateState({
-                message: "Vui lòng chọn phương thức thanh toán",
+                message: t("requirePaymentMethod"),
                 open: true,
                 type: "error",
             });

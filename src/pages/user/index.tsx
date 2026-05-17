@@ -7,9 +7,11 @@ import { useCallback, useRef, useState } from "react";
 import UserConfirm from "./user-confirm";
 import { UserForm } from "./user-form";
 import UserTable from "./user-table";
+import { useTranslation } from "react-i18next";
 
 export default function UserPage() {
     const notification = useNotificationStore();
+    const { t } = useTranslation();
     const [action, setAction] = useState<TypeActionTable | null>(null);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const tableRef = useRef<BaseTableRef>(null);
@@ -50,12 +52,12 @@ export default function UserPage() {
         key: ["delete-user"],
         url: `users/${selectedUser?.id}`, method: "delete", options: {
             onSuccess: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 resetState();
                 tableRef.current?.refresh();
             },
-            onError: (error) => {
-                notification.updateState({ message: error.message, type: "error", open: true });
+            onError: () => {
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
             }
         }
     });

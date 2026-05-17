@@ -14,7 +14,6 @@ import { useNotificationStore } from "@/store/notification.store";
 import { useForm } from "@tanstack/react-form";
 import _ from "lodash";
 import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 import z from "zod";
 
 interface IReaderFormProps {
@@ -31,11 +30,11 @@ export const ReaderForm = ({ open, onClose, reader }: IReaderFormProps) => {
         key: ["create-reader", "update-reader"],
         url: _.isNull(reader) ? "readers" : `readers/${reader.id}`, method: !_.isEmpty(reader) ? "put" : "post", options: {
             onSuccess: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 onClose(true);
             },
-            onError: (error) => {
-                toast.info(error.message);
+            onError: () => {
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
             }
         }
     });

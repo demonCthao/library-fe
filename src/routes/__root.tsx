@@ -11,6 +11,9 @@ import { useEffect } from "react"
 import { toast } from "sonner"
 import "../configs/i18n"
 import appCss from "../styles.css?url"
+import { useAccountStore } from "@/store/account.store"
+import { ROLE } from "@/constants/role.constants"
+import UserLayout from "@/components/user-layout"
 
 export const Route = createRootRoute({
   head: () => ({
@@ -41,6 +44,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   // const hasHydrated = useAccountStore((s) => s.hasHydrated);
   const notification = useNotificationStore();
+  const account = useAccountStore()
   const checkLoginPage = location.pathname.includes("login");
 
   useEffect(() => {
@@ -96,18 +100,37 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="h-screen" style={{ background: "#eceff180" }}>
-        {checkLoginPage ? <div>{children}</div> : <div className="min-h-screen">
-          <Navbar />
-          <div className="h-screen py-6 pr-4 xl:ml-80 flex flex-col">
-            <Header />
-            <div className="flex-1 mt-[25px]">
-              {children}
-            </div>
-          </div>
 
-        </div>}
+      <body
+        className={(account.user?.role === ROLE.USER || !account.user)? "overflow-y-auto":"h-dvh overflow-hidden"}
+        style={{background: (account.user?.role === ROLE.USER || !account.user) && !checkLoginPage ? "rgb(18 18 20)": ""}}
+      >
+        {checkLoginPage ? (
+          <div>{children}</div>
+        ) : (
+          (account.user?.role === ROLE.USER || !account.user) ?
+            <UserLayout>
+              {children}
+            </UserLayout> :
+            <div className="h-full">
+              <Navbar />
+
+              <div className="xl:ml-80 h-full flex flex-col pr-4 py-6">
+                {/* Sticky Header */}
+                <div className="sticky top-0 z-50 backdrop-blur-sm">
+                  <Header />
+                </div>
+
+                {/* Scroll Area */}
+                <div className="flex-1 min-h-0 overflow-y-auto mt-[25px]">
+                  {children}
+                </div>
+              </div>
+            </div>
+        )}
+
         <Toaster />
+
         <TanStackDevtools
           config={{
             position: "bottom-right",
@@ -119,6 +142,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             },
           ]}
         />
+
         <Scripts />
       </body>
     </html>

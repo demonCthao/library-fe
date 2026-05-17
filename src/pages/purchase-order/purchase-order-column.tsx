@@ -1,3 +1,5 @@
+import { Badge } from "@/components/ui/badge";
+import { PURCHASE_ORDER } from "@/constants/purchase-order.constants";
 import { PurchaseOrder } from "@/models/purchase-order.model";
 import {
     createColumnHelper
@@ -20,7 +22,7 @@ export const purchaseOrderColumns = [
         }
     }),
     columnHelper.accessor(
-        (row) => row.readers?.full_name ?? row.guest_name ?? "",
+        (row) => row.reader?.full_name ?? row.guest_name ?? "",
         {
             id: "buyerName",
             header: "Tên người mua",
@@ -36,7 +38,7 @@ export const purchaseOrderColumns = [
         }
     ),
     columnHelper.accessor(
-        (row) => row.readers?.phone ?? row.guest_phone ?? "",
+        (row) => row.reader?.phone ?? row.guest_phone ?? "",
         {
             id: "phone",
             header: "phone",
@@ -51,6 +53,33 @@ export const purchaseOrderColumns = [
             }
         }
     ),
+
+    columnHelper.accessor("total_price", {
+        cell: (info) => Number(info.getValue()).toLocaleString("vi-VN", {
+            style: "currency",
+            currency: "VND"
+        }),
+        header: "totalPrice",
+        footer: (info) => info.column.id,
+        meta: {
+            label: "totalPrice",
+            className: "text-center"
+        }
+    }),
+
+    columnHelper.accessor("payment_status", {
+        header: "paymentStatus",
+        cell: ({ getValue }) => getValue() === PURCHASE_ORDER.UNPAID ? <Badge variant="red">Chưa thanh toán</Badge> : <Badge variant="green">Đã thanh toán</Badge>,
+        sortUndefined: 'last',
+        sortDescFirst: false,
+        footer: (info) => info.column.id,
+        filterFn: "includesString",
+        meta: {
+            label: "paymentStatus",
+            className: "text-center"
+        }
+    }),
+
     columnHelper.accessor("created_at", {
         cell: ({ getValue }) => format(new Date(getValue() as string), "dd/MM/yyyy"),
         header: "createdAt",

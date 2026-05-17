@@ -8,9 +8,11 @@ import _ from 'lodash';
 import { useCallback, useRef, useState } from 'react';
 import { CategoryForm } from './category-form';
 import CategoryTable from './category-table';
+import { useTranslation } from 'react-i18next';
 
 export default function CategoryPage() {
   const notification = useNotificationStore();
+  const { t } = useTranslation();
   const [action, setAction] = useState<TypeActionTable | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const tableRef = useRef<BaseTableRef>(null);
@@ -50,12 +52,12 @@ export default function CategoryPage() {
     key: ["delete-category"],
     url: `categories/${selectedCategory?.id}`, method: "delete", options: {
       onSuccess: () => {
-        notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+        notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
         resetState();
         tableRef.current?.refresh();
       },
-      onError: (error) => {
-        notification.updateState({ message: error.message, type: "error", open: true });
+      onError: () => {
+        notification.updateState({ message: t("updateFail"), type: "error", open: true });
       }
     }
   });

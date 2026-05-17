@@ -7,6 +7,7 @@ import {
   FieldLabel
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { ROLE } from "@/constants/role.constants";
 import { useMutationRequest } from "@/hooks/useMutation";
 import { loginSchema } from "@/schema/login.schema";
 import { useAccountStore } from "@/store/account.store";
@@ -31,13 +32,19 @@ export default function LoginPage() {
         localStorage.setItem("jwt", JSON.stringify(data));
 
         const decoded = jwtDecode<JwtPayload>(token);
-
         useAccountStore.getState().setUser(decoded);
 
-        navigate({
-          to: "/dashboard",
-          replace: true
-        });
+        if (decoded.role === ROLE.USER) {
+          navigate({
+            to: "/user-page",
+            replace: true
+          });
+        } else {
+          navigate({
+            to: "/dashboard",
+            replace: true
+          });
+        }
 
         notification.updateState({
           message: "Đăng nhập thành công",

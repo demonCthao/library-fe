@@ -13,7 +13,7 @@ import { categorySchema } from "@/schema/category.schema";
 import { useNotificationStore } from "@/store/notification.store";
 import { useForm } from "@tanstack/react-form";
 import _ from "lodash";
-import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 import z from "zod";
 
 interface ICategoryFormProps {
@@ -24,16 +24,17 @@ interface ICategoryFormProps {
 
 export const CategoryForm = ({ open, onClose, category }: ICategoryFormProps) => {
     const notification = useNotificationStore();
+    const { t } = useTranslation();
     type CategoryForm = z.infer<typeof categorySchema>;
     const { mutate } = useMutationRequest({
         key: ["create-category", "update-category"],
         url: _.isNull(category) ? "categories" : `categories/${category.id}`, method: !_.isEmpty(category) ? "put" : "post", options: {
             onSuccess: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 onClose(true);
             },
-            onError: (error) => {
-                toast.info(error.message);
+            onError: () => {
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
             }
         }
     });

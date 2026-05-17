@@ -9,6 +9,7 @@ import { authorSchema } from "@/schema/author.schema";
 import { useNotificationStore } from "@/store/notification.store";
 import { useForm } from "@tanstack/react-form";
 import _ from "lodash";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import z from "zod";
 
@@ -20,16 +21,17 @@ interface IAuthorFormProps {
 
 export const AuthorForm = ({ open, onClose, author }: IAuthorFormProps) => {
     const notification = useNotificationStore();
+    const { t } = useTranslation();
     type AuthorForm = z.infer<typeof authorSchema>;
     const { mutate } = useMutationRequest({
         key: ["create-author", "update-author"],
         url: _.isNull(author) ? "authors" : `authors/${author.id}`, method: !_.isEmpty(author) ? "put" : "post", options: {
             onSuccess: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 onClose(true);
             },
-            onError: (error) => {
-                toast.info(error.message);
+            onError: () => {
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
             }
         }
     });

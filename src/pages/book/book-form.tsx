@@ -16,6 +16,7 @@ import { useNotificationStore } from "@/store/notification.store";
 import { useForm } from "@tanstack/react-form";
 import _ from "lodash";
 import { ChangeEvent, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import z from "zod";
 
@@ -27,6 +28,7 @@ interface IBookFormProps {
 
 export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
   const notification = useNotificationStore();
+  const { t } = useTranslation();
   type BookForm = z.infer<typeof bookSchema>;
   const [preview, setPreview] = useState<{
     file: File,
@@ -37,11 +39,11 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
     key: ["create-book", "update-book"],
     url: _.isNull(book) ? "books" : `books/${book.id}`, method: !_.isEmpty(book) ? "put" : "post", options: {
       onSuccess: () => {
-        notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+        notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
         onClose(true);
       },
-      onError: (error) => {
-        toast.info(error.message);
+      onError: () => {
+        notification.updateState({ message: t("updateFail"), type: "error", open: true });
       }
     }
   });

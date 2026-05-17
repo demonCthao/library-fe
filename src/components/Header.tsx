@@ -21,11 +21,12 @@ export function Header() {
   useEffect(() => {
     const defaultLanguage = () => {
       if (user) {
+        console.log("🚀 ~ defaultLanguage ~ user:", user)
         setLanguage(user.lang)
       }
     }
 
-    return () => defaultLanguage()
+    defaultLanguage()
   }, [user])
 
 

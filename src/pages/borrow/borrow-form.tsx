@@ -16,6 +16,7 @@ import { Reader } from "@/models/reader.model"
 import { useNotificationStore } from "@/store/notification.store"
 import _ from "lodash"
 import { ChangeEvent, useCallback, useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
 
 interface IBorrowPopupProps {
     open: boolean
@@ -24,6 +25,7 @@ interface IBorrowPopupProps {
 
 export function BorrowForm({ open, onClose }: IBorrowPopupProps) {
     const notification = useNotificationStore();
+    const { t } = useTranslation();
     const [search, setSearch] = useState<{ readerKey: string, bookKey: string, dueDate: string }>({ bookKey: "", readerKey: "", dueDate: "" });
     const readerDebounce = useDebounce(search.readerKey);
     const bookDebounce = useDebounce(search.bookKey);
@@ -61,11 +63,11 @@ export function BorrowForm({ open, onClose }: IBorrowPopupProps) {
         key: ["create-borrow"],
         url: "borrow-record", method: "post", options: {
             onSuccess: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 onClose(true);
             },
             onError: (error) => {
-                notification.updateState({ message: error.message, type: "error", open: true });
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
             }
         }
     });

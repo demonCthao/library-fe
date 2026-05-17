@@ -16,6 +16,7 @@ import { Reader } from "@/models/reader.model"
 import { useNotificationStore } from "@/store/notification.store"
 import _ from "lodash"
 import { ChangeEvent, useCallback, useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
 
 interface IPurchaseOrdeFormProps {
     open: boolean
@@ -24,6 +25,7 @@ interface IPurchaseOrdeFormProps {
 
 export default function PurchaseOrdeForm({ open, onClose }: IPurchaseOrdeFormProps) {
     const notification = useNotificationStore();
+    const { t } = useTranslation();
     const [search, setSearch] = useState<{ readerKey: string, bookKey: string }>({ bookKey: "", readerKey: "" });
     const readerDebounce = useDebounce(search.readerKey);
     const bookDebounce = useDebounce(search.bookKey);
@@ -61,18 +63,18 @@ export default function PurchaseOrdeForm({ open, onClose }: IPurchaseOrdeFormPro
         key: ["create-purchase"],
         url: "purchase-orders", method: "post", options: {
             onSuccess: () => {
-                notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 onClose(true);
             },
-            onError: (error) => {
-                notification.updateState({ message: error.message, type: "error", open: true });
+            onError: () => {
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
             }
         }
     });
 
     const handleConfirm = () => {
         if (_.isEmpty(books)) {
-            notification.updateState({ open: true, message: "Sách không được để trống", type: "warning" });
+            notification.updateState({ open: true, message: t("requireBook"), type: "warning" });
             return;
         }
 
@@ -113,7 +115,7 @@ export default function PurchaseOrdeForm({ open, onClose }: IPurchaseOrdeFormPro
     const onSelectBook = (opt: SelectOption) => {
 
         if (opt.otherValue?.stock_quantity === 0) {
-            notification.updateState({ open: true, message: "Số lượng sách này không đủ", type: "warning" });
+            notification.updateState({ open: true, message: t("bookEnough"), type: "warning" });
             return
         }
 
@@ -151,7 +153,7 @@ export default function PurchaseOrdeForm({ open, onClose }: IPurchaseOrdeFormPro
     });
 
     return (
-        <Popup onConfirm={handleConfirm} variant="lg" type="confirm" open={open} onClose={onClose} title="Phiếu mượn">
+        <Popup onConfirm={handleConfirm} variant="lg" type="confirm" open={open} onClose={onClose} title={t("orderInformation")}>
             <div className="grid grid-cols-2 gap-2">
                 <div>
                     <div className="relative">
@@ -195,6 +197,7 @@ export default function PurchaseOrdeForm({ open, onClose }: IPurchaseOrdeFormPro
                             style: "currency",
                             currency: "VND"
                         })}
+                        readOnly
                     />
                 </div>
                 <div>
@@ -226,7 +229,7 @@ export default function PurchaseOrdeForm({ open, onClose }: IPurchaseOrdeFormPro
                 </div>
             </div>
             <div className="mt-3">
-                <div>Danh sách</div>
+                <div>{t("listBook")}</div>
                 <Card className="w-[350px] w-full mt-2 py-3">
                     <CardContent className="px-3">
                         <ScrollArea className="h-[300px]">

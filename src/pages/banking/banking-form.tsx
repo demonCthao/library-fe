@@ -15,7 +15,6 @@ import { useForm } from "@tanstack/react-form";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 import z from "zod";
 
 interface IBankingFormProps {
@@ -87,11 +86,11 @@ export default function BankingForm({ open, onClose, bank }: IBankingFormProps) 
     key: ["create-bank", "update-bank"],
     url: _.isNull(bank) ? "banks" : `banks/${bank.id}`, method: !_.isEmpty(bank) ? "put" : "post", options: {
       onSuccess: () => {
-        notification.updateState({ message: "Cập nhật dữ liệu thành công", type: "success", open: true });
+        notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
         onClose(true);
       },
-      onError: (error) => {
-        toast.info(error.message);
+      onError: () => {
+        notification.updateState({ message: t("updateFail"), type: "error", open: true });
       }
     }
   });

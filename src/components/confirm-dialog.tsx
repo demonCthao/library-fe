@@ -1,4 +1,5 @@
 import { Popup } from "@/components/popup";
+import { useTranslation } from "react-i18next";
 
 interface IConfirmProps {
     label: string;
@@ -8,14 +9,16 @@ interface IConfirmProps {
 }
 
 export default function ConfirmDialog({ label, open, onConfirm, onClose }: IConfirmProps) {
+    const { t } = useTranslation();
+
     const handleClosePopup = () => {
         onClose(false)
     }
 
     return (
         <div>
-            <Popup variant="2xl" type="confirm" open={open} onConfirm={onConfirm} onClose={handleClosePopup} title="Xác nhận">
-                Bạn có xác nhận xóa: {label}?
+            <Popup variant="md" type="confirm" open={open} onConfirm={onConfirm} onClose={handleClosePopup} title={t("confirm")}>
+                {t("confirmDelete")}: {label}?
             </Popup>
         </div>
     )
