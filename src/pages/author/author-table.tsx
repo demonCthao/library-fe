@@ -102,6 +102,10 @@ const AuthorTable = forwardRef<BaseTableRef, IAuthorTableProps>(({ onChooseAutho
     }
   }));
 
+  if (isLoading) {
+    return <Loading />
+  }
+
   return (
     <div className="h-full flex flex-col">
       <div className="grid grid-cols-3 justify-between w-full mb-5">
@@ -140,7 +144,7 @@ const AuthorTable = forwardRef<BaseTableRef, IAuthorTableProps>(({ onChooseAutho
           <DropdownHeaderTable table={tableData.table} />
         </div>
       </div>
-      {isLoading ? <Loading /> : <Table useCanMutaion={canMutationAuthor} title={t("authorList")} tableData={tableData} />}
+      <Table useCanMutaion={canMutationAuthor} title={t("authorList")} tableData={tableData} />
     </div>
   )
 });

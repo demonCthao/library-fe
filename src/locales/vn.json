@@ -111,5 +111,9 @@
     "page": "Số trang",
     "category": "Danh mục",
     "publisher": "Nhà xuất bản",
-    "cartEmpty": "Bạn đang chưa có sách, vui lòng thêm sách để tạo đơn hàng"
+    "cartEmpty": "Bạn đang chưa có sách, vui lòng thêm sách để tạo đơn hàng",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "newPassword": "Mật khẩu mới",
+    "currentPassword": "Mật khẩu hiện tại"
 }

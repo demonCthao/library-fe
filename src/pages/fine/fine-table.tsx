@@ -98,6 +98,10 @@ const FineTable = forwardRef<BaseTableRef, IFineTableProps>(({ onChooseFine }, r
         }
     }));
 
+    if (isLoading) {
+        return <Loading />
+    }
+
     return (
         <div className="h-full flex flex-col">
             <div className="grid grid-cols-3 justify-between w-full mb-2">
@@ -130,7 +134,7 @@ const FineTable = forwardRef<BaseTableRef, IFineTableProps>(({ onChooseFine }, r
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table useCanMutaion={canMutationFine} title={t("penaltyList")} tableData={tableData} />}
+            <Table useCanMutaion={canMutationFine} title={t("penaltyList")} tableData={tableData} />
         </div>
     )
 });

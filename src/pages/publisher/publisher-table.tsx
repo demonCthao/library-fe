@@ -45,7 +45,7 @@ const PublisherTable = forwardRef<BaseTableRef, IPublisherTableProps>(({ onChoos
     const { data, isLoading, error, refetch } = useFetch<DataList<Publisher>>({
         url: `publishers?${convertObjectToParam(search)}`,
         key: ["publishers", nameDebounce, search.pageIndex.toString(),
-      search.pageSize.toString()],
+            search.pageSize.toString()],
     });
 
     const { mutateAsync } = useMutationRequest<Blob>({
@@ -96,6 +96,10 @@ const PublisherTable = forwardRef<BaseTableRef, IPublisherTableProps>(({ onChoos
         }
     }));
 
+    if (isLoading) {
+        return <Loading />
+    }
+
     return (
         <div className="h-full flex flex-col">
             <div className="grid grid-cols-3 justify-between w-full mb-2">
@@ -123,7 +127,7 @@ const PublisherTable = forwardRef<BaseTableRef, IPublisherTableProps>(({ onChoos
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title={t("publisherList")} tableData={tableData} useCanMutaion={canMutatePublisher} />}
+            <Table title={t("publisherList")} tableData={tableData} useCanMutaion={canMutatePublisher} />
         </div>
     )
 });

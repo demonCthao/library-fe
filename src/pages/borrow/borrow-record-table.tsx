@@ -42,12 +42,12 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
 
   const { data, isLoading, error, refetch } = useFetch<DataList<BorrowRecord>>({
     url: `borrow-record?${convertObjectToParam(search)}`,
-    key: ["borrow-record", 
-      search.status, 
-      search.borrowDate, 
-      search.dueDate, 
-      search.returnDate, 
-      readerNameDebounce, 
+    key: ["borrow-record",
+      search.status,
+      search.borrowDate,
+      search.dueDate,
+      search.returnDate,
+      readerNameDebounce,
       phoneDebounce,
       search.pageIndex.toString(),
       search.pageSize.toString()
@@ -93,6 +93,10 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
       refetch();
     }
   }));
+
+  if (isLoading) {
+    return <Loading />
+  }
 
   return (
     <div className="h-full flex flex-col">
@@ -146,7 +150,7 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
 
         <div className="ml-auto w-fit flex gap-2">
           {
-            canMutationBorrow && 
+            canMutationBorrow &&
             <div>
               <Button className="bg-green-500 hover:bg-green-600" onClick={handleAddBorrow}><BookmarkPlus size={18} /> {t("add")}</Button>
             </div>
@@ -154,7 +158,7 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
           <DropdownHeaderTable table={tableData.table} />
         </div>
       </div>
-      {isLoading ? <Loading /> : <Table useCanMutaion={canMutationBorrow} title={t("borrowingList")} tableData={tableData} />}
+      <Table useCanMutaion={canMutationBorrow} title={t("borrowingList")} tableData={tableData} />
     </div>
   )
 });

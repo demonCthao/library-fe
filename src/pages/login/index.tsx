@@ -16,10 +16,15 @@ import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
 import { jwtDecode } from "jwt-decode";
 import { BookOpen, Lock, User } from "lucide-react"; // Thêm icon cho đẹp
+import { useState } from "react";
+import { RegisterModal } from "../user-page/user-page-register";
+import { ForgotPasswordDialog } from "../user-page/user-page-forgot-pass";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const notification = useNotificationStore();
+  const [isRegister, setIsRegister] = useState(false);
+  const [isShowRememberPass, setIsShowRememberPass] = useState<boolean>(false)
 
   const { mutate } = useMutationRequest({
     key: ["login"],
@@ -55,6 +60,12 @@ export default function LoginPage() {
     validators: { onSubmit: loginSchema },
     onSubmit: async ({ value }) => { await mutate(value); },
   });
+
+  const onOpenRegister = (value: boolean) => setIsRegister(value)
+
+  const onRememberPassword = () => {
+    setIsShowRememberPass(true)
+  }
 
   return (
     <section className="flex h-screen items-center bg-[#121214]">
@@ -146,7 +157,7 @@ export default function LoginPage() {
                 <input type="checkbox" id="remember" className="rounded border-zinc-800 bg-zinc-900 text-emerald-500 focus:ring-emerald-500" />
                 <label htmlFor="remember" className="text-xs text-gray-500 cursor-pointer">Ghi nhớ đăng nhập</label>
               </div>
-              <a href="#" className="text-xs font-semibold text-emerald-500 hover:text-emerald-400 transition-colors">Quên mật khẩu?</a>
+              <a onClick={onRememberPassword} href="#" className="text-xs font-semibold text-emerald-500 hover:text-emerald-400 transition-colors">Quên mật khẩu?</a>
             </div>
 
             <Button
@@ -157,11 +168,17 @@ export default function LoginPage() {
             </Button>
 
             <p className="text-center text-gray-500 text-sm mt-8">
-              Chưa có tài khoản? <a href="#" className="text-emerald-500 font-bold hover:underline">Đăng ký miễn phí</a>
+              Chưa có tài khoản? <a onClick={() => setIsRegister(true)} href="#" className="text-emerald-500 font-bold hover:underline">Đăng ký miễn phí</a>
             </p>
           </form>
         </div>
       </div>
+      {isRegister && (
+        <RegisterModal onOpenChange={onOpenRegister} open={isRegister} />
+      )}
+      {
+        isShowRememberPass && <ForgotPasswordDialog isOpen onOpenChange={setIsShowRememberPass} />
+      }
     </section>
   );
 }

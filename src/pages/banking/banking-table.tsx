@@ -26,7 +26,7 @@ const BankingTable = forwardRef<BaseTableRef, IBankingTableProps>(({ onChooseBan
     });
 
     const tableData = useTable<BankAccount>({
-        data: data?? [],
+        data: data ?? [],
         search: { pageIndex: 1, pageSize: 100 },
         total: 10,
         columns: bankAccountColumns,
@@ -48,6 +48,10 @@ const BankingTable = forwardRef<BaseTableRef, IBankingTableProps>(({ onChooseBan
         }
     }));
 
+    if (isLoading) {
+        return <Loading />
+    }
+
     return (
         <div className="h-full flex flex-col">
             <div className="w-full mb-5">
@@ -58,7 +62,7 @@ const BankingTable = forwardRef<BaseTableRef, IBankingTableProps>(({ onChooseBan
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table useCanMutaion={canMutationBook} title="Quản lý danh sách tài khoản" tableData={tableData} />}
+            <Table useCanMutaion={canMutationBook} title="Quản lý danh sách tài khoản" tableData={tableData} />
         </div>
     )
 });

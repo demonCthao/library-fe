@@ -137,7 +137,7 @@ export function RegisterModal({ open, onOpenChange }: { open: boolean, onOpenCha
                                 const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                                 return (
                                     <Field data-invalid={isInvalid} className="gap-1">
-                                        <FieldLabel htmlFor={field.name}>{t("userName")}</FieldLabel>
+                                        <FieldLabel htmlFor={field.name}>{t("username")}</FieldLabel>
                                         <Input
                                             id={field.name}
                                             name={field.name}
@@ -183,7 +183,6 @@ export function RegisterModal({ open, onOpenChange }: { open: boolean, onOpenCha
                         />
                     </div>
 
-                    {/* THÊM MỚI: Ô NHẬP EMAIL ĐÃ BỊ THIẾU */}
                     <div className="space-y-1">
                         <form.Field
                             name="email"
@@ -211,7 +210,6 @@ export function RegisterModal({ open, onOpenChange }: { open: boolean, onOpenCha
                         />
                     </div>
 
-                    {/* Mật khẩu */}
                     <div className="space-y-1">
                         <form.Field
                             name="password"

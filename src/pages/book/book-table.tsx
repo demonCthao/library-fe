@@ -5,6 +5,7 @@ import { SelectApp } from "@/components/select-app";
 import { DynamicTable as Table } from "@/components/table-dynamic";
 import { Button } from "@/components/ui/button";
 import { PAGE_SIZE_10 } from "@/enum/search.enum";
+import { useCan } from "@/hooks/use-can";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useFetch } from "@/hooks/useFetch";
 import { useMutationRequest } from "@/hooks/useMutation";
@@ -14,13 +15,12 @@ import { Book } from "@/models/book.model";
 import { Category } from "@/models/category.model";
 import { DataList } from "@/models/response.model";
 import { BaseTableRef } from "@/types/base-ref.type";
+import { DELETE, EXPORT, MUTATION } from "@/types/permission.type";
 import { PaginationState } from "@tanstack/react-table";
 import { ArrowBigDownDash, BookPlus } from "lucide-react";
 import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
-import { bookColumns } from "./book-column";
 import { useTranslation } from "react-i18next";
-import { useCan } from "@/hooks/use-can";
-import { DELETE, EXPORT, MUTATION, PERMISSIONS } from "@/types/permission.type";
+import { bookColumns } from "./book-column";
 
 interface IBookTableProps {
   onChooseBook: (type: TypeActionTable, book?: Book) => void;
@@ -119,10 +119,14 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
     }
   }));
 
+  if (isLoading) {
+    return <Loading />
+  }
+
   return (
     <div className="h-full flex flex-col">
-      <div className="grid grid-cols-3 w-full mb-5 items-center">
-        <div className="col-span-2 grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-12 w-full mb-5 items-center">
+        <div className="col-span-8 grid grid-cols-4 gap-3">
           <div>
             <FieldSearch
               type="text"
@@ -169,7 +173,7 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
           </div>
         </div>
 
-        <div className="ml-auto w-fit flex gap-2">
+        <div className="col-span-4 ml-auto w-fit flex gap-2">
           {
             canExportPBook && <div>
               <Button className="bg-sky-700 hover:bg-sky-600" onClick={handleExport}><ArrowBigDownDash size={18} /> {t("exportData")}</Button>
@@ -183,7 +187,7 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
           <DropdownHeaderTable table={tableData.table} />
         </div>
       </div>
-      {isLoading ? <Loading /> : <Table useCanMutaion={canMutationBook} title={t("bookList")} tableData={tableData} />}
+      <Table useCanMutaion={canMutationBook} title={t("bookList")} tableData={tableData} />
     </div>
   )
 });

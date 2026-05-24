@@ -18,22 +18,12 @@ import UserLayout from "@/components/user-layout"
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      {
-        charSet: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      {
-        title: "Library Web",
-      },
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "Library Web" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
     ],
   }),
   shellComponent: RootDocument,
@@ -42,20 +32,25 @@ export const Route = createRootRoute({
 function RootDocument({ children }: { children: React.ReactNode }) {
   useSyncLanguage();
   const location = useLocation();
-  // const hasHydrated = useAccountStore((s) => s.hasHydrated);
   const notification = useNotificationStore();
   const account = useAccountStore()
   const checkLoginPage = location.pathname.includes("login");
 
   useEffect(() => {
     if (notification.open) {
+      // Style chung cho Toast để khớp giao diện tối
+      const baseStyle = {
+        background: "#1a1a1a",
+        border: "1px solid rgba(255,255,255,0.1)",
+        color: "#fff",
+      };
+
       if (_.isEqual(notification.type, "success")) {
         toast.success(notification.message, {
           style: {
-            "--normal-bg":
-              "color-mix(in oklab, light-dark(var(--color-green-600), var(--color-green-400)) 10%, var(--background))",
-            "--normal-text": "light-dark(var(--color-green-600), var(--color-green-400))",
-            "--normal-border": "light-dark(var(--color-green-600), var(--color-green-400))"
+            ...baseStyle,
+            "--normal-border": "#10b981", // Emerald 500
+            "--normal-text": "#10b981",
           } as React.CSSProperties,
           position: "top-center"
         })
@@ -64,10 +59,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       if (_.isEqual(notification.type, "warning")) {
         toast.warning(notification.message, {
           style: {
-            "--normal-bg":
-              "color-mix(in oklab, light-dark(var(--color-amber-600), var(--color-amber-400)) 10%, var(--background))",
-            "--normal-text": "light-dark(var(--color-amber-600), var(--color-amber-400))",
-            "--normal-border": "light-dark(var(--color-amber-600), var(--color-amber-400))"
+            ...baseStyle,
+            "--normal-border": "#f59e0b", // Amber 500
+            "--normal-text": "#f59e0b",
           } as React.CSSProperties,
           position: "top-center"
         })
@@ -76,9 +70,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       if (_.isEqual(notification.type, "error")) {
         toast.error(notification.message, {
           style: {
-            "--normal-bg": "color-mix(in oklab, var(--destructive) 10%, var(--background))",
-            "--normal-text": "var(--destructive)",
-            "--normal-border": "var(--destructive)"
+            ...baseStyle,
+            "--normal-border": "#ef4444", // Red 500
+            "--normal-text": "#ef4444",
           } as React.CSSProperties,
           position: "top-center"
         })
@@ -90,51 +84,54 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     }
   }, [notification.message, notification.open])
 
-  // if (!hasHydrated) {
-  //   return <div>Loading...</div>;
-  // }
-
+  // Logic xác định xem có phải là giao diện người dùng (User/Guest) hay không
+  const isUserView = account.user?.role === ROLE.USER || !account.user;
 
   return (
-    <html lang="en">
+    <html lang="en" className="dark"> {/* Thêm class dark để đồng bộ shadcn */}
       <head>
         <HeadContent />
       </head>
 
       <body
-        className={(account.user?.role === ROLE.USER || !account.user)? "overflow-y-auto":"h-dvh overflow-hidden"}
-        style={{background: (account.user?.role === ROLE.USER || !account.user) && !checkLoginPage ? "rgb(18 18 20)": ""}}
+        className={isUserView ? "overflow-y-auto" : "h-dvh overflow-hidden"}
+        style={{
+          // Màu nền Dark chuẩn cho toàn bộ app người dùng và trang login
+          backgroundColor: "#121214",
+          color: "#ececec"
+        }}
       >
         {checkLoginPage ? (
-          <div>{children}</div>
+          <div className="h-full">{children}</div>
         ) : (
-          (account.user?.role === ROLE.USER || !account.user) ?
+          isUserView ? (
             <UserLayout>
               {children}
-            </UserLayout> :
-            <div className="h-full">
+            </UserLayout>
+          ) : (
+            <div className="h-full flex bg-[#0f0f11]"> {/* Nền riêng cho Dashboard Admin */}
               <Navbar />
 
-              <div className="xl:ml-80 h-full flex flex-col pr-4 py-6">
-                {/* Sticky Header */}
-                <div className="sticky top-0 z-50 backdrop-blur-sm">
+              <div className="xl:ml-80 h-full flex flex-col flex-1 pr-4 py-6">
+                {/* Sticky Header cho Admin */}
+                <div className="sticky top-0 z-50 backdrop-blur-md bg-[#0f0f11]/80">
                   <Header />
                 </div>
 
-                {/* Scroll Area */}
-                <div className="flex-1 min-h-0 overflow-y-auto mt-[25px]">
+                {/* Scroll Area cho Admin */}
+                <div className="flex-1 min-h-0 overflow-y-auto mt-6 custom-scrollbar">
                   {children}
                 </div>
               </div>
             </div>
+          )
         )}
 
-        <Toaster />
+        {/* Cấu hình Toaster cho phù hợp với Dark Mode */}
+        <Toaster theme="dark" closeButton richColors />
 
         <TanStackDevtools
-          config={{
-            position: "bottom-right",
-          }}
+          config={{ position: "bottom-right" }}
           plugins={[
             {
               name: "Tanstack Router",

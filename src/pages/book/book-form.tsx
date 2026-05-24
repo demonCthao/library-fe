@@ -144,7 +144,7 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
   return (
     <div>
       <Popup variant="2xl" type="form" open={open} onClose={handleCloseForm} title="Thông tin sách" form={form}>
-        <FieldGroup className="grid grid-cols-2 gap-3">
+        <FieldGroup className="grid grid-cols-3 gap-2">
           <FormFieldInput form={form} label="title" name="title" type="text" placeholder="Nhập tên sách..." disabled={!_.isNull(book)} />
           <FormFieldInput form={form} label="description" name="description" type="text" placeholder="Nhập miêu tả..." />
           <FormFieldInput form={form} label="publishYear" name="publish_year" type="number" placeholder="Nhập miêu tả..." />
@@ -179,7 +179,7 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
               <img
                 src={preview.src}
                 alt="preview"
-                className="max-h-40 object-contain rounded-md"
+                className="max-h-30 object-contain rounded-md"
               />
             ) : (
               <p className="text-sm text-muted-foreground">

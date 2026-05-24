@@ -7,7 +7,11 @@ const columnHelper = createColumnHelper<Book>();
 export const bookColumns = [
   columnHelper.accessor("title", {
     header: "name",
-    cell: (info) => info.getValue(),
+    cell: (info) => (
+      <div className="max-w-[150px] truncate" title={info.getValue() as string}>
+        {info.getValue()}
+      </div>
+    ),
     sortUndefined: "last",
     sortDescFirst: false,
     footer: (info) => info.column.id,
@@ -105,20 +109,21 @@ export const bookColumns = [
 
   columnHelper.accessor("borrowed_quantity", {
     header: "borrowedQuantity",
-    cell: (info) => info.getValue(),
+    // Căn giữa giá trị hiển thị bằng flex justify-center
+    cell: (info) => <div className="flex justify-center">{info.getValue()}</div>,
     sortUndefined: "last",
     sortDescFirst: false,
     footer: (info) => info.column.id,
     filterFn: "includesString",
     meta: {
       label: "borrowedQuantity",
-      className: "text-center"
+      className: "text-center" // Giữ class này để căn giữa tiêu đề
     },
   }),
 
   columnHelper.accessor("available_quantity", {
     header: "availableQuantity",
-    cell: (info) => info.getValue(),
+    cell: (info) => <div className="flex justify-center">{info.getValue()}</div>,
     sortUndefined: "last",
     sortDescFirst: false,
     footer: (info) => info.column.id,
@@ -131,7 +136,7 @@ export const bookColumns = [
 
   columnHelper.accessor("stock_quantity", {
     header: "stockQuantity",
-    cell: (info) => info.getValue(),
+    cell: (info) => <div className="flex justify-center">{info.getValue()}</div>,
     sortUndefined: "last",
     sortDescFirst: false,
     footer: (info) => info.column.id,

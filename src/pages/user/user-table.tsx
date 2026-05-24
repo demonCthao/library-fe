@@ -101,10 +101,14 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
         }
     }));
 
+    if (isLoading) {
+        return <Loading />
+    }
+
     return (
-        <div className="h-full flex flex-col">
-            <div className="grid grid-cols-4 w-full mb-5">
-                <div className="col-span-3 grid grid-cols-3 gap-3">
+        <div className="h-full flex flex-col w-full max-w-ful">
+            <div className="grid grid-cols-3 w-full mb-5">
+                <div className="col-span-2 grid grid-cols-3 gap-3">
                     <div>
                         <FieldSearch
                             label={t("username")}
@@ -137,7 +141,7 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title={t("userList")} tableData={tableData} useCanMutaion={canMutationUser} />}
+            <Table title={t("userList")} tableData={tableData} useCanMutaion={canMutationUser} />
         </div>
     )
 });

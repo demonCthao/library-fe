@@ -97,7 +97,7 @@ export default function BankingForm({ open, onClose, bank }: IBankingFormProps) 
 
   return (
     <div>
-      <Popup variant="2xl" type="form" open={open} onClose={() => onClose(false)} title={t("userInfomation")} form={form}>
+      <Popup variant="lg" type="form" open={open} onClose={() => onClose(false)} title={t("userInfomation")} form={form}>
         <FieldGroup className="grid grid-cols-2 gap-3">
           <FormFieldInput form={form} label={t("ownerName")} name="owner_name" type="text" placeholder="Nhập tên chủ tài khoản..." />
           <FormFieldInput form={form} label={t("accountNumber")} name="account_number" type="text" placeholder="Nhập số tài khoản..." />

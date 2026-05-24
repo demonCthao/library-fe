@@ -1,4 +1,6 @@
 import * as React from "react";
+import { Search } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface FieldSearchProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -13,30 +15,53 @@ export const FieldSearch = React.forwardRef<
     FieldSearchProps
 >(({ isHideIcon = false, label, className, wrapperClassName, children, ...props }, ref) => {
     return (
-        <div className="relative w-full">
+        <div className={cn("relative w-full group", wrapperClassName)}>
             {
-                children ?? <>
-                    <input
-                        type="text"
-                        placeholder=" "
-                        className="peer w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-gray-900 transition-all"
-                        {...props}
-                        ref={ref}
-                    />
+                children ?? (
+                    <>
+                        {/* Icon kính lúp ở đầu (nếu không ẩn) */}
+                        {!isHideIcon && (
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-emerald-500 transition-colors duration-200">
+                                <Search size={16} />
+                            </div>
+                        )}
 
-                    <label
-                        className="absolute left-3 top-1/2 -translate-y-1/2 
-                            px-2 text-sm text-gray-500
-                            transition-all duration-200
-                            peer-focus:top-0 peer-focus:text-xs peer-focus:text-gray-900
-                            peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs
-                            bg-gray-100
-                            before:absolute before:inset-0 before:bg-gray-100 before:z-[-1]
-                            pointer-events-none"
-                    >
-                        {label}
-                    </label>
-                </>
+                        <input
+                            type="text"
+                            placeholder=" "
+                            className={cn(
+                                "peer w-full px-4 py-2 text-sm rounded-xl transition-all duration-200",
+                                // Dark Mode Styles
+                                "bg-[#252529] border border-white/5 text-gray-200",
+                                // Focus Styles
+                                "focus:outline-none focus:border-emerald-500/50 focus:bg-[#2b2b30] focus:ring-4 focus:ring-emerald-500/10",
+                                // Padding chỉnh sửa dựa theo icon
+                                !isHideIcon ? "pl-10" : "pl-4",
+                                className
+                            )}
+                            {...props}
+                            ref={ref}
+                        />
+
+                        {/* Floating Label */}
+                        <label
+                            className={cn(
+                                "absolute transition-all duration-200 pointer-events-none text-gray-500",
+                                // Vị trí mặc định
+                                "top-1/2 -translate-y-1/2 text-sm",
+                                !isHideIcon ? "left-10" : "left-4",
+
+                                // Khi Focus: Nhảy lên trên và đổi sang chữ TRẮNG
+                                "peer-focus:-top-2 peer-focus:left-3 peer-focus:text-[11px] peer-focus:text-white peer-focus:font-bold peer-focus:bg-[#1a1a1c] peer-focus:px-2",
+
+                                // Khi có dữ liệu (not-placeholder-shown): Nhảy lên trên và màu Emerald
+                                "peer-not-placeholder-shown:-top-2 peer-not-placeholder-shown:left-3 peer-not-placeholder-shown:text-[11px] peer-not-placeholder-shown:text-emerald-400 peer-not-placeholder-shown:bg-[#1a1a1c] peer-not-placeholder-shown:px-2"
+                            )}
+                        >
+                            {label}
+                        </label>
+                    </>
+                )
             }
         </div>
     );

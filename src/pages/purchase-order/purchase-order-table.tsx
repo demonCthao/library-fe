@@ -40,7 +40,7 @@ const PurchaseOrderTable = forwardRef<BaseTableRef, IPurchaseOrderTableProps>(({
     const { data, isLoading, error, refetch } = useFetch<DataList<PurchaseOrder>>({
         url: `purchase-orders?${convertObjectToParam(search)}`,
         key: ["purchase-orders", search.createdAt, readerNameDebounce, phoneDebounce, search.pageIndex.toString(),
-      search.pageSize.toString()],
+            search.pageSize.toString()],
     });
 
     const tableData = useTable<PurchaseOrder>({
@@ -75,6 +75,10 @@ const PurchaseOrderTable = forwardRef<BaseTableRef, IPurchaseOrderTableProps>(({
             refetch();
         }
     }));
+
+    if (isLoading) {
+        return <Loading />
+    }
 
     return (
         <div className="h-full flex flex-col">
@@ -115,7 +119,7 @@ const PurchaseOrderTable = forwardRef<BaseTableRef, IPurchaseOrderTableProps>(({
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table useCanMutaion={canMutationBorrow} title={t("borrowingList")} tableData={tableData} />}
+            <Table useCanMutaion={canMutationBorrow} title={t("borrowingList")} tableData={tableData} />
         </div>
     )
 });

@@ -100,6 +100,10 @@ const CategoryTable = forwardRef<BaseTableRef, ICategoryTableProps>(({ onChooseC
         }
     }));
 
+    if (isLoading) {
+        return <Loading />
+    }
+
     return (
         <div className="h-full flex flex-col">
             <div className="grid grid-cols-3 justify-between w-full mb-2">
@@ -126,7 +130,7 @@ const CategoryTable = forwardRef<BaseTableRef, ICategoryTableProps>(({ onChooseC
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table useCanMutaion={canMutationCategory} title={t("categoryList")} tableData={tableData} />}
+            <Table useCanMutaion={canMutationCategory} title={t("categoryList")} tableData={tableData} />
         </div>
     )
 });

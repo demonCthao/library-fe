@@ -111,5 +111,9 @@
     "page": "Page",
     "category": "Category",
     "publisher": "Publisher",
-    "cartEmpty": "Cart Empty"
+    "cartEmpty": "Cart Empty",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "newPassword": "New Password",
+    "currentPassword": "Current Password"
 }

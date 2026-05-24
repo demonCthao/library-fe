@@ -72,6 +72,10 @@ const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader 
         }
     }));
 
+    if (isLoading) {
+        return <Loading />
+    }
+
     return (
         <div className="h-full flex flex-col">
             <div className="grid grid-cols-5 w-full mb-5">
@@ -114,7 +118,7 @@ const ReaderTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseReader 
                     <DropdownHeaderTable table={tableData.table} />
                 </div>
             </div>
-            {isLoading ? <Loading /> : <Table title={t("patronList")} tableData={tableData} useCanMutaion={canMutationReader} />}
+            <Table title={t("patronList")} tableData={tableData} useCanMutaion={canMutationReader} />
         </div>
     )
 });

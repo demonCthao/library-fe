@@ -156,17 +156,32 @@ code {
   line-height: 1.25;
 }
 
+/* Thiết lập chiều rộng và kiểu dáng chung */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 6px; /* Độ rộng của thanh cuộn */
+  height: 6px; /* Độ rộng nếu cuộn ngang */
 }
 
+/* Phần track (nền phía sau) */
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02); /* Nền tối nhẹ hoặc trong suốt */
+  border-radius: 10px;
 }
 
+/* Phần thumb (thanh kéo) - màu xanh Emerald bạn đang dùng */
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #10b981;
+  background: #10b981; /* Màu xanh emerald-500 */
   border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Tạo độ nổi nhẹ */
+}
+
+/* Hiệu ứng khi di chuột vào thanh cuộn */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #059669; /* Màu xanh đậm hơn khi hover */
+}
+
+.overflow-auto, .overflow-y-auto {
+  @apply custom-scrollbar;
 }
 
 .swiper-button-next,
