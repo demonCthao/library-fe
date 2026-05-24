@@ -55,7 +55,11 @@ export const bookColumns = [
 
   columnHelper.accessor("description", {
     header: "description",
-    cell: (info) => info.getValue(),
+    cell: (info) => (
+      <div className="max-w-[150px] truncate" title={info.getValue() as string}>
+        {info.getValue()}
+      </div>
+    ),
     sortUndefined: "last",
     sortDescFirst: false,
     footer: (info) => info.column.id,
