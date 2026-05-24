@@ -32,7 +32,12 @@ export default function AvatarDropdownMenu() {
   const handleLogout = () => {
     localStorage.clear();
     useAccountStore.getState().setUser(null);
-    navigate({ to: "/login" });
+
+    if (userStore.user?.role === "user") {
+      navigate({ to: "/user-page" });
+    } else {
+      navigate({ to: "/login" });
+    }
   }
 
   return (
