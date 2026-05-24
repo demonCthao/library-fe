@@ -149,7 +149,7 @@ export default function UserLayout({ children }: ILayoutProps) {
                     <div className="mx-auto flex h-16 items-center justify-between px-6">
                         <div className="flex items-center gap-10">
                             <div className="h-24 flex items-center justify-center border-b border-white/5 shrink-0">
-                                <Link to="/" className="flex items-center gap-2 group">
+                                <Link to="/user-page" className="flex items-center gap-2 group">
                                     <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-300">
                                         <span className="text-xl font-black">B</span>
                                     </div>
