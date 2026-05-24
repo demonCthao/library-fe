@@ -28,10 +28,19 @@ export default function Navbar() {
 
     return (
         <aside className="fixed inset-y-0 left-0 z-50 w-72 bg-[#121214] border-r border-white/5 transition-transform duration-300 -translate-x-80 xl:translate-x-0 flex flex-col">
-            {/* Logo Area - Cố định chiều cao */}
             <div className="h-24 flex items-center justify-center border-b border-white/5 shrink-0">
-                <Link to="/" className="flex items-center gap-2">
-                    <LazyImage className="h-12 w-auto" src="../../src/assets/images/image.png" />
+                <Link to="/" className="flex items-center gap-2 group">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-300">
+                        <span className="text-xl font-black">B</span>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-lg font-bold text-white tracking-tight leading-none">
+                            BOOK<span className="text-emerald-500">LIB</span>
+                        </span>
+                        <span className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">
+                            Management
+                        </span>
+                    </div>
                 </Link>
             </div>
 

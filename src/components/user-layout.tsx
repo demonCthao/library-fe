@@ -1,7 +1,7 @@
 import { Search, ShoppingCart, Phone, Mail, MapPin, X, Loader2 } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react'
 import { Button } from "@/components/ui/button";
-import { useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { useFetch } from '@/hooks/useFetch';
 import { Category } from '@/models/category.model';
 import { Book } from '@/models/book.model'; // Đảm bảo bạn có model này
@@ -147,10 +147,21 @@ export default function UserLayout({ children }: ILayoutProps) {
             <div className="sticky top-0 z-50 bg-black/60 backdrop-blur-md border-b border-white/10">
                 <header className="w-full">
                     <div className="mx-auto flex h-16 items-center justify-between px-6">
-                        {/* LEFT */}
                         <div className="flex items-center gap-10">
-                            <div className="text-4xl cursor-pointer font-white text-emerald-400" onClick={gotoHome}>
-                                <LazyImage className="h-[40px] w-auto" src="../../src/assets/images/image.png" />
+                            <div className="h-24 flex items-center justify-center border-b border-white/5 shrink-0">
+                                <Link to="/" className="flex items-center gap-2 group">
+                                    <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-300">
+                                        <span className="text-xl font-black">B</span>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-lg font-bold text-white tracking-tight leading-none">
+                                            BOOK<span className="text-emerald-500">LIB</span>
+                                        </span>
+                                        <span className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">
+                                            Management
+                                        </span>
+                                    </div>
+                                </Link>
                             </div>
 
                             <nav className="hidden lg:flex items-center gap-7 text-sm font-medium">

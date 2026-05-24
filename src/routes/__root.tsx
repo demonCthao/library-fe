@@ -84,8 +84,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     }
   }, [notification.message, notification.open])
 
-  // Logic xác định xem có phải là giao diện người dùng (User/Guest) hay không
+
   const isUserView = account.user?.role === ROLE.USER || !account.user;
+  const isUserRoute = location.pathname.startsWith("/user-page");
 
   return (
     <html lang="en" className="dark"> {/* Thêm class dark để đồng bộ shadcn */}
@@ -104,7 +105,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         {checkLoginPage ? (
           <div className="h-full">{children}</div>
         ) : (
-          isUserView ? (
+          isUserView || isUserRoute ? (
             <UserLayout>
               {children}
             </UserLayout>
