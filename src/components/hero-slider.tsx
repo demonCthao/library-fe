@@ -118,8 +118,8 @@ export function HeroSlider() {
                 </CarouselContent>
 
                 {/* Buttons */}
-                <CarouselPrevious className="left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/30 hover:bg-white/50 text-white border-none rounded-full" />
-                <CarouselNext className="right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/30 hover:bg-white/50 text-white border-none rounded-full" />
+                <CarouselPrevious className="size-12 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/30 hover:bg-white/50 text-white border-none rounded-full" />
+                <CarouselNext className="size-12 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/30 hover:bg-white/50 text-white border-none rounded-full" />
             </Carousel>
 
             {/* Dots (bottom right) */}

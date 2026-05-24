@@ -22,7 +22,7 @@ export const purchaseOrderColumns = [
         }
     }),
     columnHelper.accessor(
-        (row) => row.reader?.full_name ?? row.guest_name ?? "",
+        (row) => row.users?.full_name ?? row.guest_name ?? "",
         {
             id: "buyerName",
             header: "Tên người mua",
@@ -38,7 +38,7 @@ export const purchaseOrderColumns = [
         }
     ),
     columnHelper.accessor(
-        (row) => row.reader?.phone ?? row.guest_phone ?? "",
+        (row) => row.users?.phone ?? row.guest_phone ?? "",
         {
             id: "phone",
             header: "phone",

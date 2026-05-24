@@ -39,7 +39,8 @@ const PurchaseOrderTable = forwardRef<BaseTableRef, IPurchaseOrderTableProps>(({
 
     const { data, isLoading, error, refetch } = useFetch<DataList<PurchaseOrder>>({
         url: `purchase-orders?${convertObjectToParam(search)}`,
-        key: ["purchase-orders", search.createdAt, readerNameDebounce, phoneDebounce],
+        key: ["purchase-orders", search.createdAt, readerNameDebounce, phoneDebounce, search.pageIndex.toString(),
+      search.pageSize.toString()],
     });
 
     const tableData = useTable<PurchaseOrder>({

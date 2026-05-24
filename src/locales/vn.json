@@ -104,5 +104,12 @@
     "listBook": "Danh sách sách",
     "bookEnough": "Không đủ số lượng sách thì là gì nhỉ",
     "requireBook": "Sách không được để trống",
-    "gotoUserPage": "Tới trang người dùng"
+    "gotoUserPage": "Tới trang người dùng",
+    "content": "Nội dung",
+    "registerSuccess": "Đăng ký thành công",
+    "title": "Tiêu đề",
+    "page": "Số trang",
+    "category": "Danh mục",
+    "publisher": "Nhà xuất bản",
+    "cartEmpty": "Bạn đang chưa có sách, vui lòng thêm sách để tạo đơn hàng"
 }

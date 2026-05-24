@@ -29,51 +29,49 @@ const CircularProgress = ({
     progressStrokeWidth = 10,
 }: CircularProgressProps) => {
     const radius = size / 2 - 10;
-    const circumference = Math.ceil(3.14 * radius * 2);
-    const percentage = Math.ceil(circumference * ((100 - value) / 100));
-
-    const viewBox = `-${size * 0.125} -${size * 0.125} ${size * 1.25} ${size * 1.25}`;
+    const circumference = 2 * Math.PI * radius;
+    // Đảo ngược logic để vẽ đúng chiều kim đồng hồ
+    const offset = circumference - (value / 100) * circumference;
 
     return (
-        <div className="relative">
+        <div className="relative inline-flex items-center justify-center">
             <svg
                 width={size}
                 height={size}
-                viewBox={viewBox}
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
+                viewBox={`0 0 ${size} ${size}`}
                 style={{ transform: "rotate(-90deg)" }}
                 className="relative"
             >
-                {/* Base Circle */}
+                {/* Vòng tròn nền (Track) */}
                 <circle
                     r={radius}
                     cx={size / 2}
                     cy={size / 2}
                     fill="transparent"
                     strokeWidth={strokeWidth ?? circleStrokeWidth}
-                    strokeDasharray={circumference}
-                    strokeDashoffset="0"
-                    className={cn("stroke-primary/25", className)}
+                    className={cn("stroke-white/5", className)}
                 />
 
-                {/* Progress */}
+                {/* Vòng tròn tiến trình (Progress) */}
                 <circle
                     r={radius}
                     cx={size / 2}
                     cy={size / 2}
+                    fill="transparent"
                     strokeWidth={strokeWidth ?? progressStrokeWidth}
                     strokeLinecap={shape}
-                    strokeDashoffset={percentage}
-                    fill="transparent"
                     strokeDasharray={circumference}
-                    className={cn("stroke-primary", progressClassName)}
+                    strokeDashoffset={offset}
+                    className={cn(
+                        "stroke-emerald-500 transition-all duration-300 ease-out",
+                        progressClassName
+                    )}
                 />
             </svg>
             {showLabel && (
                 <div
                     className={cn(
-                        "absolute inset-0 flex items-center justify-center text-lg",
+                        "absolute inset-0 flex items-center justify-center font-mono",
                         labelClassName
                     )}
                 >
@@ -88,33 +86,47 @@ export default function Loading() {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
+        // Tăng tốc độ mượt mà hơn
         const timer = setInterval(() => {
             setProgress((prev) => {
-                if (prev >= 99) {
-                    clearInterval(timer)
-                    return 100
+                if (prev >= 100) {
+                    clearInterval(timer);
+                    return 100;
                 }
-                return prev + 1
-            })
-        }, 20)
+                return prev + 1;
+            });
+        }, 15); // Nhanh hơn một chút để tạo cảm giác linh hoạt
 
-        return () => clearInterval(timer)
-    }, [])
+        return () => clearInterval(timer);
+    }, []);
 
     return (
-        <div className="flex items-center justify-center h-full overflow-hidden">
-            <div className="w-64 h-32 flex items-center justify-center">
+        // Thêm min-h-screen để căn giữa toàn bộ ứng dụng khi đang load
+        <div className="fixed inset-0 flex items-center justify-center bg-[#121214] z-[9999]">
+            <div className="flex flex-col items-center gap-6">
                 <CircularProgress
                     value={progress}
-                    size={160}
-                    strokeWidth={16}
+                    size={120}
+                    strokeWidth={8}
                     showLabel
-                    labelClassName="text-2xl font-bold"
-                    renderLabel={(progress) => `${progress}%`}
-                    className="stroke-orange-500/25"
-                    progressClassName="stroke-indigo-600"
+                    labelClassName="text-xl font-bold text-white"
+                    renderLabel={(p) => `${p}%`}
+                    className="stroke-white/10"
+                    progressClassName="stroke-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.5)]"
                 />
+
+                {/* Thêm text hiệu ứng để phù hợp với ứng dụng Bookstore */}
+                <div className="flex flex-col items-center">
+                    <p className="text-emerald-500 font-medium tracking-widest animate-pulse uppercase text-xs">
+                        Đang tải dữ liệu
+                    </p>
+                    <div className="flex gap-1 mt-2">
+                        <span className="w-1 h-1 bg-emerald-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                        <span className="w-1 h-1 bg-emerald-500 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                        <span className="w-1 h-1 bg-emerald-500 rounded-full animate-bounce"></span>
+                    </div>
+                </div>
             </div>
         </div>
-    )
+    );
 }

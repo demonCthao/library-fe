@@ -15,5 +15,7 @@ type Obj = {
 
 export type User = Required<Obj> & {
     avatar_path?: string;
-    accounts?: Account
+    accounts?: Account;
+    address?: string;
+    user_code?: string
 };

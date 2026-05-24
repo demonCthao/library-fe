@@ -1,6 +1,7 @@
 import { FormFieldInput } from "@/components/form-field-input";
 import { FormFieldSelect } from "@/components/form-field-select";
 import { Popup } from "@/components/popup";
+import { RichTextEditor } from "@/components/rich-text-editor";
 import { SelectOption } from "@/components/select-app";
 import {
   FieldGroup,
@@ -17,7 +18,6 @@ import { useForm } from "@tanstack/react-form";
 import _ from "lodash";
 import { ChangeEvent, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 import z from "zod";
 
 interface IBookFormProps {
@@ -29,6 +29,7 @@ interface IBookFormProps {
 export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
   const notification = useNotificationStore();
   const { t } = useTranslation();
+  const isEdit = book !== null && !_.isEmpty(book);
   type BookForm = z.infer<typeof bookSchema>;
   const [preview, setPreview] = useState<{
     file: File,
@@ -37,7 +38,7 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { mutate } = useMutationRequest({
     key: ["create-book", "update-book"],
-    url: _.isNull(book) ? "books" : `books/${book.id}`, method: !_.isEmpty(book) ? "put" : "post", options: {
+    url: _.isNull(book) ? "books" : `books/${book.id}`, method: isEdit ? "put" : "post", options: {
       onSuccess: () => {
         notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
         onClose(true);
@@ -81,38 +82,51 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
   const emptyBook: BookForm = {
     title: "",
     description: "",
-    publish_year: 0,
+    publish_year: undefined,
     language: "",
-    pages: 0,
+    pages: undefined,
     publisher_id: "",
     category_id: "",
+    content: "",
+    available_quantity: undefined,
+    stock_quantity: undefined
   };
 
   const form = useForm({
-    defaultValues: !_.isNull(book) ? {
+    defaultValues: isEdit ? {
       ...book,
-      publisher_id: _.defaultTo(book.publisher_id?.toString(), ""),
-      category_id: _.defaultTo(book.category_id?.toString(), ""),
+      publisher_id: book.publisher_id?.toString() || "",
+      category_id: book.category_id?.toString() || "",
+      available_quantity: book.available_quantity || 0,
+      stock_quantity: book.stock_quantity || 0
     } : emptyBook,
-    validators: {
-      onSubmit: bookSchema,
-    },
     onSubmit: async ({ value }) => {
       const formData = new FormData();
-      formData.append(
-        "data",
-        JSON.stringify({
-          ...value,
-          publisher_id: Number(value.publisher_id),
-          category_id: Number(value.category_id),
-        })
-      )
+
+      const payload = {
+        title: String(value.title),
+        description: String(value.description),
+        publish_year: Number(value.publish_year),
+        language: String(value.language),
+        pages: Number(value.pages),
+        publisher_id: Number(value.publisher_id),
+        category_id: Number(value.category_id),
+        content: String(value.content),
+        available_quantity: Number(value.available_quantity),
+        stock_quantity: Number(value.stock_quantity)
+      };
+      formData.append("data", JSON.stringify(payload));
 
       if (preview?.file) {
-        formData.append("image", preview.file)
+        formData.append("image", preview.file);
       }
+      console.log("Data in FormData:", formData.get("data"));
+      console.log("File in FormData:", formData.get("image"));
 
-      await mutate(formData);
+      for (const x of formData.entries()) {
+        console.log(x);
+      }
+      mutate(formData as any);
     },
   });
 
@@ -131,13 +145,19 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
     <div>
       <Popup variant="2xl" type="form" open={open} onClose={handleCloseForm} title="Thông tin sách" form={form}>
         <FieldGroup className="grid grid-cols-2 gap-3">
-          <FormFieldInput form={form} label="Title" name="title" type="text" placeholder="Nhập tên sách..." disabled={!_.isNull(book)} />
-          <FormFieldInput form={form} label="Description" name="description" type="text" placeholder="Nhập miêu tả..." />
-          <FormFieldInput form={form} label="Publish Year" name="publish_year" type="number" placeholder="Nhập miêu tả..." />
-          <FormFieldInput form={form} label="Language" name="language" type="text" placeholder="Nhập miêu tả..." />
-          <FormFieldSelect form={form} label="Category" name="category_id" options={categoryOptions ?? []} />
-          <FormFieldSelect form={form} label="Publisher" name="publisher_id" options={publisherOptions ?? []} />
-          <FormFieldInput form={form} label="Page" name="pages" type="number" placeholder="Nhập số lượng trang..." />
+          <FormFieldInput form={form} label="title" name="title" type="text" placeholder="Nhập tên sách..." disabled={!_.isNull(book)} />
+          <FormFieldInput form={form} label="description" name="description" type="text" placeholder="Nhập miêu tả..." />
+          <FormFieldInput form={form} label="publishYear" name="publish_year" type="number" placeholder="Nhập miêu tả..." />
+          <FormFieldInput form={form} label="language" name="language" type="text" placeholder="Nhập miêu tả..." />
+          <FormFieldSelect form={form} label="category" name="category_id" options={categoryOptions ?? []} />
+          <FormFieldSelect form={form} label="publisher" name="publisher_id" options={publisherOptions ?? []} />
+          <FormFieldInput form={form} label="page" name="pages" type="number" placeholder="Nhập số lượng trang..." />
+          {
+            !isEdit && <>
+              <FormFieldInput form={form} label="availableQuantity" name="available_quantity" type="number" placeholder="Nhập số lượng mượn..." />
+              <FormFieldInput form={form} label="stockQuantity" name="stock_quantity" type="number" placeholder="Nhập số lượng bán..." />
+            </>
+          }
         </FieldGroup>
         <div className="mt-3">
           <div>
@@ -167,6 +187,25 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
               </p>
             )}
           </div>
+        </div>
+        <div className="mt-3">
+          <form.Field
+            name="content"
+            children={(field) => (
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-700">{t("content")}</label>
+                <RichTextEditor
+                  value={field.state.value ?? ""}
+                  onChange={(val) => field.handleChange(val)}
+                />
+                {field.state.meta.errors && (
+                  <p className="text-[12px] text-red-500 font-medium">
+                    {field.state.meta.errors.join(", ")}
+                  </p>
+                )}
+              </div>
+            )}
+          />
         </div>
       </Popup>
     </div>

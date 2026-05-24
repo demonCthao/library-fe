@@ -93,21 +93,21 @@ export default function FineReceiptPopup({
 
                 <div className="grid grid-cols-2 gap-3">
                     {/* Customer Info */}
-                    <div className="bg-gray-50 rounded-xl px-4 shadow-sm">
+                    <div className="bg-gray-50 rounded-xl p-4 shadow-sm">
                         <h3 className="text-sm font-semibold mb-3 text-gray-700">
                             Thông tin khách hàng
                         </h3>
 
                         <div className="grid grid-cols-2 gap-4 text-sm">
-                            <Info label="Khách hàng" value={borrow?.reader?.full_name} />
-                            <Info label="Số điện thoại" value={borrow?.reader?.phone} />
-                            <Info label="Email" value={borrow?.reader?.email} />
-                            <Info label="Địa chỉ" value={borrow?.reader?.address} />
+                            <Info label="Khách hàng" value={borrow?.users?.full_name} />
+                            <Info label="Số điện thoại" value={borrow?.users?.phone} />
+                            <Info label="Email" value={borrow?.users?.email} />
+                            <Info label="Địa chỉ" value={borrow?.users?.address} />
                         </div>
                     </div>
 
                     {/* Borrow Info */}
-                    <div className="bg-gray-50 rounded-xl px-4 shadow-sm">
+                    <div className="bg-gray-50 rounded-xl p-4 shadow-sm">
                         <h3 className="text-sm font-semibold mb-3 text-gray-700">
                             Thông tin mượn
                         </h3>

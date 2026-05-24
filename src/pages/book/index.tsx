@@ -57,7 +57,9 @@ export default function BookPage() {
                     onChooseBook={handleChooseBook}
                 />
             </div>
+
             <BookForm key={`book-${action}-${selectedBook?.id ?? "new"}`} book={selectedBook} onClose={handleCloseForm} open={isFormOpen} />
+
             <ConfirmDialog
                 label={_.defaultTo(selectedBook?.title, "")}
                 onClose={handleCloseForm}

@@ -19,7 +19,7 @@ export const borrowRecordColumns = [
         },
     }),
 
-    columnHelper.accessor("readers.full_name", {
+    columnHelper.accessor("users.full_name", {
         header: "Customer Name",
         cell: (info) => info.getValue(),
         sortUndefined: "last",
@@ -33,7 +33,7 @@ export const borrowRecordColumns = [
         },
     }),
 
-    columnHelper.accessor("readers.phone", {
+    columnHelper.accessor("users.phone", {
         header: "Phone",
         cell: (info) => info.getValue(),
         sortUndefined: "last",
@@ -46,7 +46,7 @@ export const borrowRecordColumns = [
         },
     }),
 
-    columnHelper.accessor("readers.email", {
+    columnHelper.accessor("users.email", {
         header: "Email",
         cell: (info) => info.getValue(),
         sortUndefined: "last",

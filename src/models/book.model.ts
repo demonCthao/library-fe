@@ -1,3 +1,6 @@
+import { Category } from "./category.model"
+import { Publisher } from "./publisher.model"
+
 type Obj = {
     id: number
     title: string
@@ -12,7 +15,12 @@ type Obj = {
     borrowed_quantity: number;
     reserved_quantity: number;
     available_quantity: number;
-    price: number
+    price: number;
+    content: string;
+    categories: Category;    
+    publishers: Publisher;
+    quantity?: number
+    isbn?: string
 }
 
 export type Book = Required<Obj>

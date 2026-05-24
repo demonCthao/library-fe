@@ -5,39 +5,36 @@ type Method = "get" | "post" | "put" | "delete"
 
 type ResponseType = "json" | "blob";
 
-export const useMutationRequest = <
-  TData,
-  TVariables = unknown
->({
+export const useMutationRequest = <TData, TVariables = unknown>({
   key,
-  url,
-  method = "post",
+  url: defaultUrl,
+  method: defaultMethod = "post",
   responseType = "json",
   options
 }: {
   key: string[];
   url: string;
-  method: Exclude<Method, "get">,
+  method: Exclude<Method, "get">;
   responseType?: ResponseType;
-  options?: UseMutationOptions<TData, Error, TVariables>
+  options?: UseMutationOptions<TData, Error, TVariables>;
 }) => {
-
   return useMutation({
     mutationKey: key,
     mutationFn: async (variables: TVariables): Promise<TData> => {
-      const request = api[method].bind(api);
       const isFormData = variables instanceof FormData;
-      const response = await request(url, {
-        ...(isFormData
-          ? { body: variables }
-          : { json: variables }),
+
+      const response = await api(defaultUrl, {
+        method: defaultMethod,
+        body: variables instanceof FormData ? variables : undefined,
+        json: variables instanceof FormData ? undefined : variables,
+        headers: variables instanceof FormData ? undefined : undefined,
       });
 
       if (responseType === "blob") {
-        return response.blob() as Promise<TData>;
+        return await response.blob() as TData;
       }
 
-      return response.json<TData>();
+      return await response.json<TData>();
     },
     ...options
   });

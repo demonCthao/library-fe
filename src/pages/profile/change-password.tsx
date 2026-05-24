@@ -29,8 +29,7 @@ export default function ChangePassword() {
             onSuccess: () => {
                 notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
                 navigate({
-                    to: "/profile/" + id,
-                    replace: true
+                    to: "/profile/" + id
                 });
             },
             onError: () => {
@@ -56,7 +55,7 @@ export default function ChangePassword() {
     });
 
     return (
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center h-full mt-20">
             <Card className="w-[420px]">
                 <CardHeader>
                     <CardTitle>Change Password</CardTitle>

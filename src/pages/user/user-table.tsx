@@ -39,7 +39,8 @@ const UserTable = forwardRef<BaseTableRef, IUserTableProps>(({ onChooseUser }, r
     const phoneDebounce = useDebounce(search.phone);
     const { data, isLoading, error, refetch } = useFetch<DataList<User>>({
         url: `users?${convertObjectToParam(search)}`,
-        key: ["users", _.toString(search.pageIndex + search.pageSize), fullNameDebounce, phoneDebounce]
+        key: ["users", _.toString(search.pageIndex + search.pageSize), fullNameDebounce, phoneDebounce, search.pageIndex.toString(),
+            search.pageSize.toString()]
     });
 
     const { mutateAsync } = useMutationRequest<Blob>({

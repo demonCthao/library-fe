@@ -31,6 +31,7 @@ export default function PurchaseOrderDetail() {
         url: `purchase-orders/${id}`,
         key: ["purchase-orders-detail", id],
     });
+    console.log("🚀 ~ PurchaseOrderDetail ~ data:", data)
 
     const { mutate } = useMutationRequest({
         key: ["payment-purchase-order"],
@@ -74,7 +75,7 @@ export default function PurchaseOrderDetail() {
     if (isLoading) return <Loading />;
     if (error instanceof Error) return <div>{error.message}</div>;
 
-    const isGuest = !data?.reader;
+    const isGuest = !data?.users;
 
     const handlePayment = () => {
         mutate({
@@ -184,11 +185,11 @@ export default function PurchaseOrderDetail() {
                         </>
                     ) : (
                         <>
-                            <Info label="Mã KH" value={data?.reader?.reader_code} />
-                            <Info label="Họ tên" value={data?.reader?.full_name} />
-                            <Info label="Email" value={data?.reader?.email} />
-                            <Info label="Điện thoại" value={data?.reader?.phone} />
-                            <Info label="Địa chỉ" value={data?.reader?.address} />
+                            <Info label="Mã KH" value={data?.users?.user_code} />
+                            <Info label="Họ tên" value={data?.users?.full_name} />
+                            <Info label="Email" value={data?.users?.email} />
+                            <Info label="Điện thoại" value={data?.users?.phone} />
+                            <Info label="Địa chỉ" value={data?.users?.address} />
                         </>
                     )}
                 </Card>
@@ -270,6 +271,7 @@ export default function PurchaseOrderDetail() {
                                     <p>Năm XB: {book.publish_year}</p>
                                     <p>Số trang: {book.pages}</p>
                                     <p>Giá: {Number(book.price).toLocaleString()}đ</p>
+                                    <p>Số lượng: {book.quantity}</p>
                                 </div>
                             </div>
                         </div>

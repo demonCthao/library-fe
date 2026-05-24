@@ -18,7 +18,7 @@ import * as z from "zod";
 // });
 
 export const readerSchema = z.object({
-      full_name: z.string().min(1, "Không được bỏ trống Tên"),
+  full_name: z.string().min(1, "Không được bỏ trống Tên"),
   email: z.string().email("Email không đúng định dạng"),
   phone: z.string().min(1, "Không được bỏ trống điện thoại"),
   address: z.string().min(1, "Không được bỏ trống địa chỉ"),

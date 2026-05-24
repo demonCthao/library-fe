@@ -39,7 +39,8 @@ const AuthorTable = forwardRef<BaseTableRef, IAuthorTableProps>(({ onChooseAutho
 
   const { data, isLoading, error, refetch } = useFetch<DataList<Author>>({
     url: `authors?${convertObjectToParam(search)}`,
-    key: ["authors", nameDebounce, bioYearDebounce],
+    key: ["authors", nameDebounce, bioYearDebounce, search.pageIndex.toString(),
+      search.pageSize.toString()],
   });
 
 

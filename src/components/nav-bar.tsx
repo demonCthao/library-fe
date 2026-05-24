@@ -26,8 +26,8 @@ export default function Navbar() {
     const user = useAccountStore((s) => s.user);
 
     return (
-        <div className="max-h-[calc(100vh-100px)] overflow-y-auto">
-            <aside className="bg-white shadow-sm -translate-x-80 fixed inset-0 z-50 mt-4 w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100">
+        <div className="max-h-[calc(100vh-150px)] overflow-y-auto">
+            <aside className="bg-white shadow-sm -translate-x-80 fixed inset-0 z-50 w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100">
                 <div className="relative">
                     <a className="px-8 mt-3 text-center flex justify-center" href="#/">
                         <LazyImage className="w-[80%] h-[100px]" src="../../src/assets/images/image.png" />
@@ -40,7 +40,7 @@ export default function Navbar() {
                         </span>
                     </button>
                 </div>
-                <div className="m-4 max-h-[calc(100vh-100px)] overflow-y-auto">
+                <div className="m-4 max-h-[calc(100vh-150px)] overflow-y-auto">
                     {menuPermissions.map((group) => {
                         const visibleItems = group.items.filter(item =>
                             hasPermission(user, item.permission)

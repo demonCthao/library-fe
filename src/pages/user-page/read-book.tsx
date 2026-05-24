@@ -146,6 +146,12 @@ export default function ReadBook() {
                                     {slide.content}
                                 </div>
                             ))}
+                            {/* <section className="mt-10 border-t border-white/10">
+                                <BookContentSlider
+                                    content={book.content}
+                                    title={book.title}
+                                />
+                            </section> */}
                         </div>
                     </div>
 

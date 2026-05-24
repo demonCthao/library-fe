@@ -44,7 +44,8 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
 
   const { data, isLoading, error, refetch } = useFetch<DataList<Book>>({
     url: `books?${convertObjectToParam(search)}`,
-    key: ["books", search.category_id, titleDebounce, publishYearDebounce, descriptionDebounce],
+    key: ["books", search.category_id, titleDebounce, publishYearDebounce, descriptionDebounce, search.pageIndex.toString(),
+      search.pageSize.toString()],
   });
 
   const { data: categories } = useFetch<Category[]>({

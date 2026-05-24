@@ -66,6 +66,8 @@ export default function BorrowDetailPage() {
             });
             setOpenPopup(true);
             return;
+        } else {
+            setOpenPopup(true);
         }
     };
 
@@ -121,11 +123,10 @@ export default function BorrowDetailPage() {
             {/* INFO */}
             <div className="grid md:grid-cols-2 gap-6">
                 <Card title="👤 Thông tin độc giả">
-                    <Info label="Mã" value={data?.reader.reader_code} />
-                    <Info label="Họ tên" value={data?.reader.full_name} />
-                    <Info label="Email" value={data?.reader.email} />
-                    <Info label="Điện thoại" value={data?.reader.phone} />
-                    <Info label="Địa chỉ" value={data?.reader.address} />
+                    <Info label="Họ tên" value={data?.users?.full_name} />
+                    <Info label="Email" value={data?.users?.email} />
+                    <Info label="Điện thoại" value={data?.users?.phone} />
+                    <Info label="Địa chỉ" value={data?.users?.address} />
                 </Card>
 
                 <Card title="📖 Thông tin mượn">

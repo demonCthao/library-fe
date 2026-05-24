@@ -7,6 +7,7 @@ import { useAccountStore } from "@/store/account.store";
 
 export const getTokenClient = (): string | null => {
   if (typeof window === "undefined") return null;
+  
   return localStorage.getItem("jwt");
 };
 

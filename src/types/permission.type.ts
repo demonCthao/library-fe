@@ -111,7 +111,6 @@ export const menuPermissions = [
       { label: "categoryList", path: "/category", icon: "categories", permission: [VIEW.categories] },
       { label: "patronManagement", path: "/reader", icon: "readers", permission: [VIEW.readers] },
       { label: "publisherList", path: "/publisher", icon: "publishers", permission: [VIEW.publishers] },
-      { label: "penaltyList", path: "/fine", icon: "fines", permission: [VIEW.fines] },
       { label: "purchaseOrderList", path: "/purchase-order", icon: "ShoppingBag", permission: [VIEW.purchases] },
     ],
   },

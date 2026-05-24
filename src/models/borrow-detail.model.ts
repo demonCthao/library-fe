@@ -1,9 +1,9 @@
 import { Book } from "./book.model";
-import { Reader } from "./reader.model";
+import { User } from "./user.model";
 
 type Obj = {
     id: number;
-    reader: Reader;
+    users: User;
     borrow_date: string;
     due_date: string;
     return_date: string | null;

@@ -33,9 +33,9 @@ export const DynamicTable = <TData,>({
     };
 
     return (
-        <div className="relative top-6 flex flex-col rounded-xl bg-white shadow-md flex-1 min-h-0 overflow-hidden">
+        <div className="relative top-2 flex flex-col rounded-xl bg-white shadow-md flex-1 min-h-0 overflow-hidden">
             {/* Header */}
-            <div className="relative mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-lg -mt-6 mb-4 p-6 shrink-0">
+            <div className="relative mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-lg mb-2 p-6 shrink-0">
                 <h6 className="text-base font-semibold text-white">
                     {title}
                 </h6>

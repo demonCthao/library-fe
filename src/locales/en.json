@@ -104,5 +104,12 @@
     "listBook": "List Books",
     "bookEnough": "Not enough books available",
     "requireBook": "Book cannot be empty",
-    "gotoUserPage": "Go to User Page"
+    "gotoUserPage": "Go to User Page",
+    "content": "Content",
+    "registerSuccess": "Register success",
+    "title": "Title",
+    "page": "Page",
+    "category": "Category",
+    "publisher": "Publisher",
+    "cartEmpty": "Cart Empty"
 }

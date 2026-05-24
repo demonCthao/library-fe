@@ -42,7 +42,16 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
 
   const { data, isLoading, error, refetch } = useFetch<DataList<BorrowRecord>>({
     url: `borrow-record?${convertObjectToParam(search)}`,
-    key: ["borrow-record", search.status, search.borrowDate, search.dueDate, search.returnDate, readerNameDebounce, phoneDebounce],
+    key: ["borrow-record", 
+      search.status, 
+      search.borrowDate, 
+      search.dueDate, 
+      search.returnDate, 
+      readerNameDebounce, 
+      phoneDebounce,
+      search.pageIndex.toString(),
+      search.pageSize.toString()
+    ],
   });
 
   const tableData = useTable<BorrowRecord>({

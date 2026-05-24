@@ -11,6 +11,7 @@ type BasePopupProps = {
     title: string
     description?: string
     variant: "lg" | "sm" | "md" | "xl" | "2xl"
+    className?: string
 }
 
 type FormPopupProps = BasePopupProps & {
@@ -27,7 +28,7 @@ type NonFormPopupProps = BasePopupProps & {
 
 type PopupProps = FormPopupProps | NonFormPopupProps
 
-export const Popup = ({ open, form, type, title, description, variant, children, onClose, onConfirm }: PopupProps) => {
+export const Popup = ({ open, form, type, title, description, variant, children, onClose, onConfirm, className }: PopupProps) => {
     const { t } = useTranslation();
     const width: Record<string, string> = {
         sm: "sm:max-w-md",
@@ -39,7 +40,7 @@ export const Popup = ({ open, form, type, title, description, variant, children,
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
-            <DialogContent className={`max-w-[80%] ${width[variant]}`}>
+            <DialogContent className={`max-w-[80%] ${width[variant]} ${className}`}>
                 <DialogHeader>
                     <DialogTitle className="font-bold">{t(title)}</DialogTitle>
                     {

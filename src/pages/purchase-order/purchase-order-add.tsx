@@ -77,7 +77,7 @@ export default function PurchaseOrderAdd({ onClose, onConfirm, booksDefault }: I
         const checkExist = _.includes(books, opt?.otherValue);
 
         if (!checkExist) {
-            setBooks([...books, opt?.otherValue])
+            setBooks([...books, { ...opt?.otherValue, quantity: 1 }])
         }
 
         setShowBookSelect(false);
@@ -86,6 +86,44 @@ export default function PurchaseOrderAdd({ onClose, onConfirm, booksDefault }: I
             bookKey: ""
         })
     }
+
+    const handleQtyChange = (
+        bookId: number,
+        type: "increase" | "decrease",
+        value?: number
+    ) => {
+        setBooks(prev =>
+            prev.map(item => {
+                if (item.id !== bookId) {
+                    return item;
+                }
+
+                const max = item.stock_quantity || 1;
+                // SỬA: Đọc từ item.quantity thay vì item.qty
+                let currentQuantity = item.quantity || 1;
+
+                if (type === "increase") {
+                    currentQuantity += 1;
+                }
+
+                if (type === "decrease") {
+                    currentQuantity -= 1;
+                }
+
+                if (value !== undefined) {
+                    currentQuantity = value;
+                }
+
+                currentQuantity = Math.max(1, currentQuantity);
+                currentQuantity = Math.min(max, currentQuantity);
+
+                return {
+                    ...item,
+                    quantity: currentQuantity // SỬA: Trả về trường 'quantity' đồng bộ với JSX
+                };
+            })
+        );
+    };
 
     return (
         <Popup onConfirm={onConfirmAdd} variant="lg" type="confirm" open onClose={onClose} title={t("orderInformation")}>
@@ -109,32 +147,143 @@ export default function PurchaseOrderAdd({ onClose, onConfirm, booksDefault }: I
                     }
                 </div>
                 <div>{t("listBook")}</div>
-                <Card className="w-[350px] w-full mt-2 py-3">
-                    <CardContent className="px-3">
+                <Card className="w-full mt-2 py-3">
+                    <CardContent className="px-1">
                         <ScrollArea className="h-[300px]">
-                            <div className="space-y-1">
-                                {books.map((book, index) => (
-                                    <div
-                                        key={`list-${book.id}-${index}`}
-                                        className="rounded-md border p-3 text-sm hover:bg-muted cursor-pointer flex items-center justify-between"
-                                    >
-                                        {
-                                            book?.avatar_path ? <LazyImage className="w-10 h-12" src={`http://127.0.0.1:3000${book?.avatar_path}`} /> :
-                                                <div className="w-10 h-10 bg-gray-200 flex items-center justify-center text-sm">
-                                                    {book?.title?.charAt(0)}
+                            <div className="space-y-2">
+                                {
+                                    books.map((item, index) => {
+                                        const book = item
+                                        return (
+
+                                            <div
+                                                key={`list-${book.id}-${index}`}
+                                                className="rounded-md border py-3 px-1 text-sm flex items-center justify-between gap-3"
+                                            >
+                                                {
+                                                    book?.avatar_path ? (
+
+                                                        <LazyImage
+                                                            className="w-10 h-12"
+                                                            src={`http://127.0.0.1:3000${book?.avatar_path}`}
+                                                        />
+
+                                                    ) : (
+
+                                                        <div className="w-10 h-12 bg-gray-200 flex items-center justify-center text-sm">
+                                                            {book?.title?.charAt(0)}
+                                                        </div>
+                                                    )
+                                                }
+
+                                                {/* INFO */}
+
+                                                <div className="flex-1">
+
+                                                    <div>
+                                                        {book.title}
+                                                    </div>
+
+                                                    <div className="text-gray-500 text-xs">
+                                                        {book.description}
+                                                    </div>
+
+                                                    <div className="text-red-500 text-xs mt-1">
+
+                                                        {book.price.toLocaleString("vi-VN", {
+                                                            style: "currency",
+                                                            currency: "VND"
+                                                        })}
+
+                                                    </div>
+
                                                 </div>
 
-                                        }
-                                        <div>
-                                            <div>{book.title}</div>
-                                            <div className="text-gray-500">{book.description}</div>
-                                        </div>
-                                        <div><div>NXB: {book.publish_year}</div><div>Số Lượng: {book.borrowed_quantity}</div></div>
-                                        <Button onClick={() => handleRemoveBook(book.id)} variant="destructive" size="sm">
-                                            Remove
-                                        </Button>
-                                    </div>
-                                ))}
+                                                {/* STOCK */}
+
+                                                <div className="text-xs">
+
+                                                    <div>
+                                                        NXB: {book.publish_year}
+                                                    </div>
+
+                                                    <div>
+                                                        Tồn: {book.stock_quantity}
+                                                    </div>
+
+                                                </div>
+
+                                                {/* QTY */}
+
+                                                <div className="flex items-center gap-2">
+
+                                                    <Button
+                                                        type="button"
+                                                        size="sm"
+                                                        variant="outline"
+                                                        onClick={() =>
+                                                            handleQtyChange(
+                                                                book.id,
+                                                                "decrease"
+                                                            )
+                                                        }
+                                                    >
+                                                        -
+                                                    </Button>
+
+                                                    <input
+                                                        type="number"
+                                                        min={1}
+                                                        max={book.stock_quantity}
+                                                        value={item.quantity}
+                                                        onChange={(e) =>
+                                                            handleQtyChange(
+                                                                book.id,
+                                                                "increase",
+                                                                Number(e.target.value)
+                                                            )
+                                                        }
+                                                        className="w-16 border rounded text-center h-8"
+                                                    />
+
+                                                    <Button
+                                                        type="button"
+                                                        size="sm"
+                                                        variant="outline"
+                                                        onClick={() =>
+                                                            handleQtyChange(
+                                                                book.id,
+                                                                "increase"
+                                                            )
+                                                        }
+                                                    >
+                                                        +
+                                                    </Button>
+
+                                                </div>
+                                                <div className="text-sm font-semibold text-green-600 min-w-[120px] text-right">
+
+                                                    {(book.price * item.quantity).toLocaleString("vi-VN", {
+                                                        style: "currency",
+                                                        currency: "VND"
+                                                    })}
+
+                                                </div>
+                                                <Button
+                                                    onClick={() =>
+                                                        handleRemoveBook(book.id)
+                                                    }
+                                                    variant="destructive"
+                                                    size="sm"
+                                                >
+                                                    Remove
+                                                </Button>
+
+                                            </div>
+                                        )
+                                    })
+                                }
+
                             </div>
                         </ScrollArea>
                     </CardContent>

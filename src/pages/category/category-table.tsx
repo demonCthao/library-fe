@@ -44,7 +44,12 @@ const CategoryTable = forwardRef<BaseTableRef, ICategoryTableProps>(({ onChooseC
 
     const { data, isLoading, error, refetch } = useFetch<DataList<Category>>({
         url: `categories?${convertObjectToParam(search)}`,
-        key: ["categories", nameDebounce],
+        key: [
+            "categories",
+            nameDebounce,
+            search.pageIndex.toString(),
+            search.pageSize.toString()
+        ],
     });
 
     const { mutateAsync } = useMutationRequest<Blob>({
@@ -97,7 +102,7 @@ const CategoryTable = forwardRef<BaseTableRef, ICategoryTableProps>(({ onChooseC
 
     return (
         <div className="h-full flex flex-col">
-            <div className="grid grid-cols-3 justify-between w-full mb-5">
+            <div className="grid grid-cols-3 justify-between w-full mb-2">
                 <div className="col-span-2 grid grid-cols-2 gap-3">
                     <FieldSearch
                         label={t("categoryName")}

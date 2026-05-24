@@ -2,6 +2,7 @@ import { DeepKeys } from "@tanstack/react-form";
 import { Field, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { ComponentProps } from "react";
+import { useTranslation } from "react-i18next";
 
 type BaseInputProps = Omit<
     ComponentProps<typeof Input>,
@@ -20,6 +21,7 @@ export function FormFieldInput<TFormData>({
     label,
     ...inputProps
 }: FormFieldInputProps<TFormData>) {
+    const { t } = useTranslation();
 
     return (
         <form.Field name={name}>
@@ -31,7 +33,7 @@ export function FormFieldInput<TFormData>({
                 return (
                     <Field data-invalid={isInvalid} className="gap-1">
                         <FieldLabel htmlFor={field.name}>
-                            {label}
+                            {t(label)}
                         </FieldLabel>
 
                         <Input

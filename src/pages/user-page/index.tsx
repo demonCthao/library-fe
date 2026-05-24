@@ -1,53 +1,77 @@
 import { HeroSlider } from "@/components/hero-slider";
 import Loading from "@/components/loading";
-import { LazyImage } from "@/components/ui/image";
 import { useFetch } from "@/hooks/useFetch";
 import { Category } from "@/models/category.model";
 import { useNavigate } from "@tanstack/react-router";
+import { BookItem } from "./book-items";
 
 export default function UserMain() {
     const navigate = useNavigate();
-    const { data, isLoading, error, refetch } = useFetch<Category[]>({
+    const { data, isLoading } = useFetch<Category[]>({
         url: "category-books",
         key: ["category-books"],
     });
 
     const goToBookDetail = (id: number) => {
-         navigate({
+        navigate({
             to: "/user-book-detail/" + id,
-            replace: true
+            // replace: true // Bạn có thể bỏ replace nếu muốn quay lại trang chủ bằng nút Back
+        });
+    }
+
+    const handleBuy = (id: number) => {
+        const jwt = localStorage.getItem("jwt");
+        if (!jwt) {
+            navigate({
+                to: "/login",
+            });
+
+            return
+        }
+
+        navigate({
+            to: "/user-page-book/" + id,
+        });
+    }
+
+    const goToCategoryDetail = (id: number) => {
+        navigate({
+            to: "/user-page-category-detail/" + id,
         });
     }
 
     return (
-        <div className="overflow-y-auto">
+        <div className="min-h-screen bg-[#121212] text-white">
             <HeroSlider />
-            {
-                isLoading ? <Loading /> :
-                    <div className="px-[50px]">
-                        {
-                            data?.filter(c => c?.books && c?.books.length > 0)?.map(category => {
-                                return <div>
-                                    <div className="mt-10">
-                                        <h1 className="text-f2f text-xl font-medium cursor-pointer">{category.name}</h1>
-                                    </div>
-                                    <div className="flex gap-10 mt-5">
-                                        {
-                                            category.books?.map(book => {
-                                                return <div className="cursor-pointer" onClick={() => goToBookDetail(book.id)}>
-                                                    <LazyImage className="w-[250px] h-[380px] rounded-lg"  src={`http://127.0.0.1:3000${book.avatar_path}`} />
-                                                    <div className="mt-3">
-                                                        {book.title}
-                                                    </div>
-                                                </div>
-                                            })
-                                        }
-                                    </div>
-                                </div>
-                            })
-                        }
-                    </div>
-            }
+
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <div className="px-[50px] pb-20">
+                    {data?.filter(c => c?.books && c?.books.length > 0)?.map(category => (
+                        <div key={category.id} className="mt-12">
+                            <div className="flex items-center justify-between mb-6">
+                                <h2 className="text-2xl font-bold border-l-4 border-emerald-500 pl-4">
+                                    {category.name}
+                                </h2>
+                                <button onClick={() => goToCategoryDetail(category.id)} className="text-sm text-gray-400 hover:text-emerald-400 transition-colors cursor-pointer">
+                                    Xem tất cả
+                                </button>
+                            </div>
+                            <div className="flex flex-wrap gap-8">
+                                {category.books?.map(book => (
+                                    <BookItem
+                                        key={book.id}
+                                        book={book}
+                                        onClick={() => goToBookDetail(book.id)}
+                                        onClickCart={() => handleBuy(book.id)}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }

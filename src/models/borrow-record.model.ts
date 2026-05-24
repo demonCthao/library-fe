@@ -1,4 +1,4 @@
-import { Reader } from "./reader.model"
+import { User } from "./user.model"
 
 type Obj = {
     id: number
@@ -8,7 +8,7 @@ type Obj = {
     due_date: string
     return_date: string
     status: string
-    readers: Reader
+    users: User
 }
 
 export type BorrowRecord = Required<Omit<Obj, "return_date">> & {

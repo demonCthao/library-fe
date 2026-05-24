@@ -155,3 +155,26 @@ code {
 .peer:focus~.peer-focus\:leading-tight {
   line-height: 1.25;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #10b981;
+  border-radius: 10px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #10b981 !important;
+  transform: scale(0.7);
+}
+
+.swiper-pagination-bullet-active {
+  background: #10b981 !important;
+}

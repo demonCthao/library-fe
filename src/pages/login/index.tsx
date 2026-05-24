@@ -26,7 +26,6 @@ export default function LoginPage() {
         user: JwtPayload,
         access_token: string
       }) => {
-        console.log("🚀 ~ LoginPage ~ data:", data)
         const token = data.access_token;
 
         localStorage.setItem("jwt", JSON.stringify(data));
@@ -37,12 +36,10 @@ export default function LoginPage() {
         if (decoded.role === ROLE.USER) {
           navigate({
             to: "/user-page",
-            replace: true
           });
         } else {
           navigate({
             to: "/dashboard",
-            replace: true
           });
         }
 

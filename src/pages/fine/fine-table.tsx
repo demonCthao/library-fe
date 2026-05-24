@@ -46,7 +46,8 @@ const FineTable = forwardRef<BaseTableRef, IFineTableProps>(({ onChooseFine }, r
 
     const { data, isLoading, error, refetch } = useFetch<DataList<Fine>>({
         url: `fines?${convertObjectToParam(search)}`,
-        key: ["fines", nameDebounce, phoneDebounce],
+        key: ["fines", nameDebounce, phoneDebounce, search.pageIndex.toString(),
+            search.pageSize.toString()],
     });
 
     const { mutateAsync } = useMutationRequest<Blob>({
@@ -99,7 +100,7 @@ const FineTable = forwardRef<BaseTableRef, IFineTableProps>(({ onChooseFine }, r
 
     return (
         <div className="h-full flex flex-col">
-            <div className="grid grid-cols-3 justify-between w-full mb-5">
+            <div className="grid grid-cols-3 justify-between w-full mb-2">
                 <div className="col-span-2 grid grid-cols-3 gap-3">
                     <FieldSearch
                         label={t("readerName")}
