@@ -143,7 +143,7 @@ export default function UserLayout({ children }: ILayoutProps) {
     if (isLoading) return <Loading />
 
     return (
-        <div className="min-h-screen bg-[#121214] text-white">
+        <div className="min-h-screen bg-[#121214] text-white overflow-y-auto">
             <div className="sticky top-0 z-50 bg-black/60 backdrop-blur-md border-b border-white/10">
                 <header className="w-full">
                     <div className="mx-auto flex h-16 items-center justify-between px-6">

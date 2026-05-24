@@ -95,7 +95,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
 
       <body
-        className={isUserView ? "overflow-y-auto" : "h-dvh overflow-hidden"}
+        className={"overflow-y-auto custom-scrollbar"}
         style={{
           // Màu nền Dark chuẩn cho toàn bộ app người dùng và trang login
           backgroundColor: "#121214",
