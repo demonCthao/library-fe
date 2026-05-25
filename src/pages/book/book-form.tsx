@@ -43,8 +43,8 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
         notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
         onClose(true);
       },
-      onError: () => {
-        notification.updateState({ message: t("updateFail"), type: "error", open: true });
+      onError: (data) => {
+        notification.updateState({ message: data.message, type: "error", open: true });
       }
     }
   });
@@ -89,7 +89,8 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
     category_id: "",
     content: "",
     available_quantity: undefined,
-    stock_quantity: undefined
+    stock_quantity: undefined,
+    isbn: ""
   };
 
   const form = useForm({
@@ -113,7 +114,8 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
         category_id: Number(value.category_id),
         content: String(value.content),
         available_quantity: Number(value.available_quantity),
-        stock_quantity: Number(value.stock_quantity)
+        stock_quantity: Number(value.stock_quantity),
+        isbn: value.isbn
       };
       formData.append("data", JSON.stringify(payload));
 
@@ -145,6 +147,7 @@ export const BookForm = ({ open, onClose, book }: IBookFormProps) => {
     <div>
       <Popup variant="2xl" type="form" open={open} onClose={handleCloseForm} title="Thông tin sách" form={form}>
         <FieldGroup className="grid grid-cols-3 gap-2">
+          <FormFieldInput form={form} label="bookCode" name="isbn" type="text" placeholder="Nhập mã sách..." disabled={!_.isNull(book)} />
           <FormFieldInput form={form} label="title" name="title" type="text" placeholder="Nhập tên sách..." disabled={!_.isNull(book)} />
           <FormFieldInput form={form} label="description" name="description" type="text" placeholder="Nhập miêu tả..." />
           <FormFieldInput form={form} label="publishYear" name="publish_year" type="number" placeholder="Nhập miêu tả..." />

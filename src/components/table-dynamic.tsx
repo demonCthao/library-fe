@@ -33,7 +33,7 @@ export const DynamicTable = <TData,>({ title, tableData, useCanMutaion }: IDynam
                 - overflow-x-auto: Tạo thanh cuộn ngang khi bảng quá rộng
                 - overflow-y-auto: Tạo thanh cuộn dọc trong nội dung nếu danh sách dài
             */}
-            <div className="flex-1 min-h-0 min-w-0 overflow-x-auto overflow-y-auto custom-scrollbar px-2">
+            <div className="flex-1 min-h-0 min-w-0 overflow-x-auto overflow-y-auto scrollbar px-2">
                 
                 {/* Thẻ Table:
                     - w-full: Giãn theo khung nếu bảng nhỏ

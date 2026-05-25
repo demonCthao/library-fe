@@ -115,5 +115,6 @@
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "newPassword": "New Password",
-    "currentPassword": "Current Password"
+    "currentPassword": "Current Password",
+    "bookCode": "Book Code"
 }

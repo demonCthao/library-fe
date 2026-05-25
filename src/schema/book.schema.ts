@@ -1,6 +1,7 @@
 import * as z from "zod";
 
 export const bookSchema = z.object({
+    isbn: z.string().min(1, "Không được bỏ trống mã sách"),
     title: z.string().min(1, "Không được bỏ trống tên sách"),
 
     description: z.string().min(1, "Không được bỏ trống mô tả"),

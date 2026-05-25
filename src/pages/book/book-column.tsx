@@ -5,10 +5,27 @@ import { createColumnHelper } from "@tanstack/react-table";
 const columnHelper = createColumnHelper<Book>();
 
 export const bookColumns = [
+  columnHelper.accessor("isbn", {
+    header: "bookCode",
+    cell: (info) => (
+      <div className="max-w-[80px] truncate" title={info.getValue() as string}>
+        {info.getValue()}
+      </div>
+    ),
+    sortUndefined: "last",
+    sortDescFirst: false,
+    footer: (info) => info.column.id,
+    filterFn: "includesString",
+    meta: {
+      label: "bookCode",
+      headerClassName: "text-left"
+    },
+  }),
+
   columnHelper.accessor("title", {
     header: "name",
     cell: (info) => (
-      <div className="max-w-[150px] truncate" title={info.getValue() as string}>
+      <div className="max-w-[120px] truncate" title={info.getValue() as string}>
         {info.getValue()}
       </div>
     ),
@@ -134,7 +151,7 @@ export const bookColumns = [
     filterFn: "includesString",
     meta: {
       label: "availableQuantity",
-      className: "text-center"
+      className: "text-center w-[100px]"
     },
   }),
 

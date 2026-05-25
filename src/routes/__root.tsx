@@ -113,7 +113,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <div className="h-full flex bg-[#0f0f11]"> {/* Nền riêng cho Dashboard Admin */}
               <Navbar />
 
-              <div className="xl:ml-80 h-full flex flex-col flex-1 pr-4 py-6">
+              <div className="xl:ml-76 h-full flex flex-col flex-1 pr-4 py-6">
                 {/* Sticky Header cho Admin */}
                 <div className="sticky top-0 z-50 backdrop-blur-md bg-[#0f0f11]/80">
                   <Header />
