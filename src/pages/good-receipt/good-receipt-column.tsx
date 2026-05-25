@@ -47,22 +47,29 @@ export const goodsReceiptColumns = [
     },
   }),
 
+  /* ========================================================
+   * CỘT SỐ LƯỢNG: Đã đồng bộ căn giữa (center) toàn bộ
+   * ======================================================== */
   columnHelper.accessor("goods_receipt_details", {
     id: "totalQuantity",
     header: "totalQuantity",
     cell: ({ getValue }) => {
       const details = getValue() || [];
       const totalQty = details.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
-      return <div className="flex justify-center font-semibold">{totalQty}</div>;
+      return <div className="flex justify-center text-center font-semibold w-full">{totalQty}</div>;
     },
     sortUndefined: "last",
     enableColumnFilter: false,
     meta: {
       label: "totalQuantity",
-      className: "text-center",
+      headerClassName: "text-center", // Tiêu đề ra giữa
+      className: "text-center",       // Nội dung ô ra giữa
     },
   }),
 
+  /* ========================================================
+   * CỘT TỔNG TIỀN: Đã đồng bộ căn phải (right) toàn bộ
+   * ======================================================== */
   columnHelper.accessor("goods_receipt_details", {
     id: "totalAmount",
     header: "totalAmount",
@@ -73,7 +80,7 @@ export const goodsReceiptColumns = [
         0
       );
       return (
-        <div className="flex justify-end font-semibold text-green-600">
+        <div className="flex justify-end text-right font-semibold text-green-600 w-full">
           {totalAmount.toLocaleString("vi-VN", {
             style: "currency",
             currency: "VND",
@@ -85,7 +92,8 @@ export const goodsReceiptColumns = [
     enableColumnFilter: false,
     meta: {
       label: "totalAmount",
-      className: "text-right",
+      headerClassName: "text-right", // Tiêu đề ra bên phải
+      className: "text-right",       // Nội dung ô ra bên phải
     },
   }),
 
@@ -108,6 +116,7 @@ export const goodsReceiptColumns = [
     enableColumnFilter: false,
     meta: {
       label: "createdAt",
+      headerClassName: "text-center",
       className: "text-center",
     },
   }),
