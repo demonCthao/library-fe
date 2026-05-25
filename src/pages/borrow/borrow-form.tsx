@@ -456,7 +456,6 @@ export function BorrowForm({
                         <ScrollArea className="h-[300px]">
 
                             <div className="space-y-2">
-
                                 {
                                     books.map((item, index) => {
 

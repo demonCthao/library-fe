@@ -2,7 +2,7 @@ import { useFetch } from '@/hooks/useFetch';
 import { CartService } from '@/lib/cart-utils';
 import { useNotificationStore } from '@/store/notification.store';
 import { useNavigate, useParams } from '@tanstack/react-router';
-import { BookOpen, Heart, Info, Loader2, Star } from 'lucide-react';
+import { BookOpen, Info, Loader2, Star } from 'lucide-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

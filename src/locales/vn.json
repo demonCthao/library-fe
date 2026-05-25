@@ -116,5 +116,6 @@
     "confirmPassword": "Xác nhận mật khẩu",
     "newPassword": "Mật khẩu mới",
     "currentPassword": "Mật khẩu hiện tại",
-    "isbn": "Mã sách"
+    "isbn": "Mã sách",
+    "goodsReceiptList": "Phiếu nhập hàng"
 }

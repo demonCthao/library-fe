@@ -116,5 +116,6 @@
     "confirmPassword": "Confirm Password",
     "newPassword": "New Password",
     "currentPassword": "Current Password",
-    "isbn": "Book Code"
+    "isbn": "Book Code",
+    "goodsReceiptList": "Goods Receipt List"
 }

@@ -12,6 +12,7 @@ import {
   User,
   UserLock,
   UsersRound,
+  PackagePlus,
 } from "lucide-react";
 
 export const PERMISSIONS = {
@@ -27,6 +28,7 @@ export const PERMISSIONS = {
   bank: ["bank:view", "bank:mutation", "bank:delete", "bank:export"],
   extra: ["borrow-detail:view", "borrow-records:view"],
   purchases: ["purchases:view", "purchases:mutation", "purchases:delete", "purchases:export"],
+  goods_receipts: ["goods_receipts:view", "goods_receipts:mutation", "goods_receipts:delete", "goods_receipts:export"],
 } as const;
 
 export const VIEW = {
@@ -40,7 +42,8 @@ export const VIEW = {
   publishers: PERMISSIONS.publishers[0],
   fines: PERMISSIONS.fines[0],
   bank: PERMISSIONS.bank[0],
-  purchases: PERMISSIONS.purchases[0]
+  purchases: PERMISSIONS.purchases[0],
+  goods_receipts: PERMISSIONS.goods_receipts[0],
 };
 
 export const MUTATION = {
@@ -53,7 +56,8 @@ export const MUTATION = {
   publishers: PERMISSIONS.publishers[1],
   fines: PERMISSIONS.fines[1],
   bank: PERMISSIONS.bank[1],
-  purchases: PERMISSIONS.purchases[1]
+  purchases: PERMISSIONS.purchases[1],
+  goods_receipts: PERMISSIONS.goods_receipts[1],
 };
 
 export const DELETE = {
@@ -66,7 +70,22 @@ export const DELETE = {
   publishers: PERMISSIONS.publishers[2],
   fines: PERMISSIONS.fines[2],
   bank: PERMISSIONS.bank[2],
-  purchases: PERMISSIONS.purchases[2]
+  purchases: PERMISSIONS.purchases[2],
+  goods_receipts: PERMISSIONS.goods_receipts[2],
+};
+
+export const EXPORT = {
+  users: PERMISSIONS.users[3],
+  books: PERMISSIONS.books[3],
+  authors: PERMISSIONS.authors[3],
+  borrows: PERMISSIONS.borrows[3],
+  categories: PERMISSIONS.categories[3],
+  readers: PERMISSIONS.readers[3],
+  publishers: PERMISSIONS.publishers[3],
+  fines: PERMISSIONS.fines[3],
+  bank: PERMISSIONS.bank[3],
+  purchases: PERMISSIONS.purchases[3],
+  goods_receipts: PERMISSIONS.goods_receipts[3],
 };
 
 export const iconMap = {
@@ -81,21 +100,9 @@ export const iconMap = {
   fines: Flag,
   accessControl: UserLock,
   banking: UserLock,
-  ShoppingBag: ShoppingBag
+  ShoppingBag: ShoppingBag,
+  goodsReceipts: PackagePlus,
 } as const;
-
-export const EXPORT = {
-  users: PERMISSIONS.users[3],
-  books: PERMISSIONS.books[3],
-  authors: PERMISSIONS.authors[3],
-  borrows: PERMISSIONS.borrows[3],
-  categories: PERMISSIONS.categories[3],
-  readers: PERMISSIONS.readers[3],
-  publishers: PERMISSIONS.publishers[3],
-  fines: PERMISSIONS.fines[3],
-  bank: PERMISSIONS.bank[3],
-  purchases: PERMISSIONS.purchases[3]
-}
 
 export type IconKey = keyof typeof iconMap;
 
@@ -112,6 +119,7 @@ export const menuPermissions = [
       { label: "patronManagement", path: "/reader", icon: "readers", permission: [VIEW.readers] },
       { label: "publisherList", path: "/publisher", icon: "publishers", permission: [VIEW.publishers] },
       { label: "purchaseOrderList", path: "/purchase-order", icon: "ShoppingBag", permission: [VIEW.purchases] },
+      { label: "goodsReceiptList", path: "/good-receipt", icon: "goodsReceipts", permission: [VIEW.goods_receipts] },
     ],
   },
   {
@@ -141,9 +149,8 @@ export const rolePermissions: RolePermissions = {
     VIEW.purchases,
     ...PERMISSIONS.borrows,
     ...PERMISSIONS.extra,
+    ...PERMISSIONS.goods_receipts,
   ],
 
-  user: [
-    
-  ]
+  user: []
 };
