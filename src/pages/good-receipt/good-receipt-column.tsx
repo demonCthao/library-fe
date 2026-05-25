@@ -47,9 +47,6 @@ export const goodsReceiptColumns = [
     },
   }),
 
-  /* ========================================================
-   * CỘT SỐ LƯỢNG: Đã đồng bộ căn giữa (center) toàn bộ
-   * ======================================================== */
   columnHelper.accessor("goods_receipt_details", {
     id: "totalQuantity",
     header: "totalQuantity",
@@ -62,14 +59,11 @@ export const goodsReceiptColumns = [
     enableColumnFilter: false,
     meta: {
       label: "totalQuantity",
-      headerClassName: "text-center", // Tiêu đề ra giữa
-      className: "text-center",       // Nội dung ô ra giữa
+      headerClassName: "text-center",
+      className: "text-center",
     },
   }),
 
-  /* ========================================================
-   * CỘT TỔNG TIỀN: Đã đồng bộ căn phải (right) toàn bộ
-   * ======================================================== */
   columnHelper.accessor("goods_receipt_details", {
     id: "totalAmount",
     header: "totalAmount",
@@ -92,8 +86,8 @@ export const goodsReceiptColumns = [
     enableColumnFilter: false,
     meta: {
       label: "totalAmount",
-      headerClassName: "text-right", // Tiêu đề ra bên phải
-      className: "text-right",       // Nội dung ô ra bên phải
+      headerClassName: "text-right",
+      className: "text-right",
     },
   }),
 
