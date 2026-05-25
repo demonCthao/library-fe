@@ -139,10 +139,10 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
           <div>
             <FieldSearch
               type="text"
-              name="description"
+              name="isbn"
               onChange={handleChangeInput}
               className="full"
-              label={t("description")}
+              label={t("isbn")}
             />
           </div>
           <div>

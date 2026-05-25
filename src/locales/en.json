@@ -116,5 +116,5 @@
     "confirmPassword": "Confirm Password",
     "newPassword": "New Password",
     "currentPassword": "Current Password",
-    "bookCode": "Book Code"
+    "isbn": "Book Code"
 }
