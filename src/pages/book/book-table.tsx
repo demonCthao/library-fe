@@ -30,9 +30,9 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
   const { t } = useTranslation();
   const canMutationBook = useCan([MUTATION.books, DELETE.books]);
   const canExportPBook = useCan([EXPORT.books]);
-  const [search, setSearch] = useState<PaginationState & { title: string, description: string, publish_year: string, category_id: string }>({
+  const [search, setSearch] = useState<PaginationState & { title: string, isbn: string, publish_year: string, category_id: string }>({
     title: "",
-    description: "",
+    isbn: "",
     publish_year: "",
     category_id: "",
     pageIndex: 1,
@@ -40,7 +40,7 @@ const BookTable = forwardRef<BaseTableRef, IBookTableProps>(({ onChooseBook }, r
   });
   const titleDebounce = useDebounce(search.title);
   const publishYearDebounce = useDebounce(search.publish_year);
-  const descriptionDebounce = useDebounce(search.description);
+  const descriptionDebounce = useDebounce(search.isbn);
 
   const { data, isLoading, error, refetch } = useFetch<DataList<Book>>({
     url: `books?${convertObjectToParam(search)}`,
