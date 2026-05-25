@@ -156,28 +156,66 @@ code {
   line-height: 1.25;
 }
 
-/* Thiết lập chiều rộng và kiểu dáng chung */
+@utility custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #10b981 rgba(255, 255, 255, 0.02);
+
+  &::-webkit-scrollbar {
+    width: 3px !important;
+    height: 3px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 10px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #10b981 !important;
+    border-radius: 10px !important;
+    border: 0.5px solid rgba(0, 0, 0, 0.1) !important;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #059669 !important;
+  }
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #10b981 rgba(255, 255, 255, 0.02);
+}
+
+/* Custom Scrollbar Global */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #10b981 rgba(255, 255, 255, 0.02);
+}
+
+/* Chrome, Edge, Safari */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px; /* Độ rộng của thanh cuộn */
-  height: 6px; /* Độ rộng nếu cuộn ngang */
+  width: 5px !important;
+  height: 5px !important;
 }
 
-/* Phần track (nền phía sau) */
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02); /* Nền tối nhẹ hoặc trong suốt */
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02) !important;
 }
 
-/* Phần thumb (thanh kéo) - màu xanh Emerald bạn đang dùng */
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #10b981; /* Màu xanh emerald-500 */
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Tạo độ nổi nhẹ */
+  background: #10b981 !important;
+  border-radius: 10px !important;
 }
 
-/* Hiệu ứng khi di chuột vào thanh cuộn */
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #059669; /* Màu xanh đậm hơn khi hover */
+  background: #059669 !important;
+}
+
+/* Đảm bảo body luôn chiếm hết chiều cao màn hình và không bị vỡ layout */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .overflow-auto, .overflow-y-auto {

@@ -95,42 +95,43 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
 
       <body
-        className={"overflow-y-auto custom-scrollbar"}
+        className="min-h-screen custom-scrollbar"
         style={{
-          // Màu nền Dark chuẩn cho toàn bộ app người dùng và trang login
           backgroundColor: "#121214",
-          color: "#ececec"
+          color: "#ececec",
+          overflowY: "auto", // Cho phép body cuộn chính
         }}
       >
         {checkLoginPage ? (
-          <div className="h-full">{children}</div>
+          /* Trang Login: Thường không cần layout phức tạp */
+          <div className="min-h-screen">{children}</div>
+        ) : isUserView || isUserRoute ? (
+          /* Giao diện người dùng */
+          <UserLayout>{children}</UserLayout>
         ) : (
-          isUserView || isUserRoute ? (
-            <UserLayout>
-              {children}
-            </UserLayout>
-          ) : (
-            <div className="h-full flex bg-[#0f0f11]"> {/* Nền riêng cho Dashboard Admin */}
-              <Navbar />
+          /* Giao diện Admin Dashboard */
+          <div className="flex bg-[#0f0f11] min-h-screen">
+            {/* Navbar cố định bên trái */}
+            <Navbar />
 
-              <div className="xl:ml-76 h-full flex flex-col flex-1 pr-4 py-6">
-                {/* Sticky Header cho Admin */}
-                <div className="sticky top-0 z-50 backdrop-blur-md bg-[#0f0f11]/80">
-                  <Header />
-                </div>
-
-                {/* Scroll Area cho Admin */}
-                <div className="flex-1 min-h-0 overflow-y-auto mt-6 custom-scrollbar">
-                  {children}
-                </div>
+            <div className="xl:ml-76 flex flex-col flex-1">
+              {/* Sticky Header */}
+              <div className="sticky top-0 z-50 backdrop-blur-md bg-[#0f0f11]/80 px-4 py-4">
+                <Header />
               </div>
+
+              {/* NỘI DUNG ADMIN: 
+           Ở đây mình bỏ 'overflow-y-auto' và 'h-full' để nó dùng chung thanh cuộn của BODY.
+           Điều này giúp thanh custom-scrollbar ở body hoạt động chính xác.
+        */}
+              <main className="flex-1 p-4 md:p-6">
+                {children}
+              </main>
             </div>
-          )
+          </div>
         )}
 
-        {/* Cấu hình Toaster cho phù hợp với Dark Mode */}
         <Toaster theme="dark" closeButton richColors />
-
         <TanStackDevtools
           config={{ position: "bottom-right" }}
           plugins={[
@@ -140,7 +141,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             },
           ]}
         />
-
         <Scripts />
       </body>
     </html>
