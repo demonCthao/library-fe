@@ -83,19 +83,19 @@ export function RegisterModal({ open, onOpenChange }: { open: boolean, onOpenCha
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[480px] bg-[#121212] border-gray-800 text-white px-8 py-6 rounded-3xl">
+            <DialogContent className="sm:max-w-[480px] bg-[#121212] border-gray-800 text-white px-8 rounded-3xl">
                 <DialogClose className="absolute right-4 top-4 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white transition-colors">
                     <X size={18} />
                 </DialogClose>
 
-                <DialogHeader className="space-y-3">
+                <DialogHeader>
                     <DialogTitle className="text-3xl font-bold text-center">Đăng ký tài khoản</DialogTitle>
                     <p className="text-gray-400 text-center text-sm">
                         Đăng ký để mua và theo dõi quá trình đọc sách
                     </p>
                 </DialogHeader>
                 <form
-                    className="space-y-3 mt-6"
+                    className="space-y-2"
                     onSubmit={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -103,7 +103,7 @@ export function RegisterModal({ open, onOpenChange }: { open: boolean, onOpenCha
                     }}
                 >
                     {/* Tên người dùng */}
-                    <div className="space-y-1">
+                    <div className="space-y-2">
                         <form.Field
                             name="full_name"
                             children={(field) => {
@@ -130,7 +130,7 @@ export function RegisterModal({ open, onOpenChange }: { open: boolean, onOpenCha
                     </div>
 
                     {/* Tên đăng nhập */}
-                    <div className="space-y-1">
+                    <div className="space-y-2">
                         <form.Field
                             name="username"
                             children={(field) => {
@@ -157,7 +157,7 @@ export function RegisterModal({ open, onOpenChange }: { open: boolean, onOpenCha
                     </div>
 
                     {/* Số điện thoại */}
-                    <div className="space-y-1">
+                    <div className="space-y-2">
                         <form.Field
                             name="phone"
                             children={(field) => {
@@ -183,7 +183,7 @@ export function RegisterModal({ open, onOpenChange }: { open: boolean, onOpenCha
                         />
                     </div>
 
-                    <div className="space-y-1">
+                    <div className="space-y-2">
                         <form.Field
                             name="email"
                             children={(field) => {
@@ -210,7 +210,7 @@ export function RegisterModal({ open, onOpenChange }: { open: boolean, onOpenCha
                         />
                     </div>
 
-                    <div className="space-y-1">
+                    <div className="space-y-2">
                         <form.Field
                             name="password"
                             children={(field) => {
@@ -248,7 +248,7 @@ export function RegisterModal({ open, onOpenChange }: { open: boolean, onOpenCha
                     </div>
 
                     {/* Nhập lại mật khẩu */}
-                    <div className="space-y-1">
+                    <div className="space-y-2">
                         <form.Field
                             name="confirmPassword"
                             children={(field) => {
@@ -290,11 +290,6 @@ export function RegisterModal({ open, onOpenChange }: { open: boolean, onOpenCha
                     >
                         Đăng ký
                     </Button>
-                    <p className="text-center text-[12px] text-gray-500 px-6">
-                        Bằng việc nhấn “Đăng ký”, bạn đã đọc và đồng ý với&nbsp;
-                        <span className="text-white font-medium cursor-pointer">điều kiện</span> và&nbsp;
-                        <span className="text-white font-medium cursor-pointer">điều khoản</span>
-                    </p>
                     <hr className="border-gray-800 mx-[-32px]" />
                     <p className="text-center text-sm">
                         Bạn đã có tài khoản?&nbsp;
