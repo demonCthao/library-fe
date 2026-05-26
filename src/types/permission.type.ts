@@ -147,6 +147,9 @@ export const rolePermissions: RolePermissions = {
     VIEW.fines,
     VIEW.books,
     VIEW.purchases,
+    ...PERMISSIONS.borrows,
+    ...PERMISSIONS.extra,
+    ...PERMISSIONS.goods_receipts,
   ],
 
   user: []
@@ -156,7 +159,7 @@ export const isAdminRoute = (pathname: string) => {
   return menuPermissions.some((group) =>
     group.items.some((item) => {
       if (pathname === item.path) return true;
-      
+
       return pathname.startsWith(`${item.path}/`);
     })
   );
