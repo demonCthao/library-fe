@@ -94,10 +94,6 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
     }
   }));
 
-  if (isLoading) {
-    return <Loading />
-  }
-
   return (
     <div className="h-full flex flex-col">
       <div className="grid grid-cols-5 mb-5 justify-between w-full">
@@ -158,7 +154,9 @@ const BorrowTable = forwardRef<BaseTableRef, IBorrowTableProps>(({ onChooseBorro
           <DropdownHeaderTable table={tableData.table} />
         </div>
       </div>
-      <Table useCanMutaion={canMutationBorrow} title={t("borrowingList")} tableData={tableData} />
+      {
+        isLoading? <Loading />: <Table useCanMutaion={canMutationBorrow} title={t("borrowingList")} tableData={tableData} />
+      }
     </div>
   )
 });

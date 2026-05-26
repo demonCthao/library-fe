@@ -9,6 +9,7 @@ import BorrowConfirm from './borrow-record-confirm';
 import BorrowTable from './borrow-record-table';
 import { BORROW_STATUS } from '@/constants/borrow-status.constants';
 import { useTranslation } from 'react-i18next';
+import { useMutationRequest } from '@/hooks/useMutation';
 
 export default function BorrowRecordPage() {
     const notification = useNotificationStore();
@@ -60,7 +61,23 @@ export default function BorrowRecordPage() {
 
             return;
         }
+
+        mutate({})
     }
+
+    const { mutate } = useMutationRequest({
+        key: ["delete-purchase"],
+        url: `borrow-record/${selectedBorrow?.id}`, method: "delete", options: {
+            onSuccess: () => {
+                notification.updateState({ message: t("updateSuccess"), type: "success", open: true });
+                resetState();
+                tableRef.current?.refresh();
+            },
+            onError: () => {
+                notification.updateState({ message: t("updateFail"), type: "error", open: true });
+            }
+        }
+    });
 
     return (
         <div className="h-full flex flex-col">

@@ -14,6 +14,7 @@ import appCss from "../styles.css?url"
 import { useAccountStore } from "@/store/account.store"
 import { ROLE } from "@/constants/role.constants"
 import UserLayout from "@/components/user-layout"
+import { isAdminRoute } from "@/types/permission.type"
 
 export const Route = createRootRoute({
   head: () => ({
@@ -84,63 +85,36 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     }
   }, [notification.message, notification.open])
 
-
-  const isUserView = account.user?.role === ROLE.USER || !account.user;
-  const isUserRoute = location.pathname.startsWith("/user-page");
+  const hasAdminRole = account.user?.role === ROLE.ADMIN || account.user?.role === ROLE.LIBRARIAN;
+  const isInAdminMenu = isAdminRoute(location.pathname);
+  const showAdminLayout = !checkLoginPage && hasAdminRole && isInAdminMenu;
 
   return (
-    <html lang="en" className="dark"> {/* Thêm class dark để đồng bộ shadcn */}
-      <head>
-        <HeadContent />
-      </head>
+    <html lang="en" className="dark">
+      <head><HeadContent /></head>
+      <body className="min-h-screen custom-scrollbar" style={{ backgroundColor: "#121214", color: "#ececec" }}>
 
-      <body
-        className="min-h-screen custom-scrollbar"
-        style={{
-          backgroundColor: "#121214",
-          color: "#ececec",
-          overflowY: "auto", // Cho phép body cuộn chính
-        }}
-      >
         {checkLoginPage ? (
-          /* Trang Login: Thường không cần layout phức tạp */
           <div className="min-h-screen">{children}</div>
-        ) : isUserView || isUserRoute ? (
-          /* Giao diện người dùng */
-          <UserLayout>{children}</UserLayout>
-        ) : (
-          /* Giao diện Admin Dashboard */
+        ) : showAdminLayout ? (
+          /* GIAO DIỆN ADMIN */
           <div className="flex bg-[#0f0f11] min-h-screen">
-            {/* Navbar cố định bên trái */}
             <Navbar />
-
             <div className="xl:ml-76 flex flex-col flex-1">
-              {/* Sticky Header */}
               <div className="sticky top-0 z-50 backdrop-blur-md bg-[#0f0f11]/80 px-4 py-4">
                 <Header />
               </div>
-
-              {/* NỘI DUNG ADMIN: 
-           Ở đây mình bỏ 'overflow-y-auto' và 'h-full' để nó dùng chung thanh cuộn của BODY.
-           Điều này giúp thanh custom-scrollbar ở body hoạt động chính xác.
-        */}
               <main className="flex-1 p-4 md:p-6">
                 {children}
               </main>
             </div>
           </div>
+        ) : (
+          /* GIAO DIỆN USER (Dành cho Member hoặc Admin đang vào xem trang ngoài) */
+          <UserLayout>{children}</UserLayout>
         )}
 
         <Toaster theme="dark" closeButton richColors />
-        <TanStackDevtools
-          config={{ position: "bottom-right" }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
         <Scripts />
       </body>
     </html>

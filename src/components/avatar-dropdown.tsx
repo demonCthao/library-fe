@@ -11,29 +11,25 @@ import {
 import { useAccountStore } from "@/store/account.store";
 import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { User, Key, LogOut, Mail } from "lucide-react"; // Thêm icon cho đẹp
+import { User, Key, LogOut, Mail, LayoutDashboard } from "lucide-react"; // Import thêm LayoutDashboard
 import { Role } from "@/types/role.type";
-export interface JwtPayload {
-  userId: number;
-  email: string;
-  role: Role;
-  exp: number;
-  fullName: string;
-  userName: string;
-  lang: string;
-  avatarPath: string;
-}
+import { ROLE } from "@/constants/role.constants"; // Giả định bạn có file constant này
 
 export default function AvatarDropdownMenu() {
   const navigate = useNavigate();
   const userStore = useAccountStore();
   const { t } = useTranslation();
 
+  // Kiểm tra quyền Admin/Librarian
+  const isAdminOrLibrarian =
+    userStore.user?.role === ROLE.ADMIN ||
+    userStore.user?.role === ROLE.LIBRARIAN;
+
   const handleLogout = () => {
     localStorage.clear();
-    useAccountStore.getState().setUser(null);
+    userStore.setUser(null);
 
-    if (userStore.user?.role === "user") {
+    if (userStore.user?.role === ROLE.USER) {
       navigate({ to: "/user-page" });
     } else {
       navigate({ to: "/login" });
@@ -42,7 +38,6 @@ export default function AvatarDropdownMenu() {
 
   return (
     <div className="flex gap-3 items-center">
-      {/* Phần Text Hi: tên người dùng */}
       <div className="hidden md:block text-right">
         <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Xin chào</p>
         <p className="text-sm font-semibold text-gray-200">{userStore.user?.fullName}</p>
@@ -51,7 +46,6 @@ export default function AvatarDropdownMenu() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="relative group cursor-pointer">
-            {/* Viền sáng bao quanh Avatar khi hover */}
             <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full opacity-0 group-hover:opacity-70 transition duration-300 blur-[2px]"></div>
             <Avatar className="relative border-2 border-[#0a0a0a] h-10 w-10">
               <AvatarImage
@@ -83,15 +77,25 @@ export default function AvatarDropdownMenu() {
           <DropdownMenuSeparator className="bg-gray-800/50" />
 
           <DropdownMenuGroup className="space-y-1 py-1">
-            {
-              userStore.user?.role !== "user" && <DropdownMenuItem
-                className="flex items-center gap-2 p-2.5 rounded-lg cursor-pointer focus:bg-emerald-500/10 focus:text-emerald-400"
-                onClick={() => navigate({ to: `/profile/${userStore.user?.userId}` })}
+            {/* NÚT QUẢN LÝ: Chỉ hiện nếu là Admin hoặc Librarian */}
+            {isAdminOrLibrarian && (
+              <DropdownMenuItem
+                className="flex items-center gap-2 p-2.5 rounded-lg cursor-pointer bg-emerald-500/10 text-emerald-400 focus:bg-emerald-500/20 focus:text-emerald-300 border border-emerald-500/20"
+                onClick={() => navigate({ to: "/dashboard" })}
               >
-                <User size={16} />
-                <span>{t("profile")}</span>
+                <LayoutDashboard size={16} />
+                <span className="font-bold">Trang quản trị</span>
               </DropdownMenuItem>
-            }
+            )}
+
+            <DropdownMenuItem
+              className="flex items-center gap-2 p-2.5 rounded-lg cursor-pointer focus:bg-emerald-500/10 focus:text-emerald-400"
+              onClick={() => navigate({ to: `/profile/${userStore.user?.userId}` })}
+            >
+              <User size={16} />
+              <span>{t("profile")}</span>
+            </DropdownMenuItem>
+
             <DropdownMenuItem
               className="flex items-center gap-2 p-2.5 rounded-lg cursor-pointer focus:bg-emerald-500/10 focus:text-emerald-400"
               onClick={() => navigate({ to: `/change-pass/${userStore.user?.userId}` })}

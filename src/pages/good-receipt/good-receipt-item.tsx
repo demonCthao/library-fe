@@ -3,6 +3,7 @@ import SearchSelect from '@/components/search-select';
 import { Button } from '@/components/ui/button';
 import { useDebounce } from '@/hooks/useDebounce'; // Hoặc hook debounce có sẵn của bạn
 import { useFetch } from '@/hooks/useFetch';
+import { Book } from '@/models/book.model';
 import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -33,10 +34,10 @@ export default function GoodsReceiptItem({ form, index, isEdit, canDelete, onDel
         },
     });
 
-    const bookOptions = (bookData as any[])?.map((book) => ({
-        value: book.id,
+    const bookOptions = (bookData as Book[])?.map((book) => ({
+        value: book.id.toString(),
         label: book.title,
-        image: book.image_url,
+        image: book.avatar_path,
         publishYear: book.publish_year,
         price: book.price ?? 0,
     })) || [];

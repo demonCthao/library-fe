@@ -1,4 +1,4 @@
-import Dashboard from '@/pages/dashboard'
+import UserMain from '@/pages/user-page'
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/')({ component: Dashboard })
+export const Route = createFileRoute('/')({ component: UserMain })

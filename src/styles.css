@@ -212,13 +212,15 @@ code {
 }
 
 /* Đảm bảo body luôn chiếm hết chiều cao màn hình và không bị vỡ layout */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-.overflow-auto, .overflow-y-auto {
+.overflow-auto,
+.overflow-y-auto {
   @apply custom-scrollbar;
 }
 
@@ -230,4 +232,13 @@ html, body {
 
 .swiper-pagination-bullet-active {
   background: #10b981 !important;
+}
+
+.indiana-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.indiana-scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

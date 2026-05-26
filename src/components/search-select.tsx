@@ -1,4 +1,5 @@
 import { SelectOption } from "./select-app";
+import { LazyImage } from "./ui/image";
 
 interface IExtendedSelectOption extends SelectOption {
     image?: string;
@@ -17,6 +18,7 @@ export default function SearchSelect({
     loading = false,
     onSelect,
 }: ISearchSelectProps) {
+    
     return (
         <div className="relative w-full z-50 font-sans">
             <div className="absolute w-full bg-[#18181c] border border-gray-800 mt-2 rounded-xl shadow-2xl overflow-hidden max-h-[450px] flex flex-col">
@@ -40,12 +42,13 @@ export default function SearchSelect({
 
                     {!loading &&
                         options.map((item) => {
+                            console.log("🚀 ~ SearchSelect ~ item:", item)
                             const isFree = !item.price || item.price === 0 || item.price === "Miễn phí";
                             const displayPrice = isFree
                                 ? "Miễn phí"
                                 : typeof item.price === 'number'
                                     ? `${item.price.toLocaleString('vi-VN')}đ`
-                                    : item.price;
+                                    : `${Number(item.price).toLocaleString('vi-VN')}đ`;
 
                             return (
                                 <div
@@ -57,9 +60,8 @@ export default function SearchSelect({
                                 >
                                     <div className="w-12 h-16 bg-gray-800 rounded overflow-hidden shrink-0 border border-gray-700/50 shadow flex items-center justify-center">
                                         {item.image ? (
-                                            <img
-                                                src={item.image}
-                                                alt={item.label}
+                                            <LazyImage
+                                                src={`http://127.0.0.1:3000${item.image}`}
                                                 className="w-full h-full object-cover"
                                             />
                                         ) : (
