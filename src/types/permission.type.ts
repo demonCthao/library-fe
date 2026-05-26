@@ -147,6 +147,7 @@ export const rolePermissions: RolePermissions = {
     VIEW.fines,
     VIEW.books,
     VIEW.purchases,
+    ...PERMISSIONS.books,
     ...PERMISSIONS.borrows,
     ...PERMISSIONS.extra,
     ...PERMISSIONS.goods_receipts,
