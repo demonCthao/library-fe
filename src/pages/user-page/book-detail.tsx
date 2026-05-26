@@ -3,7 +3,7 @@ import { CartService } from '@/lib/cart-utils';
 import { useNotificationStore } from '@/store/notification.store';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import { BookOpen, Info, Loader2, Star } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const Badge = ({ children, className }: { children: React.ReactNode; className?: string }) => (
@@ -33,7 +33,10 @@ export default function BookDetail() {
     const notification = useNotificationStore();
     const { id } = useParams({ from: "/user-book-detail/$id" });
 
-    const { data, isLoading } = useFetch<any>({ // Sử dụng any hoặc cập nhật interface Book phù hợp với JSON mới
+    // State quản lý việc đóng mở nội dung
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const { data, isLoading } = useFetch<any>({
         url: `category-books/${id}`,
         key: ["book-detail", id],
     });
@@ -57,14 +60,12 @@ export default function BookDetail() {
     const handleAddToCart = () => {
         if (data?.stock_quantity === 0) {
             notification.updateState({ open: true, message: "Đã hết sách", type: "warning" })
-
             return
         }
 
         try {
             const productId = Number(id);
             CartService.addToCart(productId, 1);
-
             notification.updateState({
                 message: t("Thêm vào giỏ hàng thành công!"),
                 type: "success",
@@ -78,6 +79,11 @@ export default function BookDetail() {
             });
         }
     };
+
+    const fullText = data.description || "";
+    const words = fullText.split(' ');
+    const isLongText = words.length > 60;
+    const displayText = isExpanded ? fullText : words.slice(0, 60).join(' ') + (isLongText ? "..." : "");
 
     return (
         <div className="min-h-screen bg-[#121212] text-gray-300 font-sans p-6 md:p-12 selection:bg-[#00b98e]/30">
@@ -178,16 +184,26 @@ export default function BookDetail() {
                         </Button>
                     </div>
 
-                    {/* Phần mô tả */}
+                    {/* Phần mô tả có Đóng/Mở */}
                     <div className="space-y-3">
                         <h3 className="text-white font-bold flex items-center gap-2">
                             <div className="w-1 h-4 bg-[#00b98e] rounded-full"></div>
                             Giới thiệu nội dung
                         </h3>
-                        <div
-                            className="text-sm text-gray-400 leading-relaxed pt-2 prose prose-invert max-w-none"
-                            dangerouslySetInnerHTML={{ __html: data.content || data.description }}
-                        />
+                        <div className="relative">
+                            <div
+                                className="text-sm text-gray-400 leading-relaxed pt-2 prose prose-invert max-w-none"
+                                dangerouslySetInnerHTML={{ __html: displayText }}
+                            />
+                            {isLongText && (
+                                <button
+                                    onClick={() => setIsExpanded(!isExpanded)}
+                                    className="mt-2 text-[#00b98e] hover:text-[#00a37d] text-xs font-bold transition-colors uppercase tracking-tight"
+                                >
+                                    {isExpanded ? "Thu gọn ▲" : "Xem thêm ▼"}
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
 
