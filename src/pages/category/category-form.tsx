@@ -80,8 +80,8 @@ export const CategoryForm = ({ open, onClose, category }: ICategoryFormProps) =>
 
     return (
         <div>
-            <Popup variant="2xl" type="form" open={open} onClose={handleCloseForm} title="Thông tin danh mục" form={form}>
-                <FieldGroup className="grid grid-cols-2 gap-3">
+            <Popup variant="lg" type="form" open={open} onClose={handleCloseForm} title="Thông tin danh mục" form={form}>
+                <FieldGroup className=" grid-cols-2 gap-3">
                     <FormFieldInput form={form} label="Name" name="name" type="text" placeholder="Nhập tên danh mục..." />
                     <FormFieldSelect form={form} label="Parent" name="parent_id" options={categoryOptions ?? []} />
                 </FieldGroup>
